@@ -24,5 +24,13 @@ namespace LicenseApp
         protected override void OnResume()
         {
         }
+
+        public static bool IsDevEnv
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

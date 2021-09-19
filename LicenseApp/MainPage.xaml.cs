@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using LicenseApp.Services;
+using LicenseApp.ViewModels;
+
 
 namespace LicenseApp
 {
@@ -12,7 +15,13 @@ namespace LicenseApp
     {
         public MainPage()
         {
+            this.BindingContext = new HelloViewModels();
             InitializeComponent();
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+
         }
     }
 }
