@@ -39,12 +39,10 @@ namespace LicenseApp.ViewModels
         }
 
         public ICommand ShowLbl => new Command(ShowLabel);
-        private void ShowLabel()
+        private async void ShowLabel()
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
-            Task<string> t = proxy.SayHello();
-            t.Wait();
-            Text = t.Result;
+            Text = await proxy.SayHello(); ;
         }
     }
 }
