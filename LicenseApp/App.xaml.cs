@@ -7,10 +7,11 @@ namespace LicenseApp
 {
     public partial class App : Application
     {
+        public Object CurrentUser { get; set; }
         public App()
         {
             InitializeComponent();
-
+            CurrentUser = null;
             MainPage = new LogIn();
         }
 

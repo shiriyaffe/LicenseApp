@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using LicenseApp.ViewModels;
 
 namespace LicenseApp.Views
 {
@@ -14,6 +15,7 @@ namespace LicenseApp.Views
     {
         public LogIn()
         {
+            this.BindingContext = new LogInViewModels();
             InitializeComponent();
         }
     }
