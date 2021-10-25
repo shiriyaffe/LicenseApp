@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using LicenseApp.Views;
 
 namespace LicenseApp
 {
@@ -10,7 +11,7 @@ namespace LicenseApp
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new LogIn();
         }
 
         protected override void OnStart()

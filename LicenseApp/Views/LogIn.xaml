@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LicenseApp.Views.LogIn"
+             FlowDirection="RightToLeft">
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <Label Text="התחברות" FontFamily="Calibri" FontAttributes="Bold" FontSize="70" TextColor="#003049"/>
+            <Label/>
+            <Label Text="אימייל" FontFamily="Calibri" TextColor="Gray" FontSize="30"/>
+            <Entry/>
+            <Label Text="סיסמה" FontFamily="Calibri" TextColor="Gray" FontSize="30"/>
+            <Entry/>
+            <Button Text="שלח" HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding LogInCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
