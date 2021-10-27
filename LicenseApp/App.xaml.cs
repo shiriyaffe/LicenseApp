@@ -2,17 +2,20 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using LicenseApp.Views;
+using LicenseApp.Models;
 
 namespace LicenseApp
 {
     public partial class App : Application
     {
         public Object CurrentUser { get; set; }
+        public LookupTables Tables { get; set; }
+
         public App()
         {
             InitializeComponent();
             CurrentUser = null;
-            MainPage = new LogIn();
+            MainPage = new StudentSignUpView();
         }
 
         protected override void OnStart()
