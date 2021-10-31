@@ -15,7 +15,7 @@ namespace LicenseApp
         {
             InitializeComponent();
             CurrentUser = null;
-            MainPage = new StudentSignUpView();
+            MainPage = new SignUpView();
         }
 
         protected override void OnStart()

@@ -12,5 +12,6 @@ namespace LicenseApp.Models
         public List<Gearbox> GearBoxes { get; set; }
         public List<Gender> Genders { get; set; }
         public List<LicenseType> LicenseTypes { get; set; }
+
     }
 }

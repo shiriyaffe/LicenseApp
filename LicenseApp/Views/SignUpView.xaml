@@ -1,12 +1,70 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="LicenseApp.Views.SignUpView">
+             x:Class="LicenseApp.Views.SignUpView"
+             FlowDirection="RightToLeft">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="labelNameStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+            <Style x:Key="labelErrorStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="TextColor" Value="Red" />
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <StackLayout Padding="0,20,0,0">
+                <Label Text="הרשמה" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="70" TextColor="#003049" HorizontalOptions="Center"/>
+            <Label/>
+            <!-- שם -->
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                    <Entry Placeholder="שם" Text="{Binding Name}"/>
+                </Frame>
+                <Label Text="{Binding NameError}" IsVisible="{Binding ShowNameError}" Style="{StaticResource labelErrorStyle}"/>
+
+            <!-- אימייל -->
+            
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                    <Entry Placeholder="אימייל" Text="{Binding Email}"/>
+                </Frame>
+            <Label Text="{Binding MailError}" IsVisible="{Binding ShowMailError}"  Style="{StaticResource labelErrorStyle}"/>
+
+
+            <!-- סיסמה -->
+            <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                    <Entry Placeholder="סיסמה" Text="{Binding OriginalPass}"/>
+                </Frame>
+            <Label/>
+            <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                    <Entry Placeholder="אימות סיסמה" Text="{Binding Pass}"/>
+                </Frame>
+            <Label Text="{Binding PassError}" IsVisible="{Binding ShowPassError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
+
+
+            <!-- תאריך לידה --><!--
+                
+                    
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                <DatePicker Date="{Binding Date}">
+                </DatePicker>
+                </Frame>
+                <Label Text="{Binding DateError}" IsVisible="{Binding ShowDateError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
+
+            <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                <Picker Title="מין מועדף למורה" ItemsSource="{Binding Genders}" ItemDisplayBinding="{Binding GenderType}" SelectedItem="{Binding Gender}">
+                </Picker>
+            </Frame>
+
+            --><!-- מספר טלפון --><!--
+            <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                <Entry Placeholder="מספר טלפון" Text="{Binding PhoneNumber}"/>
+            </Frame>-->
+            <Label/>
+            <Button Text="הבא" HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SaveDataCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
