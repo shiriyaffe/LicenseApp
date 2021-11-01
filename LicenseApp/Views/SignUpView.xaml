@@ -28,7 +28,7 @@
             <!-- אימייל -->
             
                 <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
-                    <Entry Placeholder="אימייל" Text="{Binding Email}"/>
+                    <Entry Placeholder="אימייל" Text="{Binding Email}" Keyboard="Email"/>
                 </Frame>
             <Label Text="{Binding MailError}" IsVisible="{Binding ShowMailError}"  Style="{StaticResource labelErrorStyle}"/>
 

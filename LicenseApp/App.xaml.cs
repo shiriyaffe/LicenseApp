@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using LicenseApp.Views;
 using LicenseApp.Models;
+using LicenseApp.Services;
 
 namespace LicenseApp
 {
@@ -15,11 +16,14 @@ namespace LicenseApp
         {
             InitializeComponent();
             CurrentUser = null;
-            MainPage = new SignUpView();
+            MainPage = new Loading();
         }
 
-        protected override void OnStart()
+        protected async override void OnStart()
         {
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            Tables = await proxy.GetLookups();
+            MainPage = new StudentSignUpView();
         }
 
         protected override void OnSleep()

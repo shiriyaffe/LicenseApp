@@ -134,6 +134,34 @@ namespace LicenseApp.Services
             }
         }
 
+        public async Task<LookupTables> GetLookups()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetLookups");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    LookupTables table = JsonSerializer.Deserialize<LookupTables>(content, options);
+                    return table;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
         public async Task<Student> StudentSignUpAsync(Student student)
         {
             try
