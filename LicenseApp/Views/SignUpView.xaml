@@ -17,20 +17,20 @@
     </ContentPage.Resources>
     <ContentPage.Content>
             <StackLayout Padding="0,20,0,0">
-                <Label Text="הרשמה" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="70" TextColor="#003049" HorizontalOptions="Center"/>
-            <Label/>
+                <!--<Label Text="הרשמה" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="30" TextColor="#003049" HorizontalOptions="Center"/>
+            <Label/>-->
             <!-- שם -->
                 <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="שם" Text="{Binding Name}"/>
                 </Frame>
-                <Label Text="{Binding NameError}" IsVisible="{Binding ShowNameError}" Style="{StaticResource labelErrorStyle}"/>
+            <Label Padding="0" Text="{Binding NameError}" IsVisible="{Binding ShowNameError}" Style="{StaticResource labelErrorStyle}"/>
 
             <!-- אימייל -->
             
                 <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="אימייל" Text="{Binding Email}" Keyboard="Email"/>
                 </Frame>
-            <Label Text="{Binding MailError}" IsVisible="{Binding ShowMailError}"  Style="{StaticResource labelErrorStyle}"/>
+            <Label Padding="0" Text="{Binding MailError}" IsVisible="{Binding ShowMailError}"  Style="{StaticResource labelErrorStyle}"/>
 
 
             <!-- סיסמה -->
@@ -41,28 +41,30 @@
             <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="אימות סיסמה" Text="{Binding Pass}"/>
                 </Frame>
-            <Label Text="{Binding PassError}" IsVisible="{Binding ShowPassError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
+            <Label Padding="0" Text="{Binding PassError}" IsVisible="{Binding ShowPassError}" Style="{StaticResource labelErrorStyle}"/>
 
 
-            <!-- תאריך לידה --><!--
+             <!--תאריך לידה--> 
                 
                     
                 <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
                 <DatePicker Date="{Binding Date}">
                 </DatePicker>
                 </Frame>
-                <Label Text="{Binding DateError}" IsVisible="{Binding ShowDateError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
+            <Label Padding="0" Text="{Binding DateError}" IsVisible="{Binding ShowDateError}" Style="{StaticResource labelErrorStyle}"/>
+
+             <!--מספר טלפון--> 
+            <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                <Entry Placeholder="מספר טלפון" Text="{Binding PhoneNumber}"/>
+            </Frame>
+            <Label Padding="0" Text="{Binding NumberError}" IsVisible="{Binding ShowNumberError}" Style="{StaticResource labelErrorStyle}"/>
+
 
             <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
                 <Picker Title="מין מועדף למורה" ItemsSource="{Binding Genders}" ItemDisplayBinding="{Binding GenderType}" SelectedItem="{Binding Gender}">
                 </Picker>
             </Frame>
-
-            --><!-- מספר טלפון --><!--
-            <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
-                <Entry Placeholder="מספר טלפון" Text="{Binding PhoneNumber}"/>
-            </Frame>-->
-            <Label/>
+                
             <Button Text="הבא" HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SaveDataCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
 
         </StackLayout>

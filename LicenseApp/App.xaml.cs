@@ -10,12 +10,14 @@ namespace LicenseApp
     public partial class App : Application
     {
         public Object CurrentUser { get; set; }
+        public User TempUser { get; set; }
         public LookupTables Tables { get; set; }
 
         public App()
         {
             InitializeComponent();
             CurrentUser = null;
+            TempUser = null;
             MainPage = new Loading();
         }
 
@@ -23,7 +25,7 @@ namespace LicenseApp
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             Tables = await proxy.GetLookups();
-            MainPage = new StudentSignUpView();
+            MainPage = new SignUpView();
         }
 
         protected override void OnSleep()
