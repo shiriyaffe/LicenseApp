@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LicenseApp.Views.SignUpAsView"
+             FlowDirection="RightToLeft">
+    <ContentPage.Content>
+        <StackLayout Padding="40" VerticalOptions="Center" HorizontalOptions="Center">
+            <Label Text="המשך בתור:" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="50" TextColor="#003049" HorizontalOptions="Center"/>
+            <Label Padding="0"/>
+            <Button Text="תלמיד" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold"/>
+            <Label Padding="0"/>
+            <Button Text="מורה" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold"/>
+            <Label Padding="0"/>
+            <Button Text="מנהל בית ספר" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

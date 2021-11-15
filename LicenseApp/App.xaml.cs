@@ -25,7 +25,7 @@ namespace LicenseApp
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             Tables = await proxy.GetLookups();
-            MainPage = new SignUpView();
+            MainPage = new SignUpAsView();
         }
 
         protected override void OnSleep()

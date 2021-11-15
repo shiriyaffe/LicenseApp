@@ -58,6 +58,10 @@ namespace LicenseApp.ViewModels
         private void ValidateName()
         {
             this.ShowNameError = string.IsNullOrEmpty(Name);
+            if (ShowNameError)
+                NameError = "השם אינו תקין";
+            else
+                NameError = null;
         }
         #endregion
 
@@ -100,8 +104,17 @@ namespace LicenseApp.ViewModels
         }
         private void ValidateMail()
         {
-            Regex r = new Regex("/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$/");
-            this.ShowMailError = !r.IsMatch(Mail);
+            this.ShowMailError = string.IsNullOrEmpty(Mail);
+            if (!this.ShowMailError)
+            {
+                if (!Regex.IsMatch(this.Mail, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"))
+                {
+                    this.ShowMailError = true;
+                    this.MailError = "האימייל אינו תקין";
+                }
+            }
+            else
+                this.MailError = null;
         }
         #endregion
 
@@ -208,29 +221,34 @@ namespace LicenseApp.ViewModels
             {
                 if (year == DateTime.Today.Year - 16)
                 {
-                    if (month < DateTime.Today.Month)
+                    if (month > DateTime.Today.Month)
                         this.ShowDateError = true;
                     else if (month == DateTime.Today.Month)
                     {
-                        if (day <= DateTime.Today.Day)
+                        if (day < DateTime.Today.Day)
                             this.ShowDateError = true;
                     }
                 }
             }
+
+            if (ShowDateError)
+                this.DateError = "הגיל חייב להיות מעל 16";
+            else
+                this.DateError = null;
         }
         #endregion
 
         #region מספר טלפון
         private string number;
 
-        public string Number
+        public string PhoneNumber
         {
             get => number;
             set
             {
                 number = value;
                 ValidateNumber();
-                OnPropertyChanged("Number");
+                OnPropertyChanged("PhoneNumber");
             }
         }
 
@@ -260,23 +278,34 @@ namespace LicenseApp.ViewModels
 
         public void ValidateNumber()
         {
-            this.ShowNumberError = Number.Length < 10;
+            this.ShowNumberError = string.IsNullOrEmpty(PhoneNumber);
+            if (!this.ShowNumberError)
+            {
+                if (!Regex.IsMatch(this.PhoneNumber, @"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$"))
+                {
+                    this.ShowNumberError = true;
+                    this.NumberError = "מספר טלפון חייב להיות בעל 10 ספרות";
+                }
+            }
+            else
+                this.NumberError = null;
         }
 
         #endregion
 
         public SignUpViewModel()
         {
-            this.NameError = "זהו שדה חובה";
+            //this.NameError = "השם הוא שדה חובה";
             this.ShowNameError = false;
-            this.MailError = "האימייל אינו תקין";
+            //this.MailError = "האימייל אינו תקין";
             this.ShowMailError = false;
-            this.PassError = "אין התאמה בין הסיסמה לאימות";
+            //this.PassError = "אין התאמה בין הסיסמה לאימות";
             this.ShowPassError = false;
-            this.DateError = "הגיל חייב להיות מעל 16";
+            //this.DateError = "הגיל חייב להיות מעל 16";
             this.ShowDateError = false;
-            this.NumberError = "מספר טלפון חייב להיות בעל 10 ספרות";
+            //this.NumberError = "מספר טלפון חייב להיות בעל 10 ספרות";
             this.ShowNumberError = false;
+            Date = new DateTime(DateTime.Today.Year - 16, DateTime.Today.Month, DateTime.Today.Day);
             this.SaveDataCommand = new Command(() => SaveData());
         }
 
@@ -328,7 +357,7 @@ namespace LicenseApp.ViewModels
                     Email = Mail,
                     Name = Name,
                     UserPswd = Pass,
-                    PhoneNumber = Number,
+                    PhoneNumber = PhoneNumber,
                     BirthDate = Date
                 };
                 
