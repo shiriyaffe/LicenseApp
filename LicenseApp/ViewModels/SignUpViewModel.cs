@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 using Xamarin.Forms;
 using LicenseApp.Models;
+using LicenseApp.Views;
 
 
 namespace LicenseApp.ViewModels
@@ -57,6 +58,8 @@ namespace LicenseApp.ViewModels
 
         private void ValidateName()
         {
+            this.ShowConditions = false;
+
             this.ShowNameError = string.IsNullOrEmpty(Name);
             if (ShowNameError)
                 NameError = "השם אינו תקין";
@@ -104,6 +107,8 @@ namespace LicenseApp.ViewModels
         }
         private void ValidateMail()
         {
+            this.ShowConditions = false;
+
             this.ShowMailError = string.IsNullOrEmpty(Mail);
             if (!this.ShowMailError)
             {
@@ -127,28 +132,29 @@ namespace LicenseApp.ViewModels
             set
             {
                 originalPass = value;
+                ValidatePass();
                 OnPropertyChanged("OriginalPass");
             }
         }
 
-        private string pass;
+        //private string pass;
 
-        public string Pass
-        {
-            get => pass;
-            set
-            {
-                pass = value;
-                ValidatePass();
-                OnPropertyChanged("Pass");
-            }
-        }
+        //public string Pass
+        //{
+        //    get => pass;
+        //    set
+        //    {
+        //        pass = value;
+        //        ValidatePass();
+        //        OnPropertyChanged("Pass");
+        //    }
+        //}
 
         private string passError;
 
         public string PassError
         {
-            get => PassError;
+            get => passError;
             set
             {
                 passError = value;
@@ -169,7 +175,19 @@ namespace LicenseApp.ViewModels
         }
         private void ValidatePass()
         {
-            this.ShowPassError = Pass != OriginalPass;
+            this.ShowConditions = true;
+
+            this.ShowPassError = string.IsNullOrEmpty(OriginalPass);
+            if (!this.ShowPassError)
+            {
+                if (!Regex.IsMatch(this.OriginalPass, @"^ (?=.*?[A - Z])(?=.*?[a - z])(?=.*?[0 - 9])(?=.*?[#?!@$%^&*-]).{8,}$"))
+                {
+                    this.ShowPassError = true;
+                    this.PassError = "הסיסמה אינה תקינה";
+                }
+            }
+            else
+                this.PassError = null;
         }
         #endregion
 
@@ -211,6 +229,8 @@ namespace LicenseApp.ViewModels
         }
         private void ValidateDate()
         {
+            this.ShowConditions = false;
+
             int year = Date.Year;
             int month = Date.Month;
             int day = Date.Day;
@@ -278,6 +298,8 @@ namespace LicenseApp.ViewModels
 
         public void ValidateNumber()
         {
+            this.ShowConditions = false;
+
             this.ShowNumberError = string.IsNullOrEmpty(PhoneNumber);
             if (!this.ShowNumberError)
             {
@@ -293,18 +315,51 @@ namespace LicenseApp.ViewModels
 
         #endregion
 
+        private string nextError;
+
+        public string NextError
+        {
+            get => nextError;
+            set
+            {
+                nextError = value;
+                OnPropertyChanged("NextError");
+            }
+        }
+
+        private bool showNextError;
+
+        public bool ShowNextError
+        {
+            get => showNextError;
+            set
+            {
+                showNextError = value;
+                OnPropertyChanged("ShowNextError");
+            }
+        }
+
+        private bool showConditions;
+
+        public bool ShowConditions
+        {
+            get => showConditions;
+            set
+            {
+                showConditions = value;
+                OnPropertyChanged("ShowConditions");
+            }
+        }
+
         public SignUpViewModel()
         {
-            //this.NameError = "השם הוא שדה חובה";
             this.ShowNameError = false;
-            //this.MailError = "האימייל אינו תקין";
             this.ShowMailError = false;
-            //this.PassError = "אין התאמה בין הסיסמה לאימות";
             this.ShowPassError = false;
-            //this.DateError = "הגיל חייב להיות מעל 16";
             this.ShowDateError = false;
-            //this.NumberError = "מספר טלפון חייב להיות בעל 10 ספרות";
             this.ShowNumberError = false;
+            ShowConditions = false;
+            ShowNextError = false;
             Date = new DateTime(DateTime.Today.Year - 16, DateTime.Today.Month, DateTime.Today.Day);
             this.SaveDataCommand = new Command(() => SaveData());
         }
@@ -347,24 +402,30 @@ namespace LicenseApp.ViewModels
         }
 
         public Command SaveDataCommand { protected set; get; }
-        private async void SaveData()
+        private void SaveData()
         {
             App app = (App)App.Current;
             if (ValidateForm())
             {
-                app.CurrentUser = new User
+                app.TempUser = new User
                 {
                     Email = Mail,
                     Name = Name,
-                    UserPswd = Pass,
+                    UserPswd = OriginalPass,
                     PhoneNumber = PhoneNumber,
                     BirthDate = Date
                 };
-                
-                await App.Current.MainPage.DisplayAlert("שמירת נתונים", "הנתונים נבדקו ונשמרו", "אישור", FlowDirection.RightToLeft);
+
+                Page p = new SignUpAsView();
+                p.Title = "הרשם בתור";
+                app.MainPage.Navigation.PushAsync(p);
             }
             else
-                await App.Current.MainPage.DisplayAlert("שמירת נתונים", "יש בעיה עם הנתונים", "אישור", FlowDirection.RightToLeft);
+            {
+                ShowNextError = true;
+                NextError = "אירעה שגיאה! לא ניתן להמשיך בהרשמה";
+            }
+                
         }
 
 

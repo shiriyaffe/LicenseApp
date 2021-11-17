@@ -13,12 +13,18 @@
                 <Setter Property="TextColor" Value="Red" />
                 <Setter Property="FontSize" Value="Small" />
             </Style>
+            <Style x:Key="conditionsStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="TextColor" Value="DarkBlue" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
             <StackLayout Padding="0,20,0,0">
-                <Label Text="הרשמה" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="65" TextColor="#003049" HorizontalOptions="Center"/>
-            <Label Padding="0"/>
+                <!--<Label Text="הרשמה" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="65" TextColor="#003049" HorizontalOptions="Center"/>
+            <Label Padding="0"/>-->
+                
             <!-- שם -->
                 <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="שם" Text="{Binding Name}"/>
@@ -37,14 +43,17 @@
             <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="סיסמה" Text="{Binding OriginalPass}"/>
                 </Frame>
+            <!--<Frame Padding="5" BackgroundColor="Transparent" BorderColor="Black" HorizontalOptions="Center" WidthRequest="250" IsVisible="{Binding ShowConditions}">
+                <StackLayout Padding="0" HorizontalOptions="Center">
+                    <Label Text="הסיסמה חייבת לעמוד בתנאים הבאים:" Style="{StaticResource conditionsStyle}" FontAttributes="Bold"/>
+                    <Label Text="אות אחת גדולה באנגלית, אות אחת קטנה באנגלית, מספר אחד, סימן מיוחד אחד, אורך מקסימלי 8 ספרות" HorizontalOptions="Center" Style="{StaticResource conditionsStyle}"/>
+                </StackLayout>
+            </Frame>-->
             
-            <!--<Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
-                    <Entry Placeholder="אימות סיסמה" Text="{Binding Pass}"/>
-                </Frame>
-            <Label Padding="0" Text="{Binding PassError}" IsVisible="{Binding ShowPassError}" Style="{StaticResource labelErrorStyle}"/>-->
+            <Label Padding="0" Text="{Binding PassError}" HorizontalOptions="Center" IsVisible="{Binding ShowPassError}"  Style="{StaticResource labelErrorStyle}"/>
 
 
-             <!--תאריך לידה--> 
+            <!--תאריך לידה--> 
                 
                     
                 <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
@@ -59,14 +68,15 @@
             </Frame>
             <Label Padding="0" Text="{Binding NumberError}" HorizontalOptions="Center" IsVisible="{Binding ShowNumberError}" Style="{StaticResource labelErrorStyle}"/>
 
-
+            <!--מגדר-->
             <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
-                <Picker Title="מין" ItemsSource="{Binding Genders}" ItemDisplayBinding="{Binding GenderType}" SelectedItem="{Binding Gender}">
+                <Picker Title="מגדר" ItemsSource="{Binding Genders}" ItemDisplayBinding="{Binding GenderType}" SelectedItem="{Binding Gender}">
                 </Picker>
             </Frame>
             <Label/>
             <Button Text="הבא" HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SaveDataCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
-
+            
+            <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}" Style="{StaticResource labelErrorStyle}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -5,13 +5,13 @@
              FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout Padding="40" VerticalOptions="Center" HorizontalOptions="Center">
-            <Label Text="המשך בתור:" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="50" TextColor="#003049" HorizontalOptions="Center"/>
+            <!--<Label Text="המשך בתור:" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="50" TextColor="#003049" HorizontalOptions="Center"/>
+            <Label Padding="0"/>-->
+            <Button Text="תלמיד" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold" FontSize="20" Command="{Binding SignUpAsCommand}" CommandParameter="1"/>
             <Label Padding="0"/>
-            <Button Text="תלמיד" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold"/>
+            <Button Text="מורה" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold" FontSize="20" Command="{Binding SignUpAsCommand}" CommandParameter="2"/>
             <Label Padding="0"/>
-            <Button Text="מורה" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold"/>
-            <Label Padding="0"/>
-            <Button Text="מנהל בית ספר" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold"/>
+            <Button Text="מנהל בית ספר" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold" FontSize="20" Command="{Binding SignUpAsCommand}" CommandParameter="3"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

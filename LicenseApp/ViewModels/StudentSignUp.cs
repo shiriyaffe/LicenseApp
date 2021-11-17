@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
-using LicenseApp.Services;
+using System.Text.RegularExpressions;
+using Xamarin.Forms;
 using LicenseApp.Models;
+using LicenseApp.Views;
 using System.Collections.ObjectModel;
 
 
@@ -147,6 +149,25 @@ namespace LicenseApp.ViewModels
         public StudentSignUp()
         {
             SliderValue = 0;
+        }
+
+        public Command SignUpCommand => new Command(SignUpAsStudent);
+
+        public void SignUpAsStudent()
+        {
+            App app = (App)App.Current;
+            app.CurrentUser = new Student
+            {
+                Sname = app.TempUser.Name,
+                Email = app.TempUser.Email,
+                Pass = app.TempUser.UserPswd,
+                Birthday = app.TempUser.BirthDate,
+                PhoneNumber = app.TempUser.PhoneNumber,
+                LowestPrice = 0,
+                HighestPrice = SliderValue,
+                LessonsCount = 0,
+                RegistrationDate = DateTime.Today
+            };
         }
     }
 }
