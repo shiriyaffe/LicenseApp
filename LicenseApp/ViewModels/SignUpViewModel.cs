@@ -390,13 +390,13 @@ namespace LicenseApp.ViewModels
             //Validate all fields first
             ValidateName();
             ValidateMail();
-            ValidatePass();
+            //ValidatePass();
             ValidateDate();
             ValidateNumber();
 
 
             //check if any validation failed
-            if (ShowNameError || ShowMailError || ShowDateError || ShowNumberError || ShowPassError)
+            if (ShowNameError || ShowMailError || ShowDateError || ShowNumberError)
                 return false;
             return true;
         }
@@ -413,7 +413,8 @@ namespace LicenseApp.ViewModels
                     Name = Name,
                     UserPswd = OriginalPass,
                     PhoneNumber = PhoneNumber,
-                    BirthDate = Date
+                    BirthDate = Date,
+                    GenderID = Gender
                 };
 
                 Page p = new SignUpAsView();

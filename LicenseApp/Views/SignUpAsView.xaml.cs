@@ -17,5 +17,26 @@ namespace LicenseApp.Views
             this.BindingContext = new SignUpAsViewModel();
             InitializeComponent();
         }
+
+        private void Manager_Clicked(object sender, EventArgs e)
+        {
+            App app = (App)App.Current;
+            Page p = new ManagerSignUpView();
+            app.MainPage.Navigation.PushAsync(p);
+        }
+
+        private void Instructor_Clicked(object sender, EventArgs e)
+        {
+            App app = (App)App.Current;
+            Page p = new InstructorSignUpView();
+            app.MainPage.Navigation.PushAsync(p);
+        }
+
+        private void Student_Clicked(object sender, EventArgs e)
+        {
+            App app = (App)App.Current;
+            Page p = new StudentSignUpView();
+            app.MainPage.Navigation.PushAsync(p);
+        }
     }
 }

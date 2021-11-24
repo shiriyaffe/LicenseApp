@@ -7,6 +7,8 @@ using Xamarin.Forms;
 using LicenseApp.Models;
 using LicenseApp.Views;
 using System.Collections.ObjectModel;
+using LicenseApp.Services;
+
 
 
 namespace LicenseApp.ViewModels
@@ -48,27 +50,6 @@ namespace LicenseApp.ViewModels
             {
                 city = value;
                 OnPropertyChanged("City");
-            }
-        }
-
-        public List<Area> Areas
-        {
-            get
-            {
-                if (((App)App.Current).Tables != null)
-                    return ((App)App.Current).Tables.Areas;
-                return new List<Area>();
-            }
-        }
-
-        private Area area;
-        public Area Area
-        {
-            get { return area; }
-            set
-            {
-                area = value;
-                OnPropertyChanged("Area");
             }
         }
 
@@ -146,6 +127,30 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        private string submitError;
+
+        public string SubmitError
+        {
+            get => submitError;
+            set
+            {
+                submitError = value;
+                OnPropertyChanged("SubmitError");
+            }
+        }
+
+        private bool showError;
+
+        public bool ShowError
+        {
+            get => showError;
+            set
+            {
+                showError = value;
+                OnPropertyChanged("ShowNextError");
+            }
+        }
+
         public StudentSignUp()
         {
             SliderValue = 0;
@@ -153,21 +158,41 @@ namespace LicenseApp.ViewModels
 
         public Command SignUpCommand => new Command(SignUpAsStudent);
 
-        public void SignUpAsStudent()
+        public async void SignUpAsStudent()
         {
             App app = (App)App.Current;
-            app.CurrentUser = new Student
+            
+            Student s = new Student
             {
                 Sname = app.TempUser.Name,
                 Email = app.TempUser.Email,
                 Pass = app.TempUser.UserPswd,
                 Birthday = app.TempUser.BirthDate,
                 PhoneNumber = app.TempUser.PhoneNumber,
-                LowestPrice = 0,
+                GenderId = app.TempUser.GenderID.GenderId,
+                Saddress = address,
+                CityId = City.CityId,
+                GearboxId = Gearbox.GearboxId,
+                LicenseTypeId = LicenseType.LicenseTypeId,
+                TeacherGender = Gender.GenderId,
                 HighestPrice = SliderValue,
                 LessonsCount = 0,
                 RegistrationDate = DateTime.Today
             };
+
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            Student student = await proxy.StudentSignUpAsync(s);
+
+            if(student != null)
+            {
+                app.CurrentUser = s;
+                app.MainPage = new NavigationPage(new HomePageView());
+            }
+            else
+            {
+                SubmitError = "ההרשמה נכשלה! נסה שנית";
+                ShowError = true;
+            }
         }
     }
 }
