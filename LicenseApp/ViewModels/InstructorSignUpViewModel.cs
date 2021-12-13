@@ -9,11 +9,9 @@ using LicenseApp.Views;
 using System.Collections.ObjectModel;
 using LicenseApp.Services;
 
-
-
 namespace LicenseApp.ViewModels
 {
-    class StudentSignUp : INotifyPropertyChanged
+    public class InstructorSignUpViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
@@ -29,48 +27,6 @@ namespace LicenseApp.ViewModels
             {
                 sliderValue = value;
                 OnPropertyChanged("SliderValue");
-            }
-        }
-
-        public List<City> Cities 
-        { 
-            get 
-            {
-                if (((App)App.Current).Tables != null)
-                    return ((App)App.Current).Tables.Cities;
-                return new List<City>();
-            } 
-        }
-
-        private City city;
-        public City City
-        {
-            get { return city; }
-            set
-            {
-                city = value;
-                OnPropertyChanged("City");
-            }
-        }
-
-        public List<Gender> Genders
-        {
-            get
-            {
-                if (((App)App.Current).Tables != null)
-                    return ((App)App.Current).Tables.Genders;
-                return new List<Gender>();
-            }
-        }
-
-        private Gender gender;
-        public Gender Gender
-        {
-            get { return gender; }
-            set
-            {
-                gender = value;
-                OnPropertyChanged("Gender");
             }
         }
 
@@ -137,14 +93,45 @@ namespace LicenseApp.ViewModels
             }
         }
 
-        private string address;
-        public string Address
+        public List<Area> Areas
         {
-            get { return address; }
+            get
+            {
+                if (((App)App.Current).Tables != null)
+                    return ((App)App.Current).Tables.Areas;
+                return new List<Area>();
+            }
+        }
+
+        private Area area;
+        public Area Area
+        {
+            get { return area; }
             set
             {
-                address = value;
-                OnPropertyChanged("Address");
+                area = value;
+                OnPropertyChanged("Area");
+            }
+        }
+
+        public List<DrivingSchool> DrivingSchools
+        {
+            get
+            {
+                if (((App)App.Current).Tables != null)
+                    return ((App)App.Current).Tables.DrivingSchools;
+                return new List<DrivingSchool>();
+            }
+        }
+
+        private DrivingSchool drivingSchool;
+        public DrivingSchool DrivingSchool
+        {
+            get { return drivingSchool; }
+            set
+            {
+                drivingSchool = value;
+                OnPropertyChanged("DrivingSchool");
             }
         }
 
@@ -161,7 +148,6 @@ namespace LicenseApp.ViewModels
         }
 
         private bool showError;
-
         public bool ShowError
         {
             get => showError;
@@ -172,43 +158,42 @@ namespace LicenseApp.ViewModels
             }
         }
 
-        public StudentSignUp()
+        public InstructorSignUpViewModel()
         {
             SliderValue = 0;
             ShowError = false;
         }
 
-        public Command SignUpCommand => new Command(SignUpAsStudent);
+        public Command SignUpCommand => new Command(SignUpAsInstructor);
 
-        public async void SignUpAsStudent()
+        public async void SignUpAsInstructor()
         {
             App app = (App)App.Current;
-            
-            Student s = new Student
+
+            Instructor i = new Instructor
             {
-                Sname = app.TempUser.Name,
+                Iname = app.TempUser.Name,
                 Email = app.TempUser.Email,
                 Pass = app.TempUser.UserPswd,
                 Birthday = app.TempUser.BirthDate,
                 PhoneNumber = app.TempUser.PhoneNumber,
                 GenderId = app.TempUser.Gender.GenderId,
-                Saddress = address,
-                CityId = City.CityId,
+                Price = SliderValue,
+                AreaId = Area.AreaId,
                 GearboxId = Gearbox.GearboxId,
                 LicenseTypeId = LicenseType.LicenseTypeId,
                 LessonLengthId = LessonLength.LessonLengthId,
-                TeacherGender = Gender.GenderId,
-                HighestPrice = SliderValue,
-                LessonsCount = 0,
+                RateId = 6,
+                DrivingSchoolId = DrivingSchool.SchoolId,
                 RegistrationDate = DateTime.Today
             };
 
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
-            Student student = await proxy.StudentSignUpAsync(s);
+            Instructor instructor = await proxy.InstructorSignUpAsync(i);
 
-            if(student != null)
+            if (instructor != null)
             {
-                app.CurrentUser = s;
+                app.CurrentUser = i;
                 app.MainPage = new NavigationPage(new HomePageView());
             }
             else
@@ -219,3 +204,4 @@ namespace LicenseApp.ViewModels
         }
     }
 }
+

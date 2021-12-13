@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using Xamarin.Essentials;
 using System.ComponentModel;
 using LicenseApp.Services;
+using LicenseApp.Views;
 
 namespace LicenseApp.ViewModels
 {
@@ -73,9 +74,9 @@ namespace LicenseApp.ViewModels
                 App theApp = (App)App.Current;
                 theApp.CurrentUser = user;
 
-                ErrorMessage = "התחברות התקיימה בהצלחה!";
-                //Page p = new NavigationPage();
-                //App.Current.MainPage = p; 
+                //ErrorMessage = "התחברות התקיימה בהצלחה!";
+                Page p = new HomePageView();
+                App.Current.MainPage.Navigation.PushAsync(p);
             }
         }
     }

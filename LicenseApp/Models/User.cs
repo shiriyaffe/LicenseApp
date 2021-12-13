@@ -11,6 +11,6 @@ namespace LicenseApp.Models
         public string UserPswd { get; set; }
         public DateTime BirthDate { get; set; }
         public string PhoneNumber { get; set; }
-        public Gender GenderID { get; set; }
+        public Gender Gender { get; set; }
     }
 }

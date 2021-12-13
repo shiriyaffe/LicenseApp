@@ -25,7 +25,7 @@ namespace LicenseApp
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             Tables = await proxy.GetLookups();
-            Page p = new SignUpView();
+            Page p = new InstructorSignUpView();
             p.Title = "הרשמה";
             MainPage = new NavigationPage(p);
         }

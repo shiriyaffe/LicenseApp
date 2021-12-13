@@ -414,7 +414,7 @@ namespace LicenseApp.ViewModels
                     UserPswd = OriginalPass,
                     PhoneNumber = PhoneNumber,
                     BirthDate = Date,
-                    GenderID = Gender
+                    Gender = Gender
                 };
 
                 Page p = new SignUpAsView();

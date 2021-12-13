@@ -12,14 +12,11 @@ namespace LicenseApp.Models
         public string Pass { get; set; }
         public string PhoneNumber { get; set; }
         public int GenderId { get; set; }
-        public DateTime Birthday { get; set; }
-        public string DrivingSchool { get; set; }
-        public int AreaId { get; set; }
-        public int EstablishmentYear { get; set; }
-        public int NumOfTeachers { get; set; }
         public DateTime RegistrationDate { get; set; }
+        public int? SchoolId { get; set; }
+        public DateTime Birthday { get; set; }
 
-        public virtual Area Area { get; set; }
         public virtual Gender Gender { get; set; }
+        public virtual DrivingSchool School { get; set; }
     }
 }

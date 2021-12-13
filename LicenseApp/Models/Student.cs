@@ -18,6 +18,7 @@ namespace LicenseApp.Models
         public int GearboxId { get; set; }
         public int LicenseTypeId { get; set; }
         public int? TeacherGender { get; set; }
+        public int LessonLengthId { get; set; }
         public int HighestPrice { get; set; }
         public int? InstructorId { get; set; }
         public int LessonsCount { get; set; }
@@ -27,6 +28,7 @@ namespace LicenseApp.Models
         public virtual Gearbox Gearbox { get; set; }
         public virtual Gender Gender { get; set; }
         public virtual Instructor Instructor { get; set; }
+        public virtual LessonLength LessonLength { get; set; }
         public virtual LicenseType LicenseType { get; set; }
     }
 }
