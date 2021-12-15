@@ -21,62 +21,64 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
+        <ScrollView>
             <StackLayout Padding="0,20,0,0">
                 <!--<Label Text="הרשמה" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="65" TextColor="#003049" HorizontalOptions="Center"/>
             <Label Padding="0"/>-->
-                
-            <!-- שם -->
+
+                <!-- שם -->
                 <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="שם" Text="{Binding Name}"/>
                 </Frame>
-            <Label Padding="0" Text="{Binding NameError}"  HorizontalOptions="Center" IsVisible="{Binding ShowNameError}" Style="{StaticResource labelErrorStyle}"/>
+                <Label Padding="0" Text="{Binding NameError}"  HorizontalOptions="Center" IsVisible="{Binding ShowNameError}" Style="{StaticResource labelErrorStyle}"/>
 
-            <!-- אימייל -->
-            
+                <!-- אימייל -->
+
                 <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="אימייל" Text="{Binding Mail}" Keyboard="Email"/>
                 </Frame>
-            <Label Padding="0" Text="{Binding MailError}" HorizontalOptions="Center" IsVisible="{Binding ShowMailError}"  Style="{StaticResource labelErrorStyle}"/>
+                <Label Padding="0" Text="{Binding MailError}" HorizontalOptions="Center" IsVisible="{Binding ShowMailError}"  Style="{StaticResource labelErrorStyle}"/>
 
 
-            <!-- סיסמה -->
-            <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                <!-- סיסמה -->
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="סיסמה" Text="{Binding OriginalPass}"/>
                 </Frame>
-            <!--<Frame Padding="5" BackgroundColor="Transparent" BorderColor="Black" HorizontalOptions="Center" WidthRequest="250" IsVisible="{Binding ShowConditions}">
+                <!--<Frame Padding="5" BackgroundColor="Transparent" BorderColor="Black" HorizontalOptions="Center" WidthRequest="250" IsVisible="{Binding ShowConditions}">
                 <StackLayout Padding="0" HorizontalOptions="Center">
                     <Label Text="הסיסמה חייבת לעמוד בתנאים הבאים:" Style="{StaticResource conditionsStyle}" FontAttributes="Bold"/>
                     <Label Text="אות אחת גדולה באנגלית, אות אחת קטנה באנגלית, מספר אחד, סימן מיוחד אחד, אורך מקסימלי 8 ספרות" HorizontalOptions="Center" Style="{StaticResource conditionsStyle}"/>
                 </StackLayout>
             </Frame>-->
-            
-            <!--<Label Padding="0" Text="{Binding PassError}" HorizontalOptions="Center" IsVisible="{Binding ShowPassError}"  Style="{StaticResource labelErrorStyle}"/>-->
+
+                <!--<Label Padding="0" Text="{Binding PassError}" HorizontalOptions="Center" IsVisible="{Binding ShowPassError}"  Style="{StaticResource labelErrorStyle}"/>-->
 
 
-            <!--תאריך לידה--> 
-                
-                    
+                <!--תאריך לידה-->
+
+
                 <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
-                <DatePicker Date="{Binding Date}">
-                </DatePicker>
+                    <DatePicker Date="{Binding Date}">
+                    </DatePicker>
                 </Frame>
-            <Label Padding="0" Text="{Binding DateError}" HorizontalOptions="Center" IsVisible="{Binding ShowDateError}" Style="{StaticResource labelErrorStyle}"/>
+                <Label Padding="0" Text="{Binding DateError}" HorizontalOptions="Center" IsVisible="{Binding ShowDateError}" Style="{StaticResource labelErrorStyle}"/>
 
-             <!--מספר טלפון--> 
-            <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
-                <Entry Placeholder="מספר טלפון" Text="{Binding PhoneNumber}"/>
-            </Frame>
-            <Label Padding="0" Text="{Binding NumberError}" HorizontalOptions="Center" IsVisible="{Binding ShowNumberError}" Style="{StaticResource labelErrorStyle}"/>
+                <!--מספר טלפון-->
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                    <Entry Placeholder="מספר טלפון" Text="{Binding PhoneNumber}"/>
+                </Frame>
+                <Label Padding="0" Text="{Binding NumberError}" HorizontalOptions="Center" IsVisible="{Binding ShowNumberError}" Style="{StaticResource labelErrorStyle}"/>
 
-            <!--מגדר-->
-            <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
-                <Picker Title="מגדר" ItemsSource="{Binding Genders}" ItemDisplayBinding="{Binding GenderType}" SelectedItem="{Binding Gender}">
-                </Picker>
-            </Frame>
-            <Label/>
-            <Button Text="הבא" HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SaveDataCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
-            
-            <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}" Style="{StaticResource labelErrorStyle}"/>
-        </StackLayout>
+                <!--מגדר-->
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                    <Picker Title="מגדר" ItemsSource="{Binding Genders}" ItemDisplayBinding="{Binding GenderType}" SelectedItem="{Binding Gender}">
+                    </Picker>
+                </Frame>
+                <Label/>
+                <Button Text="הבא" HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SaveDataCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
+
+                <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}" Style="{StaticResource labelErrorStyle}"/>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

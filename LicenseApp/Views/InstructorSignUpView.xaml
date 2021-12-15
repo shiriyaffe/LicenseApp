@@ -13,6 +13,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
+        <ScrollView>
         <StackLayout Padding="40">
             <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
                 <Picker Title="אזור לימוד" FontAttributes="Bold" ItemsSource="{Binding Areas}" ItemDisplayBinding="{Binding AreaName}" SelectedItem="{Binding Area}">
@@ -27,7 +28,7 @@
                 </Picker>
             </Frame>
             <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
-                <Picker Title="אורך שיעור" FontAttributes="Bold" ItemsSource="{Binding LessonLengths}" ItemDisplayBinding="{Binding SLength}" SelectedItem="{Binding LessonLength}">
+                <Picker Title="אורך שיעור (בדקות)" FontAttributes="Bold" ItemsSource="{Binding LessonLengths}" ItemDisplayBinding="{Binding Slength}" SelectedItem="{Binding LessonLength}">
                 </Picker>
             </Frame>
             <Label/>
@@ -48,9 +49,27 @@
                 <Picker Title="בית ספר לנהיגה" FontAttributes="Bold" ItemsSource="{Binding DrivingSchools}" ItemDisplayBinding="{Binding SchoolName}" SelectedItem="{Binding DrivingSchool}">
                 </Picker>
             </Frame>
-            <Label/>
+            <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="106"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Picker Title="שעת סיום" HorizontalOptions="End" Grid.Column="0" FontAttributes="Bold" ItemsSource="{Binding WorkingHours}" ItemDisplayBinding="{Binding Whour}" SelectedItem="{Binding EndHour}">
+                    </Picker>
+                    <Label Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" Text="-" FontAttributes="Bold"/>
+                    <Picker Title="שעת התחלה" HorizontalOptions="Start" Grid.Column="2" FontAttributes="Bold" ItemsSource="{Binding WorkingHours}" ItemDisplayBinding="{Binding Whour}" SelectedItem="{Binding StartHour}">
+                    </Picker>
+                </Grid>
+            </Frame>
+            <Label Padding="0"/>
             <Button Text="שלח" HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SignUpCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
             <Label Padding="0" Text="{Binding SubmitError}" HorizontalOptions="Center" IsVisible="{Binding ShowError}" Style="{StaticResource labelErrorStyle}"></Label>
         </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

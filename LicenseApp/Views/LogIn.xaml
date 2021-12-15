@@ -4,17 +4,19 @@
              x:Class="LicenseApp.Views.LogIn"
              FlowDirection="RightToLeft">
     <ContentPage.Content>
-        <StackLayout Padding="40">
-            <Label Text="התחברות" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="50" TextColor="#003049" HorizontalOptions="Center"/>
-            <Label/>
-            <Label Text="אימייל" FontFamily="Calibri" FontAttributes="Bold" TextColor="Gray" FontSize="24"/>
-            <Entry Text="{Binding Email}"/>
-            <Label Text="סיסמה" FontFamily="Calibri" FontAttributes="Bold" TextColor="Gray" FontSize="24"/>
-            <Entry Text="{Binding Password}"/>
-            <Label/>
-            <Button Text="שלח" HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding LogInCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
-            <Label/>
-            <Label Text="{Binding ErrorMessage}" TextColor="Red" HorizontalOptions="Center" FontSize="16"/>
-        </StackLayout>
+        <ScrollView>
+            <StackLayout Padding="40">
+                <Label Text="התחברות" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="40" TextColor="#003049" HorizontalOptions="Center"/>
+                <Label/>
+                <Label Text="אימייל" FontFamily="Calibri" FontAttributes="Bold" TextColor="Gray" FontSize="24"/>
+                <Entry Text="{Binding Email}"/>
+                <Label Text="סיסמה" FontFamily="Calibri" FontAttributes="Bold" TextColor="Gray" FontSize="24"/>
+                <Entry Text="{Binding Password}"/>
+                <Label/>
+                <Button Text="שלח" HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding LogInCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
+                <Label/>
+                <Label Text="{Binding ErrorMessage}" TextColor="Red" HorizontalOptions="Center" FontSize="16"/>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

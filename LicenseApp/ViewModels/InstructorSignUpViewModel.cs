@@ -93,6 +93,38 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public List<WorkingHour> WorkingHours
+        {
+            get
+            {
+                if (((App)App.Current).Tables != null)
+                    return ((App)App.Current).Tables.WorkingHours;
+                return new List<WorkingHour>();
+            }
+        }
+
+        private WorkingHour startHour;
+        public WorkingHour StartHour
+        {
+            get { return startHour; }
+            set
+            {
+                startHour = value;
+                OnPropertyChanged("StartHour");
+            }
+        }
+
+        private WorkingHour endHour;
+        public WorkingHour EndHour
+        {
+            get { return endHour; }
+            set
+            {
+                endHour = value;
+                OnPropertyChanged("EndHour");
+            }
+        }
+
         public List<Area> Areas
         {
             get

@@ -7,11 +7,11 @@
         <StackLayout Padding="40" VerticalOptions="Center" HorizontalOptions="Center">
             <!--<Label Text="המשך בתור:" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="50" TextColor="#003049" HorizontalOptions="Center"/>
             <Label Padding="0"/>-->
-            <Button x:Name="Student" Text="תלמיד" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold" FontSize="20" Clicked="Student_Clicked"/>
+            <Button Padding="15" x:Name="Student" Text="תלמיד" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold" FontSize="20" Clicked="Student_Clicked"/>
             <Label Padding="0"/>
-            <Button x:Name="Instructor" Text="מורה" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold" FontSize="20" Clicked="Instructor_Clicked"/>
+            <Button Padding="15" x:Name="Instructor" Text="מורה" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold" FontSize="20" Clicked="Instructor_Clicked"/>
             <Label Padding="0"/>
-            <Button x:Name="Manager" Text="מנהל בית ספר" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold" FontSize="20" Clicked="Manager_Clicked"/>
+            <Button Padding="15" x:Name="Manager" Text="מנהל בית ספר" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold" FontSize="20" Clicked="Manager_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

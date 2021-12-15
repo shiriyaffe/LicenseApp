@@ -4,10 +4,26 @@
              x:Class="LicenseApp.Views.HomePageView"
              FlowDirection="RightToLeft">
     <ContentPage.Content>
-        <StackLayout>
+        <ScrollView>
+            <StackLayout Padding="0">
+            <Grid HorizontalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Padding="0" x:Name="login" Clicked="login_Clicked" Text="התחברות" Grid.Column="0" FontAttributes="Bold" TextColor="#5fa8d3" BackgroundColor="Transparent" FontSize="17" HorizontalOptions="Start"></Button>
+                    <Button Padding="0" x:Name="signin" Clicked="signin_Clicked" Text="הרשמה" Grid.Column="1" FontAttributes="Bold" TextColor="#5fa8d3" BackgroundColor="Transparent" FontSize="17" HorizontalOptions="End"></Button>
+            </Grid>
+            <StackLayout Padding="40">
+
             <Label Text="Home Page!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+            </StackLayout>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

@@ -245,7 +245,7 @@ namespace LicenseApp.ViewModels
                         this.ShowDateError = true;
                     else if (month == DateTime.Today.Month)
                     {
-                        if (day < DateTime.Today.Day)
+                        if (day > DateTime.Today.Day)
                             this.ShowDateError = true;
                     }
                 }

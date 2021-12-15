@@ -14,5 +14,6 @@ namespace LicenseApp.Models
         public List<LicenseType> LicenseTypes { get; set; }
         public List<LessonLength> LessonLengths { get; set; }
         public List<DrivingSchool> DrivingSchools { get; set; }
+        public List<WorkingHour> WorkingHours { get; set; }
     }
 }
