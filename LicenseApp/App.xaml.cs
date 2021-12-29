@@ -4,6 +4,8 @@ using Xamarin.Forms.Xaml;
 using LicenseApp.Views;
 using LicenseApp.Models;
 using LicenseApp.Services;
+using System.Collections.Generic;
+
 
 namespace LicenseApp
 {
@@ -12,20 +14,32 @@ namespace LicenseApp
         public Object CurrentUser { get; set; }
         public User TempUser { get; set; }
         public LookupTables Tables { get; set; }
+        public List<int> ListOfYears { get; set; }
 
         public App()
         {
             InitializeComponent();
+            FillListOfYears();
             CurrentUser = null;
             TempUser = null;
             MainPage = new Loading();
+        }
+
+        private void FillListOfYears()
+        {
+            ListOfYears = new List<int>();
+
+            for (int i = 1900; i <= DateTime.Today.Year; i++)
+            {
+                ListOfYears.Add(i);
+            }
         }
 
         protected async override void OnStart()
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             Tables = await proxy.GetLookups();
-            Page p = new HomePageView();
+            Page p = new OpenningPageView();
             MainPage = new NavigationPage(p);
         }
 

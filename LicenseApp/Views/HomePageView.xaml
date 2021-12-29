@@ -5,24 +5,31 @@
              FlowDirection="RightToLeft">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="0">
-            <Grid HorizontalOptions="FillAndExpand">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button Padding="0" x:Name="login" Clicked="login_Clicked" Text="התחברות" Grid.Column="0" FontAttributes="Bold" TextColor="#5fa8d3" BackgroundColor="Transparent" FontSize="17" HorizontalOptions="Start"></Button>
-                    <Button Padding="0" x:Name="signin" Clicked="signin_Clicked" Text="הרשמה" Grid.Column="1" FontAttributes="Bold" TextColor="#5fa8d3" BackgroundColor="Transparent" FontSize="17" HorizontalOptions="End"></Button>
-            </Grid>
             <StackLayout Padding="40">
-
-            <Label Text="Home Page!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            </StackLayout>
+                <CollectionView x:Name="collectionName" 
+                            ItemsSource="{Binding InstructorList}" SelectionMode="Single"
+                        SelectionChangedCommand="{Binding SelctionChanged}"
+                        SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="10" HorizontalOptions="FillAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="100" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
+                                <Image Grid.Column="0" Grid.Row="0" Source="{Binding ImageUrl}"/>
+                                <Label Grid.Column="0" Grid.Row="1" Text="{Binding TeacherName}" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Text="{Binding Details}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

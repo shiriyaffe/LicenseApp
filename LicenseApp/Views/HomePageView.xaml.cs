@@ -16,21 +16,5 @@ namespace LicenseApp.Views
         {
             InitializeComponent();
         }
-
-        private void signin_Clicked(object sender, EventArgs e)
-        {
-            App app = (App)App.Current;
-            Page p = new SignUpView();
-            p.Title = "הרשמה";
-            app.MainPage.Navigation.PushAsync(p);
-        }
-
-        private void login_Clicked(object sender, EventArgs e)
-        {
-            App app = (App)App.Current;
-            Page p = new LogIn();
-            p.Title = "התחברות";
-            app.MainPage.Navigation.PushAsync(p);
-        }
     }
 }

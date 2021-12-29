@@ -42,6 +42,25 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public List<int> Years
+        {
+            get
+            {
+                return ((App)App.Current).ListOfYears;
+            }
+        }
+
+        private int eYear;
+        public int EYear
+        {
+            get { return eYear; }
+            set
+            {
+                eYear = value;
+                OnPropertyChanged("EYear");
+            }
+        }
+
         #region שם בית ספר
         private string schoolName;
         public string SchoolName
@@ -81,17 +100,17 @@ namespace LicenseApp.ViewModels
 
         private void ValidateName()
         {
-            this.ShowNameError = string.IsNullOrEmpty(SchoolName);
+            this.ShowNameError = (string.IsNullOrEmpty(SchoolName) || !Regex.IsMatch(this.SchoolName, @"^[a-z][a-z\s]*$"));
             if (ShowNameError)
-                NameError = "השם הוא שדה חובה";
+                NameError = "השם אינו תקין";
             else
                 NameError = null;
         }
         #endregion
 
         #region מספר מורים
-        private string numOfTeachers;
-        public string NumOfTeachers
+        private int numOfTeachers;
+        public int NumOfTeachers
         {
             get { return numOfTeachers; }
             set
@@ -128,9 +147,10 @@ namespace LicenseApp.ViewModels
 
         private void ValidateNumber()
         {
-            this.ShowNumberError = string.IsNullOrEmpty(NumOfTeachers);
+            string num = NumOfTeachers.ToString();
+            this.ShowNumberError = (string.IsNullOrEmpty(num) || !Regex.IsMatch(num, @"^[0-9]*$"));
             if (ShowNumberError)
-                NumberError = "שדה זה הוא שדה חובה";
+                NumberError = "שדה זה אינו תקין";
             else
                 NumberError = null;
         }
@@ -164,6 +184,69 @@ namespace LicenseApp.ViewModels
             ShowError = false;
             this.ShowNameError = false;
             this.ShowNumberError = false;
+        }
+
+        private bool ValidateForm()
+        {
+            //Validate all fields first
+            ValidateName();
+            ValidateNumber();
+
+
+            //check if any validation failed
+            if (ShowNameError || ShowNumberError)
+                return false;
+            return true;
+        }
+
+        public Command SignUpCommand => new Command(SignInAsManager);
+
+        public async void SignInAsManager()
+        {
+            App app = (App)App.Current;
+            if (ValidateForm())
+            {
+                SchoolManager sm = new SchoolManager
+                {
+                    Smname = app.TempUser.Name,
+                    Email = app.TempUser.Email,
+                    Pass = app.TempUser.UserPswd,
+                    PhoneNumber = app.TempUser.PhoneNumber,
+                    Birthday = app.TempUser.BirthDate,
+                    GenderId = app.TempUser.Gender.GenderId,
+                    RegistrationDate = DateTime.Today
+                };
+
+                DrivingSchool d = new DrivingSchool
+                {
+                    SchoolName = SchoolName,
+                    NumOfTeachers = NumOfTeachers,
+                    AreaId = Area.AreaId
+                };
+
+                LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+                SchoolManager schoolM = await proxy.SchoolManagerSignUpAsync(sm);
+
+                if (schoolM != null)
+                {
+                    DrivingSchool dSchool = await proxy.AddDrivingSchool(d);
+                    if (dSchool != null)
+                    {
+                        app.CurrentUser = sm;
+                        app.MainPage = new NavigationPage(new HomePageView());
+                    }
+                }
+                else
+                {
+                    SubmitError = "ההרשמה נכשלה! נסה שנית";
+                    ShowError = true;
+                }
+            }
+            else
+            {
+                SubmitError = "אירעה שגיאה! לא ניתן להמשיך בהרשמה";
+                ShowError = true;
+            }
         }
     }
 }

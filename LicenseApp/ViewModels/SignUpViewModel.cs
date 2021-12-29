@@ -60,7 +60,7 @@ namespace LicenseApp.ViewModels
         {
             this.ShowConditions = false;
 
-            this.ShowNameError = string.IsNullOrEmpty(Name);
+            this.ShowNameError = (string.IsNullOrEmpty(Name) || !Regex.IsMatch(this.Name, @"^[a-z][a-z\s]*$"));
             if (ShowNameError)
                 NameError = "השם אינו תקין";
             else
@@ -351,19 +351,6 @@ namespace LicenseApp.ViewModels
             }
         }
 
-        public SignUpViewModel()
-        {
-            this.ShowNameError = false;
-            this.ShowMailError = false;
-            this.ShowPassError = false;
-            this.ShowDateError = false;
-            this.ShowNumberError = false;
-            ShowConditions = false;
-            ShowNextError = false;
-            Date = new DateTime(DateTime.Today.Year - 16, DateTime.Today.Month, DateTime.Today.Day);
-            this.SaveDataCommand = new Command(() => SaveData());
-        }
-
         public List<Gender> Genders
         {
             get
@@ -383,6 +370,19 @@ namespace LicenseApp.ViewModels
                 gender = value;
                 OnPropertyChanged("Gender");
             }
+        }
+
+        public SignUpViewModel()
+        {
+            this.ShowNameError = false;
+            this.ShowMailError = false;
+            this.ShowPassError = false;
+            this.ShowDateError = false;
+            this.ShowNumberError = false;
+            ShowConditions = false;
+            ShowNextError = false;
+            Date = new DateTime(DateTime.Today.Year - 16, DateTime.Today.Month, DateTime.Today.Day);
+            this.SaveDataCommand = new Command(() => SaveData());
         }
 
         private bool ValidateForm()
@@ -423,8 +423,8 @@ namespace LicenseApp.ViewModels
             }
             else
             {
-                ShowNextError = true;
                 NextError = "אירעה שגיאה! לא ניתן להמשיך בהרשמה";
+                ShowNextError = true;
             }
                 
         }

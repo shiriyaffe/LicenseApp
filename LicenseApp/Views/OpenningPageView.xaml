@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LicenseApp.Views.OpenningPageView"
+             FlowDirection="RightToLeft">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="0">
+                <Grid HorizontalOptions="FillAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Padding="0" x:Name="login" Clicked="login_Clicked" Text="התחברות" Grid.Column="0" FontAttributes="Bold" TextColor="#5fa8d3" BackgroundColor="Transparent" FontSize="17" HorizontalOptions="Start"></Button>
+                    <Button Padding="0" x:Name="signin" Clicked="signin_Clicked" Text="הרשמה" Grid.Column="1" FontAttributes="Bold" TextColor="#5fa8d3" BackgroundColor="Transparent" FontSize="17" HorizontalOptions="End"></Button>
+                </Grid>
+                <StackLayout Padding="30,0">
+                    <Label Text="חפש מורה" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="40" TextColor="#003049" HorizontalOptions="Start"/>
+                    <Label Padding="0"/>
+                    <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                        <Picker Title="אזור מגורים" FontAttributes="Bold" ItemsSource="{Binding Areas}" ItemDisplayBinding="{Binding AreaName}" SelectedItem="{Binding Area}">
+                        </Picker>
+                    </Frame>
+                    <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                        <Picker Title="תיבת הילוכים" FontAttributes="Bold" ItemsSource="{Binding Gearboxes}" ItemDisplayBinding="{Binding Type}" SelectedItem="{Binding Gearbox}">
+                        </Picker>
+                    </Frame>
+                    <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                        <Picker Title="סוג רישיון" FontAttributes="Bold" ItemsSource="{Binding LicenseTypes}" ItemDisplayBinding="{Binding Ltype}" SelectedItem="{Binding LicenseType}">
+                        </Picker>
+                    </Frame>
+                    <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                        <Picker Title="מגדר מועדף למורה" FontAttributes="Bold" ItemsSource="{Binding Genders}" ItemDisplayBinding="{Binding GenderType}" SelectedItem="{Binding Gender}">
+                        </Picker>
+                    </Frame>
+                    <Label Padding="0"/>
+                    <Slider Value="{Binding SliderValue}" Minimum="0" Maximum="500" ThumbColor="LightBlue" MaximumTrackColor="Gray" MinimumTrackColor="LightBlue"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label HorizontalOptions="End" Grid.Column="0" FontAttributes="Bold" Text="מחיר מקסימלי:"/>
+                        <Label HorizontalOptions="Start" Grid.Column="1" FontAttributes="Bold" Text="{Binding SliderValue}"/>
+                    </Grid>
+                    <Label/>
+                    <Button Text="חפש" HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SearchCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

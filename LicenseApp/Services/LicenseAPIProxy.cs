@@ -162,6 +162,34 @@ namespace LicenseApp.Services
             }
         }
 
+        public async Task<List<Instructor>> GetAllInstructorsAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetInstructors");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<Instructor> instructors = JsonSerializer.Deserialize<List<Instructor>>(content, options);
+                    return instructors;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
         public async Task<Student> StudentSignUpAsync(Student student)
         {
             try
@@ -247,6 +275,39 @@ namespace LicenseApp.Services
                     jsonObject = await response.Content.ReadAsStringAsync();
                     SchoolManager sm = JsonSerializer.Deserialize<SchoolManager>(jsonObject, options);
                     return sm;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+
+        }
+
+        public async Task<DrivingSchool> AddDrivingSchool(DrivingSchool drivingSchool)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<DrivingSchool>(drivingSchool, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/AddDrivingSchool", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    jsonObject = await response.Content.ReadAsStringAsync();
+                    DrivingSchool ds = JsonSerializer.Deserialize<DrivingSchool>(jsonObject, options);
+                    return ds;
                 }
                 else
                 {
