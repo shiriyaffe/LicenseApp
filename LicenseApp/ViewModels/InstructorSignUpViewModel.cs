@@ -167,6 +167,53 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        #region פרטי המורה
+        private string instructorDetails;
+
+        public string InstructorDetails
+        {
+            get => instructorDetails;
+            set
+            {
+                instructorDetails = value;
+                ValidateDetails();
+                OnPropertyChanged("InstructorDetails");
+            }
+        }
+
+        private bool showDetailError;
+        public bool ShowDetailError
+        {
+            get => showDetailError;
+            set
+            {
+                showDetailError = value;
+                OnPropertyChanged("ShowDetailError");
+            }
+        }
+
+        private string detailError;
+
+        public string DetailError
+        {
+            get => detailError;
+            set
+            {
+                detailError = value;
+                OnPropertyChanged("DetailError");
+            }
+        }
+
+        public void ValidateDetails()
+        {
+            this.ShowDetailError = (string.IsNullOrEmpty(InstructorDetails) || !Regex.IsMatch(this.InstructorDetails, @"^[\u0590-\u05FF ]+$"));
+            if (ShowDetailError)
+                DetailError = "שדה זה אינו תקין";
+            else
+                DetailError = null;
+        }
+        #endregion
+
         private string submitError;
 
         public string SubmitError
@@ -186,7 +233,7 @@ namespace LicenseApp.ViewModels
             set
             {
                 showError = value;
-                OnPropertyChanged("ShowNextError");
+                OnPropertyChanged("ShowError");
             }
         }
 
@@ -202,36 +249,44 @@ namespace LicenseApp.ViewModels
         {
             App app = (App)App.Current;
 
-            Instructor i = new Instructor
+            if (!ShowDetailError)
             {
-                Iname = app.TempUser.Name,
-                Email = app.TempUser.Email,
-                Pass = app.TempUser.UserPswd,
-                Birthday = app.TempUser.BirthDate,
-                PhoneNumber = app.TempUser.PhoneNumber,
-                GenderId = app.TempUser.Gender.GenderId,
-                Price = SliderValue,
-                AreaId = Area.AreaId,
-                GearboxId = Gearbox.GearboxId,
-                LicenseTypeId = LicenseType.LicenseTypeId,
-                LessonLengthId = LessonLength.LessonLengthId,
-                RateId = 6,
-                DrivingSchoolId = DrivingSchool.SchoolId,
-                RegistrationDate = DateTime.Today
-            };
+                Instructor i = new Instructor
+                {
+                    Iname = app.TempUser.Name,
+                    Email = app.TempUser.Email,
+                    Pass = app.TempUser.UserPswd,
+                    Birthday = app.TempUser.BirthDate,
+                    PhoneNumber = app.TempUser.PhoneNumber,
+                    GenderId = app.TempUser.Gender.GenderId,
+                    Price = SliderValue,
+                    AreaId = Area.AreaId,
+                    GearboxId = Gearbox.GearboxId,
+                    LicenseTypeId = LicenseType.LicenseTypeId,
+                    LessonLengthId = LessonLength.LessonLengthId,
+                    RateId = 6,
+                    TimeRange = $"{StartHour}-{EndHour}",
+                    DrivingSchoolId = DrivingSchool.SchoolId,
+                    RegistrationDate = DateTime.Today,
+                    Details = instructorDetails
+                };
 
-            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
-            Instructor instructor = await proxy.InstructorSignUpAsync(i);
+                LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+                Instructor instructor = await proxy.InstructorSignUpAsync(i);
 
-            if (instructor != null)
-            {
-                app.CurrentUser = i;
-                app.MainPage = new NavigationPage(new HomePageView());
+                if (instructor != null)
+                {
+                    app.CurrentUser = i;
+                    app.MainPage = new NavigationPage(new HomePageView());
+                }
+                else
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה! לא ניתן להמשיך בהרשמה", "בסדר");
             }
             else
             {
-                SubmitError = "ההרשמה נכשלה! נסה שנית";
-                ShowError = true;
+                //SubmitError = "ההרשמה נכשלה! נסה שנית";
+                //ShowError = true;
+                await App.Current.MainPage.DisplayAlert("שגיאה", "ההרשמה נכשלה! בדוק את הפרטים שהזנת ונסה שנית", "בסדר");
             }
         }
     }

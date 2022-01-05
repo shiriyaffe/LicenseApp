@@ -100,7 +100,7 @@ namespace LicenseApp.ViewModels
 
         private void ValidateName()
         {
-            this.ShowNameError = (string.IsNullOrEmpty(SchoolName) || !Regex.IsMatch(this.SchoolName, @"^[a-z][a-z\s]*$"));
+            this.ShowNameError = string.IsNullOrEmpty(SchoolName);
             if (ShowNameError)
                 NameError = "השם אינו תקין";
             else
@@ -175,7 +175,7 @@ namespace LicenseApp.ViewModels
             set
             {
                 showError = value;
-                OnPropertyChanged("ShowNextError");
+                OnPropertyChanged("ShowError");
             }
         }
 
@@ -206,31 +206,32 @@ namespace LicenseApp.ViewModels
             App app = (App)App.Current;
             if (ValidateForm())
             {
-                SchoolManager sm = new SchoolManager
-                {
-                    Smname = app.TempUser.Name,
-                    Email = app.TempUser.Email,
-                    Pass = app.TempUser.UserPswd,
-                    PhoneNumber = app.TempUser.PhoneNumber,
-                    Birthday = app.TempUser.BirthDate,
-                    GenderId = app.TempUser.Gender.GenderId,
-                    RegistrationDate = DateTime.Today
-                };
-
                 DrivingSchool d = new DrivingSchool
                 {
                     SchoolName = SchoolName,
                     NumOfTeachers = NumOfTeachers,
+                    EstablishmentYear = EYear,
                     AreaId = Area.AreaId
                 };
 
                 LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
-                SchoolManager schoolM = await proxy.SchoolManagerSignUpAsync(sm);
+                DrivingSchool dSchool = await proxy.AddDrivingSchool(d);
 
-                if (schoolM != null)
+                if (dSchool != null)
                 {
-                    DrivingSchool dSchool = await proxy.AddDrivingSchool(d);
-                    if (dSchool != null)
+                    SchoolManager sm = new SchoolManager
+                    {
+                        Smname = app.TempUser.Name,
+                        Email = app.TempUser.Email,
+                        Pass = app.TempUser.UserPswd,
+                        PhoneNumber = app.TempUser.PhoneNumber,
+                        Birthday = app.TempUser.BirthDate,
+                        GenderId = app.TempUser.Gender.GenderId,
+                        SchoolId = dSchool.SchoolId,
+                        RegistrationDate = DateTime.Today
+                    };
+                    SchoolManager schoolM = await proxy.SchoolManagerSignUpAsync(sm);
+                    if (schoolM != null)
                     {
                         app.CurrentUser = sm;
                         app.MainPage = new NavigationPage(new HomePageView());
@@ -238,14 +239,16 @@ namespace LicenseApp.ViewModels
                 }
                 else
                 {
-                    SubmitError = "ההרשמה נכשלה! נסה שנית";
-                    ShowError = true;
+                    //SubmitError = "ההרשמה נכשלה! נסה שנית";
+                    //ShowError = true;
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "ההרשמה נכשלה! בדוק את הפרטים שהזנת ונסה שנית", "בסדר");
                 }
             }
             else
             {
-                SubmitError = "אירעה שגיאה! לא ניתן להמשיך בהרשמה";
-                ShowError = true;
+                //SubmitError = "אירעה שגיאה! לא ניתן להמשיך בהרשמה";
+                //ShowError = true;
+                await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה! לא ניתן להמשיך בהרשמה", "בסדר");
             }
         }
     }

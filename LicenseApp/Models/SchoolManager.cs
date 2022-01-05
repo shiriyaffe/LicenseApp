@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using LicenseApp.Services;
 
 namespace LicenseApp.Models
 {
@@ -18,5 +19,14 @@ namespace LicenseApp.Models
 
         public virtual Gender Gender { get; set; }
         public virtual DrivingSchool School { get; set; }
+
+        public string PhotoURI
+        {
+            get
+            {
+                LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+                return $"{proxy.GetBasePhotoUri()}{this.SmanagerId}.jpg";
+            }
+        }
     }
 }

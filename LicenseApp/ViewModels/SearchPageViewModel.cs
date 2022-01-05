@@ -9,6 +9,9 @@ using System.Text.RegularExpressions;
 using Xamarin.Essentials;
 using System.ComponentModel;
 using LicenseApp.Models;
+using LicenseApp.Services;
+using LicenseApp.Views;
+
 
 
 namespace LicenseApp.ViewModels
@@ -20,6 +23,10 @@ namespace LicenseApp.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private List<Instructor> instructors;
+        public List<Instructor> instructorsList;
+
 
         private int sliderValue;
         public int SliderValue
@@ -123,9 +130,23 @@ namespace LicenseApp.ViewModels
 
         public ICommand SearchCommand => new Command(SearchInstructor);
 
-        public void SearchInstructor()
+        public async void SearchInstructor()
         {
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            instructors = await proxy.GetAllInstructorsAsync();
+            HomePageViewModel page = new HomePageViewModel();
 
+            foreach (Instructor i in instructors)
+            {
+                if(i.AreaId == Area.AreaId && i.Price == SliderValue && i.GenderId == Gender.GenderId && i.GearboxId == Gearbox.GearboxId && LicenseType.LicenseTypeId == i.LicenseTypeId)
+                {
+                    page.InstructorList.Add(i);
+                }
+            }
+
+            Page p = new HomePageView();
+            p.BindingContext = page;
+            App.Current.MainPage.Navigation.PushAsync(p);
         }
     }
 }

@@ -60,7 +60,7 @@ namespace LicenseApp.ViewModels
         {
             this.ShowConditions = false;
 
-            this.ShowNameError = (string.IsNullOrEmpty(Name) || !Regex.IsMatch(this.Name, @"^[a-z][a-z\s]*$"));
+            this.ShowNameError = (string.IsNullOrEmpty(Name) || !Regex.IsMatch(this.Name, @"^[\u0590-\u05FF ]+$"));
             if (ShowNameError)
                 NameError = "השם אינו תקין";
             else
@@ -402,7 +402,7 @@ namespace LicenseApp.ViewModels
         }
 
         public Command SaveDataCommand { protected set; get; }
-        private void SaveData()
+        private async void SaveData()
         {
             App app = (App)App.Current;
             if (ValidateForm())
@@ -423,8 +423,9 @@ namespace LicenseApp.ViewModels
             }
             else
             {
-                NextError = "אירעה שגיאה! לא ניתן להמשיך בהרשמה";
-                ShowNextError = true;
+                await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה! לא ניתן להמשיך בהרשמה", "בסדר");
+                //NextError = "אירעה שגיאה! לא ניתן להמשיך בהרשמה";
+                //ShowNextError = true;
             }
                 
         }

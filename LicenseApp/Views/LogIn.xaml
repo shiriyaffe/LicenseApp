@@ -5,7 +5,7 @@
              FlowDirection="RightToLeft">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="40">
+            <StackLayout Padding="40" VerticalOptions="CenterAndExpand">
                 <Label Text="התחברות" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="40" TextColor="#003049" HorizontalOptions="Center"/>
                 <Label/>
                 <Label Text="אימייל" FontFamily="Calibri" FontAttributes="Bold" TextColor="Gray" FontSize="24"/>

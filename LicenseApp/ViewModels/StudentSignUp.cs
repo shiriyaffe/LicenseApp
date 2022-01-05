@@ -213,8 +213,9 @@ namespace LicenseApp.ViewModels
             }
             else
             {
-                SubmitError = "ההרשמה נכשלה! נסה שנית";
-                ShowError = true;
+                //SubmitError = "ההרשמה נכשלה! נסה שנית";
+                //ShowError = true;
+                await App.Current.MainPage.DisplayAlert("שגיאה", "ההרשמה נכשלה! בדוק את הפרטים שהזנת ונסה שנית", "בסדר");
             }
         }
     }

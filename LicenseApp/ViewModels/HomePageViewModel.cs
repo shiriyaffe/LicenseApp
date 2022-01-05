@@ -11,6 +11,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Xamarin.Essentials;
 using LicenseApp.Models;
+using LicenseApp.Views;
+using LicenseApp.ViewModels;
+
 
 namespace LicenseApp.ViewModels
 {
@@ -22,7 +25,23 @@ namespace LicenseApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public ObservableCollection<Instructor> InstructorList { get; }
+        private ObservableCollection<Instructor> instructorList;
+        public ObservableCollection<Instructor> InstructorList
+        {
+            get
+            {
+                return this.instructorList;
+            }
+            set
+            {
+                if (this.instructorList != value)
+                {
+
+                    this.instructorList = value;
+                    OnPropertyChanged("InstructorList");
+                }
+            }
+        }
 
         public HomePageViewModel()
         {
@@ -37,6 +56,30 @@ namespace LicenseApp.ViewModels
             foreach (Instructor i in instructors)
             {
                 this.InstructorList.Add(i);
+            }
+        }
+
+        public ICommand SelctionChanged => new Command<Object>(OnSelectionChanged);
+        public void OnSelectionChanged(Object obj)
+        {
+            if (obj is Instructor)
+            {
+                Instructor chosenInstructor = (Instructor)obj;
+                ShowInstructorViewModel instructorContext = new ShowInstructorViewModel
+                {
+                    IName = chosenInstructor.Iname,
+                    ImageUrl = chosenInstructor.PhotoURI,
+                    Details = chosenInstructor.Details
+                };
+
+                App app = (App)App.Current;
+                if(app.CurrentUser != null)
+                {
+                    Page p = new ShowInstructorView();
+                    p.BindingContext = instructorContext;
+                    p.Title = instructorContext.IName;
+                    App.Current.MainPage.Navigation.PushAsync(p);
+                }
             }
         }
     }

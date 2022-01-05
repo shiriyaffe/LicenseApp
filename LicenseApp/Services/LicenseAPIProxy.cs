@@ -79,6 +79,8 @@ namespace LicenseApp.Services
             this.basePhotosUri = basePhotosUri;
         }
 
+        public string GetBasePhotoUri() { return this.basePhotosUri; }
+
         public async Task<string> SayHello()
         {
             try

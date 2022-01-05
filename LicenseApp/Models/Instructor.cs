@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using LicenseApp.Services;
 
 namespace LicenseApp.Models
 {
@@ -12,17 +13,18 @@ namespace LicenseApp.Models
         public string Pass { get; set; }
         public string PhoneNumber { get; set; }
         public int GenderId { get; set; }
+        public DateTime Birthday { get; set; }
         public int AreaId { get; set; }
         public int GearboxId { get; set; }
         public int LicenseTypeId { get; set; }
         public int LessonLengthId { get; set; }
         public int Price { get; set; }
-        public long TimeRange { get; set; }
+        public int DrivingSchoolId { get; set; }
         public int? SchoolManagerId { get; set; }
         public int RateId { get; set; }
         public DateTime RegistrationDate { get; set; }
-        public DateTime Birthday { get; set; }
-        public int DrivingSchoolId { get; set; }
+        public string TimeRange { get; set; }
+        public string Details { get; set; }
 
         public virtual Area Area { get; set; }
         public virtual DrivingSchool DrivingSchool { get; set; }
@@ -32,5 +34,14 @@ namespace LicenseApp.Models
         public virtual LicenseType LicenseType { get; set; }
         public virtual Rate Rate { get; set; }
         public virtual SchoolManager SchoolManager { get; set; }
+
+        public string PhotoURI
+        {
+            get
+            {
+                LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+                return $"{proxy.GetBasePhotoUri()}{this.InstructorId}.jpg";
+            }
+        }
     }
 }

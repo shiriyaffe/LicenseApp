@@ -22,7 +22,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="0,20,0,0">
+            <StackLayout Padding="40" VerticalOptions="CenterAndExpand">
                 <!--<Label Text="הרשמה" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="65" TextColor="#003049" HorizontalOptions="Center"/>
             <Label Padding="0"/>-->
 

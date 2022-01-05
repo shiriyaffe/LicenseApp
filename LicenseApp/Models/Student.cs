@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using LicenseApp.Services;
 
 namespace LicenseApp.Models
 {
@@ -30,5 +31,14 @@ namespace LicenseApp.Models
         public virtual Instructor Instructor { get; set; }
         public virtual LessonLength LessonLength { get; set; }
         public virtual LicenseType LicenseType { get; set; }
+
+        public string PhotoURI
+        {
+            get
+            {
+                LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+                return $"{proxy.GetBasePhotoUri()}{this.StudentId}.jpg";
+            }
+        }
     }
 }

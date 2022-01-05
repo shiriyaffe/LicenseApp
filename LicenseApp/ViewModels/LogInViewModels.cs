@@ -67,7 +67,7 @@ namespace LicenseApp.ViewModels
             Object user = await proxy.LoginAsync(Email, Password);
             if (user == null)
             {
-                ErrorMessage = "התחברות נכשלה, בדוק שם משתמש וסיסמה ונסה שוב";
+                await App.Current.MainPage.DisplayAlert("שגיאה", "התחברות נכשלה, בדוק שם משתמש וסיסמה ונסה שוב", "בסדר");
             }
             else
             {
