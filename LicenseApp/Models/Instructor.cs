@@ -5,7 +5,7 @@ using LicenseApp.Services;
 
 namespace LicenseApp.Models
 {
-    public class Instructor
+    public partial class Instructor
     {
         public int InstructorId { get; set; }
         public string Iname { get; set; }

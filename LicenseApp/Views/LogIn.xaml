@@ -6,12 +6,14 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Padding="40" VerticalOptions="CenterAndExpand">
-                <Label Text="התחברות" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="40" TextColor="#003049" HorizontalOptions="Center"/>
+                <Label Text="התחברות" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="60" TextColor="#003049" HorizontalOptions="Center"/>
                 <Label/>
-                <Label Text="אימייל" FontFamily="Calibri" FontAttributes="Bold" TextColor="Gray" FontSize="24"/>
-                <Entry Text="{Binding Email}"/>
-                <Label Text="סיסמה" FontFamily="Calibri" FontAttributes="Bold" TextColor="Gray" FontSize="24"/>
-                <Entry Text="{Binding Password}"/>
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="350" HeightRequest="40" Padding="10">
+                    <Entry Placeholder="אימייל" Text="{Binding Email}"/>
+                </Frame>
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="350" HeightRequest="40" Padding="10">
+                    <Entry Placeholder="סיסמה" Text="{Binding Password}"/>
+                </Frame>
                 <Label/>
                 <Button Text="שלח" HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding LogInCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
                 <Label/>

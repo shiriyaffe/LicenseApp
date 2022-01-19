@@ -172,6 +172,21 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        #region מקור התמונה
+        private string studentImgSrc;
+
+        public string StudentImgSrc
+        {
+            get => studentImgSrc;
+            set
+            {
+                studentImgSrc = value;
+                OnPropertyChanged("StudentImgSrc");
+            }
+        }
+        private const string DEFAULT_PHOTO_SRC = "Default.jpg";
+        #endregion
+
         public StudentSignUp()
         {
             SliderValue = 0;
@@ -208,8 +223,9 @@ namespace LicenseApp.ViewModels
 
             if(student != null)
             {
-                app.CurrentUser = s;
-                app.MainPage = new NavigationPage(new HomePageView());
+                app.CurrentUser = student;
+
+                app.MainPage = new NavigationPage(new StudentMainTabView());
             }
             else
             {

@@ -10,6 +10,7 @@ using Xamarin.Essentials;
 using System.ComponentModel;
 using LicenseApp.Services;
 using LicenseApp.Views;
+using LicenseApp.Models;
 
 namespace LicenseApp.ViewModels
 {
@@ -74,9 +75,14 @@ namespace LicenseApp.ViewModels
                 App theApp = (App)App.Current;
                 theApp.CurrentUser = user;
 
-                //ErrorMessage = "התחברות התקיימה בהצלחה!";
-                Page p = new HomePageView();
-                App.Current.MainPage.Navigation.PushAsync(p);
+                if (user is Student)
+                    App.Current.MainPage = new StudentMainTabView();
+                else if (user is Instructor)
+                    App.Current.MainPage = new InstructorMainTabView();
+                else if (user is SchoolManager)
+                    App.Current.MainPage = new SchoolManagerMainTabView();
+
+                App.Current.MainPage = new HomePageView();
             }
         }
     }

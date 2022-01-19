@@ -121,8 +121,32 @@ namespace LicenseApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
-                    Object u = JsonSerializer.Deserialize<Object>(content, options);
-                    return u;
+                    Object u = new Object();
+                    try
+                    {
+                        u = JsonSerializer.Deserialize<SchoolManager>(content, options);
+                        return u;
+                    }
+                    catch
+                    {
+                        try
+                        {
+                            u = JsonSerializer.Deserialize<Instructor>(content, options);
+                            return u;
+                        }
+                        catch
+                        {
+                            try
+                            {
+                                u = JsonSerializer.Deserialize<Student>(content, options);
+                                return u;
+                            }
+                            catch
+                            {
+                                return null;
+                            }
+                        }
+                    }
                 }
                 else
                 {

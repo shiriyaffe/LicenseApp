@@ -315,6 +315,7 @@ namespace LicenseApp.ViewModels
 
         #endregion
 
+
         private string nextError;
 
         public string NextError
@@ -381,6 +382,7 @@ namespace LicenseApp.ViewModels
             this.ShowNumberError = false;
             ShowConditions = false;
             ShowNextError = false;
+
             Date = new DateTime(DateTime.Today.Year - 16, DateTime.Today.Month, DateTime.Today.Day);
             this.SaveDataCommand = new Command(() => SaveData());
         }

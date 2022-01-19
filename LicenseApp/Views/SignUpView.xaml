@@ -26,6 +26,21 @@
                 <!--<Label Text="הרשמה" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="65" TextColor="#003049" HorizontalOptions="Center"/>
             <Label Padding="0"/>-->
 
+                <!-- תמונה -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Frame BorderColor="white"  CornerRadius="100"  Grid.Column="1" Grid.Row="0" IsClippedToBounds="True" Padding="0" HeightRequest="150" WidthRequest="150" HorizontalOptions="CenterAndExpand">
+                        <Image x:Name="theImage" Source="{Binding UserImgSrc}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="150" WidthRequest="150"/>
+                    </Frame>
+                </Grid>
+
                 <!-- שם -->
                 <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
                     <Entry Placeholder="שם" Text="{Binding Name}"/>

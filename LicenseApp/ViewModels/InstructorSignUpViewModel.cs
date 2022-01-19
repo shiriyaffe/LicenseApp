@@ -237,6 +237,21 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        #region מקור התמונה
+        private string instructorImgSrc;
+
+        public string InstructorImgSrc
+        {
+            get => instructorImgSrc;
+            set
+            {
+                instructorImgSrc = value;
+                OnPropertyChanged("InstructorImgSrc");
+            }
+        }
+        private const string DEFAULT_PHOTO_SRC = "Default.jpg";
+        #endregion
+
         public InstructorSignUpViewModel()
         {
             SliderValue = 0;
@@ -276,8 +291,8 @@ namespace LicenseApp.ViewModels
 
                 if (instructor != null)
                 {
-                    app.CurrentUser = i;
-                    app.MainPage = new NavigationPage(new HomePageView());
+                    app.CurrentUser = instructor;
+                    app.MainPage = new NavigationPage(new InstructorMainTabView());
                 }
                 else
                     await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה! לא ניתן להמשיך בהרשמה", "בסדר");

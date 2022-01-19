@@ -234,7 +234,7 @@ namespace LicenseApp.ViewModels
                     if (schoolM != null)
                     {
                         app.CurrentUser = sm;
-                        app.MainPage = new NavigationPage(new HomePageView());
+                        app.MainPage = new NavigationPage(new SchoolManagerMainTabView());
                     }
                 }
                 else

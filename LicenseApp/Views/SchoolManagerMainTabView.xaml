@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LicenseApp.Views.SchoolManagerMainTabView"
+            xmlns:fonts="clr-namespace:Fonts"
+            xmlns:local="clr-namespace:LicenseApp.Views"
+            xmlns:windows="clr-namespace:Xamarin.Forms.PlatformConfiguration.WindowsSpecific;assembly=Xamarin.Forms.Core"
+            windows:TabbedPage.HeaderIconsEnabled="true"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            android:TabbedPage.ToolbarPlacement="Bottom"
+            Title="Tabs Example"
+            SelectedTabColor="#014f86"
+            UnselectedTabColor="Black"
+            >
+
+    <!--Pages can be added as references or inline-->
+
+    <windows:TabbedPage.HeaderIconsSize>
+        <Size>
+            <x:Arguments>
+                <x:Double>48</x:Double>
+                <x:Double>48</x:Double>
+            </x:Arguments>
+        </Size>
+    </windows:TabbedPage.HeaderIconsSize>
+    <local:Test>
+        <local:Test.IconImageSource>
+            <FontImageSource Color="#014f86" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.Bars}"/>
+        </local:Test.IconImageSource>
+    </local:Test>
+    <local:Test>
+        <local:Test.IconImageSource>
+            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.GraduationCap}"/>
+        </local:Test.IconImageSource>
+    </local:Test>
+    <local:Test>
+        <local:Test.IconImageSource>
+            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.EnvelopeOpenText}"/>
+        </local:Test.IconImageSource>
+    </local:Test>
+    <local:Test>
+        <local:Test.IconImageSource>
+            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.ChartLine}"/>
+        </local:Test.IconImageSource>
+    </local:Test>
+    <local:Test>
+        <local:Test.IconImageSource>
+            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.CircleUser}"/>
+        </local:Test.IconImageSource>
+    </local:Test>
+
+</TabbedPage>
