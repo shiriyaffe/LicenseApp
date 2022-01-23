@@ -81,8 +81,6 @@ namespace LicenseApp.ViewModels
                     App.Current.MainPage = new InstructorMainTabView();
                 else if (user is SchoolManager)
                     App.Current.MainPage = new SchoolManagerMainTabView();
-
-                App.Current.MainPage = new HomePageView();
             }
         }
     }

@@ -5,17 +5,17 @@
              FlowDirection="RightToLeft">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="40" VerticalOptions="CenterAndExpand">
+            <StackLayout Padding="40">
                 <Label Text="התחברות" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="60" TextColor="#003049" HorizontalOptions="Center"/>
                 <Label/>
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="350" HeightRequest="40" Padding="10">
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="300" HeightRequest="40" Padding="10">
                     <Entry Placeholder="אימייל" Text="{Binding Email}"/>
                 </Frame>
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="350" HeightRequest="40" Padding="10">
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="300" HeightRequest="40" Padding="10">
                     <Entry Placeholder="סיסמה" Text="{Binding Password}"/>
                 </Frame>
                 <Label/>
-                <Button Text="שלח" HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding LogInCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
+                <Button Text="שלח" VerticalOptions="End"  HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding LogInCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
                 <Label/>
                 <Label Text="{Binding ErrorMessage}" TextColor="Red" HorizontalOptions="Center" FontSize="16"/>
             </StackLayout>

@@ -1,12 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="LicenseApp.Views.ShowInstructorView">
+             x:Class="LicenseApp.Views.ShowInstructorView"
+             FlowDirection="RightToLeft">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView>
+            <StackLayout Padding="40">
+                <Image Source="{Binding ImageUrl}" HeightRequest="80" WidthRequest="80" HorizontalOptions="Center"></Image>
+                <Label Text="{Binding Iname}" HorizontalOptions="Center" FontSize="25" FontAttributes="Bold"></Label>
+                <Grid Padding="10" HorizontalOptions="CenterAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
+                    <Label Text="מספר טלפון:" Grid.Column="0" Grid.Row="0" FontSize="20" FontAttributes="Bold"></Label>
+                    <Label Text="{Binding PhoneNumber}" Grid.Column="1" Grid.Row="0"/>
+                    <Label Text="אזור לימוד:" Grid.Column="0" Grid.Row="1" FontSize="20" FontAttributes="Bold"></Label>
+                    <Label Grid.Column="1" Grid.Row="1" Text="מרכז" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center"/>
+                    <Label Text="שעות עבודה:" Grid.Column="0" Grid.Row="2" FontSize="20" FontAttributes="Bold"></Label>
+                    <Label Grid.Column="1" Grid.Row="2" Text="{Binding WorkingHours}"/>
+                    <Label Text="מחיר לשיעור:" Grid.Column="0" Grid.Row="3" FontSize="20" FontAttributes="Bold"></Label>
+                    <Label Grid.Column="1" Grid.Row="3" Text="{Binding Price}"/>
+                </Grid>
+                <Label/>
+                <Button BackgroundColor="#caf0f8" Text="שליחת בקשה להרשמה" HorizontalOptions="CenterAndExpand" Padding="10" FontSize="20" FontAttributes="Bold" CornerRadius="10" TextColor="Black"></Button>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

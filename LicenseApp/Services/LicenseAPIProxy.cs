@@ -121,32 +121,29 @@ namespace LicenseApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
-                    Object u = new Object();
                     try
                     {
-                        u = JsonSerializer.Deserialize<SchoolManager>(content, options);
-                        return u;
+                        SchoolManager sm = JsonSerializer.Deserialize<SchoolManager>(content, options);
+                        if (sm.Smname != null)
+                            return sm;
                     }
-                    catch
+                    catch { }
+                    try
                     {
-                        try
-                        {
-                            u = JsonSerializer.Deserialize<Instructor>(content, options);
-                            return u;
-                        }
-                        catch
-                        {
-                            try
-                            {
-                                u = JsonSerializer.Deserialize<Student>(content, options);
-                                return u;
-                            }
-                            catch
-                            {
-                                return null;
-                            }
-                        }
+                        Instructor i = JsonSerializer.Deserialize<Instructor>(content, options);
+                        if (i.Iname != null)
+                            return i;
                     }
+                    catch { }
+                    try
+                    {
+                        Student s = JsonSerializer.Deserialize<Student>(content, options);
+                        if (s.Sname != null)
+                            return s;
+                    }
+                    catch { }
+                    
+                    return null;
                 }
                 else
                 {

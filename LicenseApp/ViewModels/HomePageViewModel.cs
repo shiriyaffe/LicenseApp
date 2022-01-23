@@ -43,10 +43,36 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        private bool search;
+        public bool Search 
+        {
+            get
+            {
+                return this.search;
+            }
+            set
+            {
+                if (this.search != value)
+                {
+
+                    this.search = value;
+                    OnPropertyChanged("Search");
+                }
+            }
+        }
+
         public HomePageViewModel()
         {
-            InstructorList = new ObservableCollection<Instructor>();
-            CreateInstructorCollection();
+            if (Search)
+            {
+                if (InstructorList.Count == 0)
+                    CreateInstructorCollection();
+            }
+            else
+            {
+                InstructorList = new ObservableCollection<Instructor>();
+                CreateInstructorCollection();
+            }
         }
 
         async void CreateInstructorCollection()
@@ -60,7 +86,7 @@ namespace LicenseApp.ViewModels
         }
 
         public ICommand SelctionChanged => new Command<Object>(OnSelectionChanged);
-        public void OnSelectionChanged(Object obj)
+        public async void OnSelectionChanged(Object obj)
         {
             if (obj is Instructor)
             {
@@ -78,7 +104,7 @@ namespace LicenseApp.ViewModels
                     Page p = new ShowInstructorView();
                     p.BindingContext = instructorContext;
                     p.Title = instructorContext.IName;
-                    App.Current.MainPage.Navigation.PushAsync(p);
+                    await App.Current.MainPage.Navigation.PushModalAsync(p);
                 }
             }
         }

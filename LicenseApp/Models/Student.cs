@@ -37,7 +37,8 @@ namespace LicenseApp.Models
             get
             {
                 LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
-                return $"{proxy.GetBasePhotoUri()}{this.StudentId}.jpg";
+                return $"defaultPhoto.png";
+                //return $"{proxy.GetBasePhotoUri()}{this.StudentId}.jpg";
             }
         }
     }

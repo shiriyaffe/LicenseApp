@@ -5,26 +5,26 @@
              FlowDirection="RightToLeft">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="40">
+            <StackLayout Padding="10,30">
                 <CollectionView EmptyView="אין מורים במערכת" x:Name="collectionName" 
                             ItemsSource="{Binding InstructorList}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelctionChanged}"
                         SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Padding="10" HorizontalOptions="FillAndExpand">
+                            <Grid Padding="10" HorizontalOptions="CenterAndExpand">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="100" />
+                                    <RowDefinition Height="66" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="70" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
-                                <Image Grid.Column="0" Grid.Row="0" Source="{Binding PhotoURI}"/>
-                                <Label Grid.Column="0" Grid.Row="1" Text="{Binding Iname}" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                <Label Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Text="{Binding Details}"/>
+                                <Image Grid.Column="0" Grid.Row="0" Source="{Binding PhotoURI}" HeightRequest="80" WidthRequest="80"/>
+                                <Label Grid.Column="0" Grid.Row="1" Text="{Binding Iname}" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Text="{Binding Details}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

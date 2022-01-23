@@ -135,18 +135,56 @@ namespace LicenseApp.ViewModels
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             instructors = await proxy.GetAllInstructorsAsync();
             HomePageViewModel page = new HomePageViewModel();
+            bool added = false;
 
             foreach (Instructor i in instructors)
             {
-                if(i.AreaId == Area.AreaId && i.Price == SliderValue && i.GenderId == Gender.GenderId && i.GearboxId == Gearbox.GearboxId && LicenseType.LicenseTypeId == i.LicenseTypeId)
+                if (sliderValue == 0 || sliderValue == i.Price)
                 {
                     page.InstructorList.Add(i);
+                    added = true;
+                }
+                
+                if (Area != null && Area.AreaId != i.AreaId)
+                {
+                    if(added)
+                    {
+                        page.InstructorList.Remove(i);
+                        added = false;
+                    }
+                }
+
+                if(Gender != null && Gender.GenderId != i.GenderId)
+                {
+                    if (added)
+                    {
+                        page.InstructorList.Remove(i);
+                        added = false;
+                    }
+                }
+
+                if(Gearbox != null && Gearbox.GearboxId != i.GearboxId)
+                {
+                    if (added)
+                    {
+                        page.InstructorList.Remove(i);
+                        added = false;
+                    }
+                }
+
+                if (LicenseType != null && LicenseType.LicenseTypeId != i.LicenseTypeId)
+                {
+                    if (added)
+                    {
+                        page.InstructorList.Remove(i);
+                        added = false;
+                    }
                 }
             }
 
             Page p = new HomePageView();
             p.BindingContext = page;
-            App.Current.MainPage.Navigation.PushAsync(p);
+            await App.Current.MainPage.Navigation.PushModalAsync(p);
         }
     }
 }
