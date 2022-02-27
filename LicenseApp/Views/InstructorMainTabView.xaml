@@ -11,7 +11,7 @@
             Title="Tabs Example"
             SelectedTabColor="#014f86"
             UnselectedTabColor="Black"
-            >
+            NavigationPage.HasNavigationBar="False">
 
     <!--Pages can be added as references or inline-->
 
@@ -38,10 +38,10 @@
             <FontImageSource Color="Black" FontFamily="MyRegularFonts" Glyph="{x:Static fonts:IconRegularFonts.Calendar}"/>
         </local:Test.IconImageSource>
     </local:Test>
-    <local:Test>
-        <local:Test.IconImageSource>
+    <local:InstructorProfileView>
+        <local:InstructorProfileView.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.CircleUser}"/>
-        </local:Test.IconImageSource>
-    </local:Test>
+        </local:InstructorProfileView.IconImageSource>
+    </local:InstructorProfileView>
 
 </TabbedPage>

@@ -280,7 +280,8 @@ namespace LicenseApp.ViewModels
                     LicenseTypeId = LicenseType.LicenseTypeId,
                     LessonLengthId = LessonLength.LessonLengthId,
                     RateId = 6,
-                    TimeRange = $"{StartHour}-{EndHour}",
+                    StartTime = StartHour.Whour,
+                    EndTime = EndHour.Whour,
                     DrivingSchoolId = DrivingSchool.SchoolId,
                     RegistrationDate = DateTime.Today,
                     Details = instructorDetails

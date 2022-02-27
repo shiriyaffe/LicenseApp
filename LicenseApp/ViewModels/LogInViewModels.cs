@@ -22,6 +22,9 @@ namespace LicenseApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private const string OPENEYE_PHOTO_SRC = "openEye.png";
+        private const string CLOSEDEYE_PHOTO_SRC = "closedEye.png";
+
         private string email;
         public string Email
         {
@@ -55,9 +58,53 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        private bool showPass;
+        public bool ShowPass
+        {
+            get { return showPass; }
+
+            set
+            {
+                if (this.showPass != value)
+                {
+                    this.showPass = value;
+                    OnPropertyChanged(nameof(ShowPass));
+                }
+            }
+        }
+
+        private string imgSource;
+        public string ImgSource
+        {
+            get => imgSource;
+            set
+            {
+                imgSource = value;
+                OnPropertyChanged("ImgSource");
+            }
+        }
+
         public LogInViewModels()
         {
             ErrorMessage = "";
+            ShowPass = true;
+            imgSource = OPENEYE_PHOTO_SRC;
+            PassCommand = new Command(OnShowPass);
+        }
+
+        public ICommand PassCommand { protected set; get; }
+
+        public void OnShowPass()
+        {
+            if (ShowPass == false)
+            { ShowPass = true; }
+
+            else { ShowPass = false; }
+
+            if (ImgSource == CLOSEDEYE_PHOTO_SRC)
+            { ImgSource = OPENEYE_PHOTO_SRC; }
+
+            else { ImgSource = CLOSEDEYE_PHOTO_SRC; }
         }
 
         public ICommand LogInCommand => new Command(OnSubmit);
@@ -76,11 +123,13 @@ namespace LicenseApp.ViewModels
                 theApp.CurrentUser = user;
 
                 if (user is Student)
-                    App.Current.MainPage = new StudentMainTabView();
+                {
+                    App.Current.MainPage = new NavigationPage(new StudentMainTabView());
+                }
                 else if (user is Instructor)
-                    App.Current.MainPage = new InstructorMainTabView();
+                    App.Current.MainPage = new NavigationPage(new InstructorMainTabView());
                 else if (user is SchoolManager)
-                    App.Current.MainPage = new SchoolManagerMainTabView();
+                    App.Current.MainPage = new NavigationPage(new SchoolManagerMainTabView());
             }
         }
     }

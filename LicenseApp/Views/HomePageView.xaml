@@ -2,10 +2,34 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LicenseApp.Views.HomePageView"
-             FlowDirection="RightToLeft">
+             xmlns:fontAwesome="clr-namespace:Fonts"
+             FlowDirection="RightToLeft"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="#caf0f8" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="10,30">
+            <StackLayout Padding="10,20">
+                <!--<ImageButton BackgroundColor="Transparent" Command="{Binding SearchPageCommand}" HorizontalOptions="End">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.MagnifyingGlass}" Color="#5fa8d3" Size="Medium"/>
+                    </ImageButton.Source>
+                </ImageButton>-->
                 <CollectionView EmptyView="אין מורים במערכת" x:Name="collectionName" 
                             ItemsSource="{Binding InstructorList}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelctionChanged}"
@@ -24,7 +48,7 @@
                                 <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
                                 <Image Grid.Column="0" Grid.Row="0" Source="{Binding PhotoURI}" HeightRequest="80" WidthRequest="80"/>
                                 <Label Grid.Column="0" Grid.Row="1" Text="{Binding Iname}" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                <Label Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Text="{Binding Details}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                <Label Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Text="{Binding Details}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

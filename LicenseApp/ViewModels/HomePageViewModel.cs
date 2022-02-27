@@ -61,24 +61,33 @@ namespace LicenseApp.ViewModels
             }
         }
 
-        public HomePageViewModel()
+        private string starsRating;
+        public string StarsRating
         {
-            if (Search)
+            get
             {
-                if (InstructorList.Count == 0)
-                    CreateInstructorCollection();
+                return this.starsRating;
             }
-            else
+            set
             {
-                InstructorList = new ObservableCollection<Instructor>();
-                CreateInstructorCollection();
+                if (this.starsRating != value)
+                {
+
+                    this.starsRating = value;
+                    OnPropertyChanged("StarsRating");
+                }
             }
         }
 
-        async void CreateInstructorCollection()
+        public HomePageViewModel()
+        {
+            InstructorList = new ObservableCollection<Instructor>();
+        }
+
+        public async void CreateInstructorCollection()
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
-            List<Instructor> instructors = await proxy.GetAllInstructorsAsync();
+            ObservableCollection<Instructor> instructors = await proxy.GetAllInstructorsAsync();
             foreach (Instructor i in instructors)
             {
                 this.InstructorList.Add(i);
@@ -90,23 +99,38 @@ namespace LicenseApp.ViewModels
         {
             if (obj is Instructor)
             {
+                LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
                 Instructor chosenInstructor = (Instructor)obj;
+
                 ShowInstructorViewModel instructorContext = new ShowInstructorViewModel
                 {
                     IName = chosenInstructor.Iname,
-                    ImageUrl = chosenInstructor.PhotoURI,
-                    Details = chosenInstructor.Details
+                    ImageUrl = $"defaultPhoto.png",
+                    Details = chosenInstructor.Details,
+                    PhoneNum = chosenInstructor.PhoneNumber,
+                    TeachingArea = await proxy.GetAreaName(chosenInstructor.AreaId),
+                    WorkingTime = $"{chosenInstructor.StartTime}-{chosenInstructor.EndTime}",
+                    Price = chosenInstructor.Price
                 };
 
                 App app = (App)App.Current;
                 if(app.CurrentUser != null)
                 {
-                    Page p = new ShowInstructorView();
-                    p.BindingContext = instructorContext;
-                    p.Title = instructorContext.IName;
-                    await App.Current.MainPage.Navigation.PushModalAsync(p);
+                    Page p = new ShowInstructorView(instructorContext);
+                    await App.Current.MainPage.Navigation.PushAsync(p);
                 }
+                else
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "יש להתחבר למערכת כדי לגשת לפרטים נוספים של מורה", "בסדר");
             }
+        }
+
+        public ICommand SearchPageCommand => new Command(OpenSearchPage);
+
+        public async void OpenSearchPage()
+        {
+            App app = (App)App.Current;
+            Page p = new SearchPageView();
+            await App.Current.MainPage.Navigation.PushAsync(p);
         }
     }
 }

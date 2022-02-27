@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using LicenseApp.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
+using LicenseApp.Models;
 
 namespace LicenseApp.Views
 {
@@ -14,7 +17,18 @@ namespace LicenseApp.Views
     {
         public HomePageView()
         {
-            this.BindingContext = new HomePageViewModel();
+            HomePageViewModel hpvm = new HomePageViewModel();
+            hpvm.CreateInstructorCollection();
+            this.BindingContext = hpvm;
+            InitializeComponent();
+        }
+
+        public HomePageView(ObservableCollection<Instructor> instructors)
+        {
+            HomePageViewModel hpvm = new HomePageViewModel();
+            hpvm.InstructorList = instructors;
+            hpvm.Search = true;
+            this.BindingContext = hpvm;
             InitializeComponent();
         }
     }

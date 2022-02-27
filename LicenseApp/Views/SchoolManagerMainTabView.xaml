@@ -43,10 +43,10 @@
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.ChartLine}"/>
         </local:Test.IconImageSource>
     </local:Test>
-    <local:Test>
-        <local:Test.IconImageSource>
+    <local:SManagerProfileView>
+        <local:SManagerProfileView.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.CircleUser}"/>
-        </local:Test.IconImageSource>
-    </local:Test>
+        </local:SManagerProfileView.IconImageSource>
+    </local:SManagerProfileView>
 
 </TabbedPage>

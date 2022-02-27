@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LicenseApp.Views.InstructorProfileView"
+             FlowDirection="RightToLeft"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="labelNameStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+            <Style x:Key="labelErrorStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="TextColor" Value="Red" />
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+            <Style x:Key="conditionsStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="TextColor" Value="DarkBlue" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+
+                <Grid HorizontalOptions="FillAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Padding="0" x:Name="logout" Clicked="logout_Clicked" Text="התנתקות" Grid.Column="0" FontAttributes="Bold" TextColor="#5fa8d3" BackgroundColor="Transparent" FontSize="17" HorizontalOptions="Start"></Button>
+                </Grid>
+
+                <StackLayout Padding="30,0">
+                    <Image Source="{Binding ImageUrl}" HeightRequest="85" WidthRequest="85" HorizontalOptions="Center"></Image>
+                    <Button Text="שנה תמונה" BackgroundColor="Transparent" HorizontalOptions="Center" TextColor="#5fa8d3" FontSize="16"/>
+                    <!--<Label Padding="0"/>-->
+                    <Grid Padding="0" HorizontalOptions="CenterAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="95" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="25" />
+                        </Grid.ColumnDefinitions>
+                        <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
+                        <Label Margin="0,12" Text="סיסמה:" Grid.Column="0" Grid.Row="0" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                        <Entry Text="{Binding Pass}" Grid.Column="2" Grid.Row="0" FontSize="18"/>
+                        <Image  Source="{Binding PassError}" HeightRequest="25" WidthRequest="25" Grid.Column="3" Grid.Row="0"/>
+                        <ImageButton Padding="0" Command="{Binding PassConditions}" BackgroundColor="Transparent" Source="Info.jpg" HeightRequest="15" WidthRequest="15" Grid.Column="1" Grid.Row="0"/>
+                        <!--<Button Text="הסיסמה חייבת להכיל" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" FontSize="15" Margin="-10,-20" TextColor="#5fa8d3" BackgroundColor="Transparent" HorizontalOptions="Start" WidthRequest="150" HeightRequest="18" Padding="0" Command="{Binding PassConditions}"/>-->
+
+                        <Label Margin="0,12" Grid.ColumnSpan="2" Text="מספר טלפון:" Grid.Column="0" Grid.Row="1" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                        <Entry Grid.Column="2" Grid.Row="1" Text="{Binding PhoneNumber}" FontSize="18"/>
+                        <Image Source="{Binding NumberError}" IsVisible="{Binding ShowNumberError}" HeightRequest="10" WidthRequest="10" Grid.Column="3" Grid.Row="1"/>
+
+                        <Label Text="אזור לימוד:" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="2" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                        <Picker Title="{Binding AreaName}" Grid.Column="2" Grid.Row="2" TitleColor="Black" ItemsSource="{Binding Areas}" ItemDisplayBinding="{Binding AreaName}" SelectedItem="{Binding Area}">
+                        </Picker>
+
+                        <Label Text="שעות עבודה:" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="3" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                        <Grid Grid.Row="3" Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="106"/>
+                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Picker Title="{Binding StartTime}" HorizontalOptions="Start" Grid.Column="2" FontAttributes="Bold" ItemsSource="{Binding WorkingHours}" ItemDisplayBinding="{Binding Whour}" SelectedItem="{Binding EndHour}">
+                            </Picker>
+                            <Label Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" Text="-" FontAttributes="Bold"/>
+                            <Picker Title="{Binding EndTime}" HorizontalOptions="End" Grid.Column="0" FontAttributes="Bold" ItemsSource="{Binding WorkingHours}" ItemDisplayBinding="{Binding Whour}" SelectedItem="{Binding StartHour}">
+                            </Picker>
+                        </Grid>
+
+                        <Label Text="תיבת הילוכים:" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="4" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                        <Picker Title="{Binding GearboxName}" TitleColor="Black" TextColor="Black" FontSize="18" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding Gearboxes}" ItemDisplayBinding="{Binding Type}" SelectedItem="{Binding Gearbox}">
+                        </Picker>
+
+                        <Label Text="אורך שיעור:" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="5" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                        <Picker Title="{Binding LessonLengthMin}" TitleColor="Black" TextColor="Black" FontSize="18" Grid.Column="2" Grid.Row="5" ItemsSource="{Binding LessonLengths}" ItemDisplayBinding="{Binding Slength}" SelectedItem="{Binding LessonLength}">
+                        </Picker>
+
+                        <Label Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="6" FontAttributes="Bold" FontSize="18" Text="מחיר לשיעור:"/>
+                        <Label Grid.Column="2" Grid.Row="6" TextColor="Black" FontSize="18" Text="{Binding SliderValue}"/>
+
+                        <Slider Value="{Binding SliderValue}" HorizontalOptions="FillAndExpand" Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="4" Minimum="0" Maximum="500" ThumbColor="LightBlue" MaximumTrackColor="Gray" MinimumTrackColor="LightBlue"/>
+
+                        <Label FontAttributes="Bold" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="8" FontSize="18" Text="מידע שימושי:"/>
+                        <Entry Grid.Column="2" Grid.Row="8" TextColor="Black" FontSize="18" Text="{Binding InstructorDetails}"/>
+                    </Grid>
+                    <Label/>
+                    <Button Text="עדכן" VerticalOptions="End"  HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SaveDataCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
+                    <Label/>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

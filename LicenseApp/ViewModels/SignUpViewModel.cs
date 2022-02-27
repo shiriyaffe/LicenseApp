@@ -180,7 +180,7 @@ namespace LicenseApp.ViewModels
             this.ShowPassError = string.IsNullOrEmpty(OriginalPass);
             if (!this.ShowPassError)
             {
-                if (!Regex.IsMatch(this.OriginalPass, @"^ (?=.*?[A - Z])(?=.*?[a - z])(?=.*?[0 - 9])(?=.*?[#?!@$%^&*-]).{8,}$"))
+                if (!Regex.IsMatch(this.OriginalPass, @"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"))
                 {
                     this.ShowPassError = true;
                     this.PassError = "הסיסמה אינה תקינה";
@@ -392,7 +392,7 @@ namespace LicenseApp.ViewModels
             //Validate all fields first
             ValidateName();
             ValidateMail();
-            //ValidatePass();
+            ValidatePass();
             ValidateDate();
             ValidateNumber();
 

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LicenseApp.Views.SManagerProfileView"
+             FlowDirection="RightToLeft">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+
+                <Grid HorizontalOptions="FillAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Padding="0" x:Name="logout" Clicked="logout_Clicked" Text="התנתקות" Grid.Column="0" FontAttributes="Bold" TextColor="#5fa8d3" BackgroundColor="Transparent" FontSize="17" HorizontalOptions="Start"></Button>
+                </Grid>
+
+                <StackLayout Padding="30,0">
+                    <Image Source="{Binding ImageUrl}" HeightRequest="85" WidthRequest="85" HorizontalOptions="Center"></Image>
+                    <Button Text="שנה תמונה" BackgroundColor="Transparent" HorizontalOptions="Center" TextColor="#5fa8d3" FontSize="16"/>
+                    <Label/>
+                    <Grid Padding="0" HorizontalOptions="CenterAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
+                        <Label Text="סיסמה:" Grid.Column="0" Grid.Row="0" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                        <Entry Text="{Binding Pass}" Grid.Column="1" Grid.Row="0" FontSize="18"/>
+
+                        <Label Text="מספר טלפון:" Grid.Column="0" Grid.Row="1" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                        <Entry Grid.Column="1" Grid.Row="1" Text="{Binding PhoneNumber}" FontSize="18"/>
+                    </Grid>
+                    <Label/>
+                    <Button Text="עדכן" VerticalOptions="End"  HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SaveDataCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
+                    <Label/>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

@@ -184,13 +184,14 @@ namespace LicenseApp.ViewModels
                 OnPropertyChanged("StudentImgSrc");
             }
         }
-        private const string DEFAULT_PHOTO_SRC = "Default.jpg";
+        private const string DEFAULT_PHOTO_SRC = "default.jpg";
         #endregion
 
         public StudentSignUp()
         {
             SliderValue = 0;
             ShowError = false;
+            this.StudentImgSrc = DEFAULT_PHOTO_SRC;
         }
 
         public Command SignUpCommand => new Command(SignUpAsStudent);

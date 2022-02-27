@@ -24,8 +24,8 @@ namespace LicenseApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private List<Instructor> instructors;
-        public List<Instructor> instructorsList;
+        private ObservableCollection<Instructor> instructors;
+        public ObservableCollection<Instructor> InstructorsList;
 
 
         private int sliderValue;
@@ -134,14 +134,14 @@ namespace LicenseApp.ViewModels
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             instructors = await proxy.GetAllInstructorsAsync();
-            HomePageViewModel page = new HomePageViewModel();
+            InstructorsList = new ObservableCollection<Instructor>();
             bool added = false;
 
             foreach (Instructor i in instructors)
             {
-                if (sliderValue == 0 || sliderValue == i.Price)
+                if (sliderValue == 0 || sliderValue >= i.Price)
                 {
-                    page.InstructorList.Add(i);
+                    InstructorsList.Add(i);
                     added = true;
                 }
                 
@@ -149,7 +149,7 @@ namespace LicenseApp.ViewModels
                 {
                     if(added)
                     {
-                        page.InstructorList.Remove(i);
+                        InstructorsList.Remove(i);
                         added = false;
                     }
                 }
@@ -158,7 +158,7 @@ namespace LicenseApp.ViewModels
                 {
                     if (added)
                     {
-                        page.InstructorList.Remove(i);
+                        InstructorsList.Remove(i);
                         added = false;
                     }
                 }
@@ -167,7 +167,7 @@ namespace LicenseApp.ViewModels
                 {
                     if (added)
                     {
-                        page.InstructorList.Remove(i);
+                        InstructorsList.Remove(i);
                         added = false;
                     }
                 }
@@ -176,15 +176,21 @@ namespace LicenseApp.ViewModels
                 {
                     if (added)
                     {
-                        page.InstructorList.Remove(i);
+                        InstructorsList.Remove(i);
                         added = false;
                     }
                 }
             }
 
-            Page p = new HomePageView();
-            p.BindingContext = page;
-            await App.Current.MainPage.Navigation.PushModalAsync(p);
+            if(InstructorsList.Count == 0)
+            {
+                await App.Current.MainPage.DisplayAlert("שגיאה", "לא נמצאו מורים במערכת העונים לכל הקריטריונים, נסה שנית!", "בסדר");
+            }
+            else
+            {
+                Page p = new HomePageView(InstructorsList);
+                await App.Current.MainPage.Navigation.PushAsync(p);
+            }
         }
     }
 }
