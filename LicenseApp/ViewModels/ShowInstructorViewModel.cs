@@ -10,6 +10,12 @@ namespace LicenseApp.ViewModels
 {
     public class ShowInstructorViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         private Area area;
         public Area Area
         {
@@ -97,14 +103,6 @@ namespace LicenseApp.ViewModels
                 OnPropertyChanged("Price");
             }
         }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
 
         public ICommand SendEnrollmentCommand => new Command(SendEnrollmentRequest);
 

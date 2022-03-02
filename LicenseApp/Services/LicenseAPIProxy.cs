@@ -388,6 +388,34 @@ namespace LicenseApp.Services
             }
         }
 
+        public async Task<ObservableCollection<Student>> GetStudentsByInstructorAsync(int instructorID)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetStudentsByInstructor?instructorId={instructorID}");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    ObservableCollection<Student> students = JsonSerializer.Deserialize<ObservableCollection<Student>>(content, options);
+                    return students;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
         public async Task<Student> StudentSignUpAsync(Student student)
         {
             try

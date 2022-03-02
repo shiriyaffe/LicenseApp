@@ -41,10 +41,10 @@ namespace LicenseApp.Models
         {
             get
             {
-                return $"defaultPhoto.png";
-
-                //LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
-                //return $"{proxy.GetBasePhotoUri()}{this.InstructorId}.jpg";
+                LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+                //Create a source with cache busting!
+                Random r = new Random();
+                return $"{proxy.GetBasePhotoUri()}{this.InstructorId}.jpg?{r.Next()}";
             }
         }
     }

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace LicenseApp.ViewModels
@@ -341,6 +343,21 @@ namespace LicenseApp.ViewModels
         }
         #endregion
 
+        #region UserImgSrc
+        private string userImgSrc;
+        public string UserImgSrc
+        {
+            get => userImgSrc;
+            set
+            {
+                userImgSrc = value;
+                OnPropertyChanged("UserImgSrc");
+            }
+        }
+        private const string DEFAULT_PHOTO_SRC = "defaultPhoto.png";
+        #endregion
+
+
         private string imageUrl;
         public string ImageUrl
         {
@@ -380,6 +397,8 @@ namespace LicenseApp.ViewModels
                 InstructorDetails = i.Details;
                 StartTime = i.StartTime;
                 EndTime = i.EndTime;
+                Random r = new Random();
+                this.UserImgSrc = i.PhotoURI + $"?{r.Next()}";
             }
             this.ShowPassError = false;
             this.ShowNumberError = false;
@@ -387,6 +406,50 @@ namespace LicenseApp.ViewModels
             this.SaveDataCommand = new Command(() => SaveData());
             this.PassConditions = new Command(() => ShowConditions());
         }
+
+        FileResult imageFileResult;
+        public event Action<ImageSource> SetImageSourceEvent;
+        #region PickImage
+        public ICommand PickImageCommand => new Command(OnPickImage);
+        public async void OnPickImage()
+        {
+            FileResult result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions()
+            {
+                Title = "בחר תמונה"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
+        }
+        #endregion
+
+        //The following command handle the take photo button
+        #region CameraImage
+        public ICommand CameraImageCommand => new Command(OnCameraImage);
+        public async void OnCameraImage()
+        {
+            var result = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions()
+            {
+                Title = "צלם תמונה"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
+        }
+        #endregion
 
         private async void GetArea(Instructor i)
         {
@@ -482,12 +545,10 @@ namespace LicenseApp.ViewModels
                 {
                     //if (this.imageFileResult != null)
                     //{
-                    //    ServerStatus = "מעלה תמונה...";
-
                     //    bool success = await proxy.UploadImage(new Models.FileInfo()
                     //    {
                     //        Name = this.imageFileResult.FullPath
-                    //    }, $"{user.Id}.jpg");
+                    //    }, $"{instructor.InstructorId}.jpg");
 
                     //    //if (!success)
                     //    //{
@@ -496,7 +557,13 @@ namespace LicenseApp.ViewModels
                     //    //    await App.Current.MainPage.DisplayAlert("עדכון", "יש בעיה בהעלאת התמונה", "אישור", FlowDirection.RightToLeft);
                     //    //}
                     //}
-                    //ServerStatus = "שומר נתונים...";
+
+                    //theApp.CurrentUser = instructor;
+                    //await App.Current.MainPage.Navigation.PopModalAsync();
+                    //Page page = new AdultMainTab();
+                    //page.Title = $"שלום {user.UserName}";
+                    //App.Current.MainPage = new NavigationPage(page) { BarBackgroundColor = Color.FromHex("#81cfe0") };
+                    //await App.Current.MainPage.DisplayAlert("עדכון", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);
 
                     theApp.CurrentUser = instructor;
                     await App.Current.MainPage.DisplayAlert("עדכון", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);
