@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using System.Text.RegularExpressions;
+using Xamarin.Essentials;
 
 namespace LicenseApp.ViewModels
 {
@@ -19,6 +20,10 @@ namespace LicenseApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        const string ERROR_PIC = "Error.png";
+        const string Correct_PIC = "Correct.png";
+
+        #region password
         private string pass;
         public string Pass
         {
@@ -26,10 +31,68 @@ namespace LicenseApp.ViewModels
             set
             {
                 pass = value;
+                ValidatePass();
                 OnPropertyChanged("Pass");
             }
         }
 
+        private string passError;
+
+        public string PassError
+        {
+            get => passError;
+            set
+            {
+                passError = value;
+                OnPropertyChanged("PassError");
+            }
+        }
+
+        private bool showPassError;
+
+        public bool ShowPassError
+        {
+            get => showPassError;
+            set
+            {
+                showPassError = value;
+                OnPropertyChanged("ShowPassError");
+            }
+        }
+
+        private void ValidatePass()
+        {
+
+            this.ShowPassError = string.IsNullOrEmpty(Pass);
+            if (!this.ShowPassError)
+            {
+                if (!Regex.IsMatch(this.Pass, @"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"))
+                {
+                    this.ShowPassError = true;
+                    this.PassError = ERROR_PIC;
+                }
+                else
+                {
+                    this.ShowPassError = false;
+                    this.PassError = Correct_PIC;
+                }
+            }
+            else
+            {
+                this.ShowPassError = true;
+                this.PassError = ERROR_PIC;
+            }
+        }
+
+        public Command PassConditions { protected set; get; }
+
+        private async void ShowConditions()
+        {
+            await App.Current.MainPage.DisplayAlert("הסיסמה חייבת להכיל:", "- ספרה אחת\n- אות אחת באנגלית\n- אורך מקסימלי 8 ספרות", "אישור", FlowDirection.RightToLeft);
+        }
+        #endregion
+
+        #region phone number
         private string phoneNumber;
         public string PhoneNumber
         {
@@ -66,17 +129,26 @@ namespace LicenseApp.ViewModels
 
         public void ValidateNumber()
         {
-            if (!this.ShowNumberError)
+            if (!string.IsNullOrEmpty(PhoneNumber))
             {
                 if (!Regex.IsMatch(this.PhoneNumber, @"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$"))
                 {
                     this.ShowNumberError = true;
-                    this.NumberError = "מספר טלפון חייב להיות בעל 10 ספרות";
+                    this.NumberError = ERROR_PIC;
+                }
+                else
+                { 
+                    this.NumberError = Correct_PIC;
+                    this.ShowNumberError = false;
                 }
             }
             else
-                this.NumberError = null;
+            {
+                this.NumberError = ERROR_PIC;
+                this.ShowNumberError = true;
+            }
         }
+        #endregion
 
         private string sAddress;
         public string SAddress
@@ -89,6 +161,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        #region city
         public List<City> Cities
         {
             get
@@ -121,6 +194,21 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        private async void GetCity(Student s)
+        {
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            City c = await proxy.GetCityById(s.CityId);
+            if (c != null)
+            {
+                this.City = c;
+                this.CityName = c.CityName;
+            }
+            else
+                this.CityName = "עיר:";
+        }
+        #endregion
+
+        #region gearbox
         public List<Gearbox> Gearboxes
         {
             get
@@ -153,6 +241,21 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        private async void GetGearbox(Student s)
+        {
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            Gearbox g = await proxy.GetGearboxById(s.GearboxId);
+            if (g != null)
+            {
+                this.Gearbox = g;
+                this.GearboxName = g.Type;
+            }
+            else
+                this.GearboxName = "תיבת הילוכים:";
+        }
+        #endregion
+
+        #region lesson length
         public List<LessonLength> LessonLengths
         {
             get
@@ -185,6 +288,21 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        private async void GetLessonLength(Student s)
+        {
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            LessonLength l = await proxy.GetLessonLengthById(s.LessonLengthId);
+            if (l != null)
+            {
+                this.LessonLength = l;
+                this.LessonLengthMin = l.Slength;
+            }
+            else
+                this.GearboxName = "אורך שיעור מועדף (בדקות):";
+        }
+        #endregion
+
+        #region image
         private string imageUrl;
         public string ImageUrl
         {
@@ -195,6 +313,51 @@ namespace LicenseApp.ViewModels
                 OnPropertyChanged("ImageUrl");
             }
         }
+
+        FileResult imageFileResult;
+        public event Action<ImageSource> SetImageSourceEvent;
+        #region PickImage
+        public ICommand PickImageCommand => new Command(OnPickImage);
+        public async void OnPickImage()
+        {
+            FileResult result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions()
+            {
+                Title = "בחר תמונה"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
+        }
+        #endregion
+
+        //The following command handle the take photo button
+        #region CameraImage
+        public ICommand CameraImageCommand => new Command(OnCameraImage);
+        public async void OnCameraImage()
+        {
+            var result = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions()
+            {
+                Title = "צלם תמונה"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
+        }
+        #endregion
+        #endregion
 
         public StudentProfileViewModel()
         {
@@ -208,62 +371,26 @@ namespace LicenseApp.ViewModels
                 GetCity(s);
                 GetGearbox(s);
                 GetLessonLength(s);
-                ImageUrl = "defaultPhoto.png";
-                this.ShowNumberError = false;
-                this.SaveDataCommand = new Command(() => SaveData());
+                ImageUrl = s.PhotoURI;
             }
+            this.ShowNumberError = false;
+            this.ShowPassError = false;
+            this.SaveDataCommand = new Command(() => SaveData());
+            this.PassConditions = new Command(() => ShowConditions());
         }
 
-        private async void GetCity(Student s)
-        {
-            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
-            City c = await proxy.GetCityById(s.CityId);
-            if (c != null)
-            {
-                this.City = c;
-                this.CityName = c.CityName;
-            }
-            else
-                this.CityName = "עיר:";
-        }
-
-        private async void GetGearbox(Student s)
-        {
-            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
-            Gearbox g = await proxy.GetGearboxById(s.GearboxId);
-            if (g != null)
-            {
-                this.Gearbox = g;
-                this.GearboxName = g.Type;
-            }
-            else
-                this.GearboxName = "תיבת הילוכים:";
-        }
-
-        private async void GetLessonLength(Student s)
-        {
-            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
-            LessonLength l = await proxy.GetLessonLengthById(s.LessonLengthId);
-            if (l != null)
-            {
-                this.LessonLength = l;
-                this.LessonLengthMin = l.Slength;
-            }
-            else
-                this.GearboxName = "אורך שיעור מועדף (בדקות):";
-        }
 
         public Command SaveDataCommand { protected set; get; }
 
         private bool ValidateForm()
         {
             //Validate all fields first
-            //ValidatePass();
+            ValidatePass();
             ValidateNumber();
 
 
             //check if any validation failed
-            if (ShowNumberError)
+            if (ShowNumberError || ShowPassError)
                 return false;
             return true;
         }
@@ -305,12 +432,11 @@ namespace LicenseApp.ViewModels
                 {
                     //if (this.imageFileResult != null)
                     //{
-                    //    ServerStatus = "מעלה תמונה...";
 
                     //    bool success = await proxy.UploadImage(new Models.FileInfo()
                     //    {
                     //        Name = this.imageFileResult.FullPath
-                    //    }, $"{user.Id}.jpg");
+                    //    }, $"{student.StudentId}.jpg");
 
                     //    //if (!success)
                     //    //{
@@ -319,7 +445,6 @@ namespace LicenseApp.ViewModels
                     //    //    await App.Current.MainPage.DisplayAlert("עדכון", "יש בעיה בהעלאת התמונה", "אישור", FlowDirection.RightToLeft);
                     //    //}
                     //}
-                    //ServerStatus = "שומר נתונים...";
 
                     theApp.CurrentUser = student;
                     await App.Current.MainPage.DisplayAlert("עדכון", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);

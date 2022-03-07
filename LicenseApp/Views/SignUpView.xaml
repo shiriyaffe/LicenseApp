@@ -26,7 +26,7 @@
                 <!--<Label Text="הרשמה" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="65" TextColor="#003049" HorizontalOptions="Center"/>
             <Label Padding="0"/>-->
 
-                <!-- תמונה -->
+                 <!--תמונה--> 
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.3*"/>
@@ -36,9 +36,23 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Frame BorderColor="white"  CornerRadius="100"  Grid.Column="1" Grid.Row="0" IsClippedToBounds="True" Padding="0" HeightRequest="150" WidthRequest="150" HorizontalOptions="CenterAndExpand">
-                        <Image x:Name="theImage" Source="{Binding UserImgSrc}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="150" WidthRequest="150"/>
+                    <Frame BorderColor="white"  CornerRadius="100"  Grid.Column="1" Grid.Row="0" IsClippedToBounds="True" Padding="0" HeightRequest="110" WidthRequest="110" HorizontalOptions="CenterAndExpand">
+                        <Image x:Name="theImage" Source="{Binding UserImgSrc}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="110" WidthRequest="110"/>
                     </Frame>
+                </Grid>
+
+                <!--<Image Source="{Binding UserImgSrc}" HeightRequest="85" WidthRequest="85" HorizontalOptions="Center"></Image>-->
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0" Grid.Column="0" Command="{Binding PickImageCommand}" Text="בחר תמונה" BackgroundColor="Transparent" HorizontalOptions="End" TextColor="#5fa8d3" FontSize="14"/>
+                    <Button Grid.Row="0" Grid.Column="1" Command="{Binding CameraImageCommand}" Text="צלם תמונה" BackgroundColor="Transparent" HorizontalOptions="Start" TextColor="#5fa8d3" FontSize="14"/>
                 </Grid>
 
                 <!-- שם -->

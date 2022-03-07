@@ -184,7 +184,7 @@ namespace LicenseApp.ViewModels
                 OnPropertyChanged("StudentImgSrc");
             }
         }
-        private const string DEFAULT_PHOTO_SRC = "default.jpg";
+        private const string DEFAULT_PHOTO_SRC = "defaultPhoto.png";
         #endregion
 
         public StudentSignUp()
@@ -199,7 +199,8 @@ namespace LicenseApp.ViewModels
         public async void SignUpAsStudent()
         {
             App app = (App)App.Current;
-            
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+
             Student s = new Student
             {
                 Sname = app.TempUser.Name,
@@ -216,14 +217,23 @@ namespace LicenseApp.ViewModels
                 TeacherGender = Gender.GenderId,
                 HighestPrice = SliderValue,
                 LessonsCount = 0,
-                RegistrationDate = DateTime.Today
+                RegistrationDate = DateTime.Today,
+                InstructorId = 1
             };
 
-            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+           
             Student student = await proxy.StudentSignUpAsync(s);
 
             if(student != null)
             {
+                if (app.TempUser.UserImg != null)
+                {
+                    bool success = await proxy.UploadImage(new FileInfo()
+                    {
+                        Name = app.TempUser.UserImg
+                    }, $"{student.StudentId}.jpg");
+                }
+
                 app.CurrentUser = student;
 
                 app.MainPage = new NavigationPage(new StudentMainTabView());

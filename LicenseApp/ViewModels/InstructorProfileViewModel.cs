@@ -71,17 +71,23 @@ namespace LicenseApp.ViewModels
                     this.PassError = ERROR_PIC;
                 }
                 else
+                {
+                    this.ShowPassError = false;
                     this.PassError = Correct_PIC;
+                }
             }
             else
+            {
+                this.ShowPassError = true;
                 this.PassError = ERROR_PIC;
+            }
         }
 
         public Command PassConditions { protected set; get; }
 
         private async void ShowConditions()
         {
-            await App.Current.MainPage.DisplayAlert("הסיסמה חייבת להכיל:", "- אות אחת גדולה באנגלית\n- אות אחת קטנה באנגלית\n- מספר אחד\n- סימן מיוחד אחד\n- אורך מקסימלי 8 ספרות", "אישור", FlowDirection.RightToLeft);
+            await App.Current.MainPage.DisplayAlert("הסיסמה חייבת להכיל:", "- ספרה אחת\n- אות אחת באנגלית\n- אורך מקסימלי 8 ספרות", "אישור", FlowDirection.RightToLeft);
         }
         #endregion
 
@@ -124,17 +130,24 @@ namespace LicenseApp.ViewModels
 
         public void ValidateNumber()
         {
-            this.ShowNumberError = string.IsNullOrEmpty(PhoneNumber);
-            if (!this.ShowNumberError)
+            if (!string.IsNullOrEmpty(PhoneNumber))
             {
                 if (!Regex.IsMatch(this.PhoneNumber, @"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$"))
                 {
                     this.ShowNumberError = true;
                     this.NumberError = ERROR_PIC;
                 }
+                else
+                {
+                    this.NumberError = Correct_PIC;
+                    this.ShowNumberError = false;
+                }
             }
             else
-                this.NumberError = Correct_PIC;
+            {
+                this.NumberError = ERROR_PIC;
+                this.ShowNumberError = true;
+            }
         }
         #endregion
 
@@ -390,15 +403,14 @@ namespace LicenseApp.ViewModels
                 GetArea(i);
                 GetGearbox(i);
                 GetLessonLength(i);
-                ImageUrl = "defaultPhoto.png";
+                ImageUrl = i.PhotoURI;
                 SliderValue = i.Price;
                 PhoneNumber = i.PhoneNumber;
                 Pass = i.Pass;
                 InstructorDetails = i.Details;
                 StartTime = i.StartTime;
                 EndTime = i.EndTime;
-                Random r = new Random();
-                this.UserImgSrc = i.PhotoURI + $"?{r.Next()}";
+                this.UserImgSrc = i.PhotoURI;
             }
             this.ShowPassError = false;
             this.ShowNumberError = false;
@@ -406,50 +418,6 @@ namespace LicenseApp.ViewModels
             this.SaveDataCommand = new Command(() => SaveData());
             this.PassConditions = new Command(() => ShowConditions());
         }
-
-        FileResult imageFileResult;
-        public event Action<ImageSource> SetImageSourceEvent;
-        #region PickImage
-        public ICommand PickImageCommand => new Command(OnPickImage);
-        public async void OnPickImage()
-        {
-            FileResult result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions()
-            {
-                Title = "בחר תמונה"
-            });
-
-            if (result != null)
-            {
-                this.imageFileResult = result;
-
-                var stream = await result.OpenReadAsync();
-                ImageSource imgSource = ImageSource.FromStream(() => stream);
-                if (SetImageSourceEvent != null)
-                    SetImageSourceEvent(imgSource);
-            }
-        }
-        #endregion
-
-        //The following command handle the take photo button
-        #region CameraImage
-        public ICommand CameraImageCommand => new Command(OnCameraImage);
-        public async void OnCameraImage()
-        {
-            var result = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions()
-            {
-                Title = "צלם תמונה"
-            });
-
-            if (result != null)
-            {
-                this.imageFileResult = result;
-                var stream = await result.OpenReadAsync();
-                ImageSource imgSource = ImageSource.FromStream(() => stream);
-                if (SetImageSourceEvent != null)
-                    SetImageSourceEvent(imgSource);
-            }
-        }
-        #endregion
 
         private async void GetArea(Instructor i)
         {

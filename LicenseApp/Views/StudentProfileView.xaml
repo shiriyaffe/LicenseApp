@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LicenseApp.Views.StudentProfileView"
-             FlowDirection="RightToLeft">
+             FlowDirection="RightToLeft"
+             NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <ScrollView>
         <StackLayout>
@@ -18,10 +19,33 @@
                 </Grid>
 
             <StackLayout Padding="30,0">
-            <Image Source="{Binding ImageUrl}" HeightRequest="85" WidthRequest="85" HorizontalOptions="Center"></Image>
-            <Button Text="שנה תמונה" BackgroundColor="Transparent" HorizontalOptions="Center" TextColor="#5fa8d3" FontSize="16"/>
-            
-            <Grid Padding="0" HorizontalOptions="CenterAndExpand">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.3*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="0.3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Frame BorderColor="white"  CornerRadius="100"  Grid.Column="1" Grid.Row="0" IsClippedToBounds="True" Padding="0" HeightRequest="110" WidthRequest="110" HorizontalOptions="CenterAndExpand">
+                            <Image x:Name="theImage" Source="{Binding ImageUrl}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="110" WidthRequest="110"/>
+                        </Frame>
+                    </Grid>
+                
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Button Grid.Row="0" Grid.Column="0" Command="{Binding PickImageCommand}" Text="בחר תמונה" BackgroundColor="Transparent" HorizontalOptions="End" TextColor="#5fa8d3" FontSize="14"/>
+                        <Button Grid.Row="0" Grid.Column="1" Command="{Binding CameraImageCommand}" Text="צלם תמונה" BackgroundColor="Transparent" HorizontalOptions="Start" TextColor="#5fa8d3" FontSize="14"/>
+                    </Grid>
+
+                    <Grid Padding="0" HorizontalOptions="CenterAndExpand">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -31,31 +55,36 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="115" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="25" />
                 </Grid.ColumnDefinitions>
                 <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
                 <Label Text="סיסמה:" Grid.Column="0" Grid.Row="0" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                <Entry Text="{Binding Pass}" Grid.Column="1" Grid.Row="0" FontSize="18"/>
+                <Entry Text="{Binding Pass}" Grid.Column="2" Grid.Row="0" FontSize="18"/>
+                <Image  Source="{Binding PassError}" HeightRequest="25" WidthRequest="25" Grid.Column="3" Grid.Row="0"/>
+                <ImageButton Padding="0" Command="{Binding PassConditions}" BackgroundColor="Transparent" Source="Info.jpg" HeightRequest="15" WidthRequest="15" Grid.Column="1" Grid.Row="0"/>
+
+                 <Label Text="מספר טלפון:" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                <Entry Grid.Column="2" Grid.Row="1" Text="{Binding PhoneNumber}" FontSize="18"/>
+                 <Image Source="{Binding NumberError}" HeightRequest="10" WidthRequest="10" Grid.Column="3" Grid.Row="1"/>
                 
-                <Label Text="מספר טלפון:" Grid.Column="0" Grid.Row="1" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                <Entry Grid.Column="1" Grid.Row="1" Text="{Binding PhoneNumber}" FontSize="18"/>
-                
-                <Label Text="עיר מגורים:" Grid.Column="0" Grid.Row="2" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                <Picker Title="{Binding CityName}" TitleColor="Black" TextColor="Black" FontSize="18" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Cities}" ItemDisplayBinding="{Binding CityName}" SelectedItem="{Binding City}">
+                <Label Text="עיר מגורים:" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                <Picker Title="{Binding CityName}" TitleColor="Black" TextColor="Black" FontSize="18" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding Cities}" ItemDisplayBinding="{Binding CityName}" SelectedItem="{Binding City}">
                 </Picker>
-                
-                <Label Text="כתובת:" Grid.Column="0" Grid.Row="3" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                <Entry Grid.Column="1" Grid.Row="3" Text="{Binding SAddress}" FontSize="18"/>
-                
-                <Label Text="תיבת הילוכים:" Grid.Column="0" Grid.Row="4" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                <Picker Title="{Binding GearboxName}" TitleColor="Black" TextColor="Black" FontSize="18" Grid.Column="1" Grid.Row="4" ItemsSource="{Binding Gearboxes}" ItemDisplayBinding="{Binding Type}" SelectedItem="{Binding Gearbox}">
+
+                        <Label Text="כתובת:" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                <Entry Grid.Column="2" Grid.Row="3" Text="{Binding SAddress}" FontSize="18"/>
+
+                        <Label Text="תיבת הילוכים:" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="4" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                <Picker Title="{Binding GearboxName}" TitleColor="Black" TextColor="Black" FontSize="18" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding Gearboxes}" ItemDisplayBinding="{Binding Type}" SelectedItem="{Binding Gearbox}">
                 </Picker>
-                
-                <Label Text="אורך שיעור מועדף (בדקות):" Grid.Column="0" Grid.Row="5" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                <Picker Title="{Binding LessonLengthMin}" TitleColor="Black" TextColor="Black" FontSize="18" Grid.Column="1" Grid.Row="5" ItemsSource="{Binding LessonLengths}" ItemDisplayBinding="{Binding Slength}" SelectedItem="{Binding LessonLength}">
+
+                        <Label Text="אורך שיעור:" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="5" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                <Picker Title="{Binding LessonLengthMin}" TitleColor="Black" TextColor="Black" FontSize="18" Grid.Column="2" Grid.Row="5" ItemsSource="{Binding LessonLengths}" ItemDisplayBinding="{Binding Slength}" SelectedItem="{Binding LessonLength}">
                 </Picker>
-            </Grid>
+                    </Grid>
             <Label/>
                     <Button Text="עדכן" VerticalOptions="End"  HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SaveDataCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
                     <Label/>

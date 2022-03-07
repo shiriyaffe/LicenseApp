@@ -6,7 +6,9 @@ using System.Text.RegularExpressions;
 using Xamarin.Forms;
 using LicenseApp.Models;
 using LicenseApp.Views;
-
+using LicenseApp.Services;
+using Xamarin.Essentials;
+using System.Windows.Input;
 
 namespace LicenseApp.ViewModels
 {
@@ -315,6 +317,63 @@ namespace LicenseApp.ViewModels
 
         #endregion
 
+        FileResult imageFileResult;
+        public event Action<ImageSource> SetImageSourceEvent;
+        #region PickImage
+        public ICommand PickImageCommand => new Command(OnPickImage);
+        public async void OnPickImage()
+        {
+            FileResult result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions()
+            {
+                Title = "בחר תמונה"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
+        }
+        #endregion
+
+        //The following command handle the take photo button
+        #region CameraImage
+        public ICommand CameraImageCommand => new Command(OnCameraImage);
+        public async void OnCameraImage()
+        {
+            var result = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions()
+            {
+                Title = "צלם תמונה"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
+        }
+        #endregion
+
+        #region UserImgSrc
+        private string userImgSrc;
+        public string UserImgSrc
+        {
+            get => userImgSrc;
+            set
+            {
+                userImgSrc = value;
+                OnPropertyChanged("UserImgSrc");
+            }
+        }
+        private const string DEFAULT_PHOTO_SRC = "defaultPhoto.png";
+        #endregion
 
         private string nextError;
 
@@ -383,6 +442,9 @@ namespace LicenseApp.ViewModels
             ShowConditions = false;
             ShowNextError = false;
 
+            this.UserImgSrc = DEFAULT_PHOTO_SRC;
+            this.imageFileResult = null;
+
             Date = new DateTime(DateTime.Today.Year - 16, DateTime.Today.Month, DateTime.Today.Day);
             this.SaveDataCommand = new Command(() => SaveData());
         }
@@ -406,7 +468,18 @@ namespace LicenseApp.ViewModels
         public Command SaveDataCommand { protected set; get; }
         private async void SaveData()
         {
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             App app = (App)App.Current;
+
+            if(imageFileResult != null)
+            {
+                UserImgSrc = imageFileResult.FullPath;
+            }
+            else
+            {
+                UserImgSrc = null;
+            }
+
             if (ValidateForm())
             {
                 app.TempUser = new User
@@ -416,7 +489,8 @@ namespace LicenseApp.ViewModels
                     UserPswd = OriginalPass,
                     PhoneNumber = PhoneNumber,
                     BirthDate = Date,
-                    Gender = Gender
+                    Gender = Gender,
+                    UserImg = UserImgSrc
                 };
 
                 Page p = new SignUpAsView();

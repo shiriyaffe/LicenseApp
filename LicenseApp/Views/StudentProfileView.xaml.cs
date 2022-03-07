@@ -15,7 +15,9 @@ namespace LicenseApp.Views
     {
         public StudentProfileView()
         {
-            this.BindingContext = new StudentProfileViewModel();
+            StudentProfileViewModel sp = new StudentProfileViewModel();
+            sp.SetImageSourceEvent += Sp_SetImageSourceEvent;
+            this.BindingContext = sp;
             InitializeComponent();
         }
 
@@ -25,6 +27,11 @@ namespace LicenseApp.Views
             app.CurrentUser = null;
             Page p = new OpenningPageView();
             app.MainPage = new NavigationPage(p);
+        }
+
+        private void Sp_SetImageSourceEvent(ImageSource obj)
+        {
+            theImage.Source = obj;
         }
     }
 }

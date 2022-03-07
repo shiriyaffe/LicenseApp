@@ -15,8 +15,15 @@ namespace LicenseApp.Views
     {
         public SignUpView()
         {
-            this.BindingContext = new SignUpViewModel();
+            SignUpViewModel su = new SignUpViewModel();
+            su.SetImageSourceEvent += Su_SetImageSourceEvent;
+            this.BindingContext = su;
             InitializeComponent();
+        }
+
+        private void Su_SetImageSourceEvent(ImageSource obj)
+        {
+            theImage.Source = obj;
         }
     }
 }

@@ -20,6 +20,7 @@ namespace LicenseApp.ViewModels
         const string ERROR_PIC = "Error.png";
         const string Correct_PIC = "Correct.png";
 
+        #region password
         private string pass;
         public string Pass
         {
@@ -45,6 +46,7 @@ namespace LicenseApp.ViewModels
         }
 
         private bool showPassError;
+
         public bool ShowPassError
         {
             get => showPassError;
@@ -66,11 +68,28 @@ namespace LicenseApp.ViewModels
                     this.ShowPassError = true;
                     this.PassError = ERROR_PIC;
                 }
+                else
+                {
+                    this.ShowPassError = false;
+                    this.PassError = Correct_PIC;
+                }
             }
             else
-                this.PassError = Correct_PIC;
+            {
+                this.ShowPassError = true;
+                this.PassError = ERROR_PIC;
+            }
         }
 
+        public Command PassConditions { protected set; get; }
+
+        private async void ShowConditions()
+        {
+            await App.Current.MainPage.DisplayAlert("הסיסמה חייבת להכיל:", "- ספרה אחת\n- אות אחת באנגלית\n- אורך מקסימלי 8 ספרות", "אישור", FlowDirection.RightToLeft);
+        }
+        #endregion
+
+        #region phone number
         private string phoneNumber;
         public string PhoneNumber
         {
@@ -78,11 +97,13 @@ namespace LicenseApp.ViewModels
             set
             {
                 phoneNumber = value;
+                ValidateNumber();
                 OnPropertyChanged("PhoneNumber");
             }
         }
 
         private string numberError;
+
         public string NumberError
         {
             get => numberError;
@@ -94,30 +115,39 @@ namespace LicenseApp.ViewModels
         }
 
         private bool showNumberError;
+
         public bool ShowNumberError
         {
             get => showNumberError;
             set
             {
                 showNumberError = value;
-                ValidateNumber();
                 OnPropertyChanged("ShowNumberError");
             }
         }
 
         public void ValidateNumber()
         {
-            if (!this.ShowNumberError)
+            if (!string.IsNullOrEmpty(PhoneNumber))
             {
                 if (!Regex.IsMatch(this.PhoneNumber, @"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$"))
                 {
                     this.ShowNumberError = true;
-                    this.NumberError = "מספר טלפון חייב להיות בעל 10 ספרות";
+                    this.NumberError = ERROR_PIC;
+                }
+                else
+                {
+                    this.NumberError = Correct_PIC;
+                    this.ShowNumberError = false;
                 }
             }
             else
-                this.NumberError = null;
+            {
+                this.NumberError = ERROR_PIC;
+                this.ShowNumberError = true;
+            }
         }
+        #endregion
 
         private string imageUrl;
         public string ImageUrl
@@ -139,9 +169,10 @@ namespace LicenseApp.ViewModels
                 Pass = sm.Pass;
                 PhoneNumber = sm.PhoneNumber;
                 ImageUrl = "defaultPhoto.png";
-                ShowNumberError = false;
-                this.SaveDataCommand = new Command(() => SaveData());
             }
+            ShowNumberError = false;
+            ShowPassError = false;
+            this.SaveDataCommand = new Command(() => SaveData());
         }
 
         public Command SaveDataCommand { protected set; get; }
