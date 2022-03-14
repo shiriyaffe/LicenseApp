@@ -9,6 +9,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using System.Text.RegularExpressions;
 using Xamarin.Essentials;
+using System.Collections.ObjectModel;
 
 namespace LicenseApp.ViewModels
 {
@@ -88,7 +89,7 @@ namespace LicenseApp.ViewModels
 
         private async void ShowConditions()
         {
-            await App.Current.MainPage.DisplayAlert("הסיסמה חייבת להכיל:", "- ספרה אחת\n- אות אחת באנגלית\n- אורך מקסימלי 8 ספרות", "אישור", FlowDirection.RightToLeft);
+            await App.Current.MainPage.DisplayAlert("הסיסמה חייבת להכיל:", "- ספרה אחת\n- אות אחת באנגלית\n- אורך מינימלי 8 ספרות", "אישור", FlowDirection.RightToLeft);
         }
         #endregion
 
@@ -359,6 +360,35 @@ namespace LicenseApp.ViewModels
         #endregion
         #endregion
 
+        private ObservableCollection<Lesson> lessonsList;
+        public ObservableCollection<Lesson> LessonsList
+        {
+            get
+            {
+                return this.lessonsList;
+            }
+            set
+            {
+                if (this.lessonsList != value)
+                {
+
+                    this.lessonsList = value;
+                    OnPropertyChanged("LessonsList");
+                }
+            }
+        }
+
+        public async void CreateLessonsCollection()
+        {
+            App app = (App)App.Current;
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            ObservableCollection<Lesson> lessons = await proxy.GetStudentLessonsAsync(((Student)app.CurrentUser).StudentId);
+            foreach (Lesson l in lessons)
+            {
+                this.LessonsList.Add(l);
+            }
+        }
+
         public StudentProfileViewModel()
         {
             App app = (App)App.Current;
@@ -377,6 +407,8 @@ namespace LicenseApp.ViewModels
             this.ShowPassError = false;
             this.SaveDataCommand = new Command(() => SaveData());
             this.PassConditions = new Command(() => ShowConditions());
+
+            CreateLessonsCollection();
         }
 
 
@@ -430,21 +462,13 @@ namespace LicenseApp.ViewModels
                 }
                 else
                 {
-                    //if (this.imageFileResult != null)
-                    //{
-
-                    //    bool success = await proxy.UploadImage(new Models.FileInfo()
-                    //    {
-                    //        Name = this.imageFileResult.FullPath
-                    //    }, $"{student.StudentId}.jpg");
-
-                    //    //if (!success)
-                    //    //{
-                    //    //    if (SetImageSourceEvent != null)
-                    //    //        SetImageSourceEvent(theApp.CurrentUser.PhotoURL);
-                    //    //    await App.Current.MainPage.DisplayAlert("עדכון", "יש בעיה בהעלאת התמונה", "אישור", FlowDirection.RightToLeft);
-                    //    //}
-                    //}
+                    if (this.imageFileResult != null)
+                    {
+                        bool success = await proxy.UploadImage(new Models.FileInfo()
+                        {
+                            Name = this.imageFileResult.FullPath
+                        }, $"Students\\{student.StudentId}.jpg");
+                    }
 
                     theApp.CurrentUser = student;
                     await App.Current.MainPage.DisplayAlert("עדכון", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);

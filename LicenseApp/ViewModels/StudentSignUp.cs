@@ -231,7 +231,7 @@ namespace LicenseApp.ViewModels
                     bool success = await proxy.UploadImage(new FileInfo()
                     {
                         Name = app.TempUser.UserImg
-                    }, $"{student.StudentId}.jpg");
+                    }, $"Students\\{student.StudentId}.jpg");
                 }
 
                 app.CurrentUser = student;

@@ -37,6 +37,24 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        private int allStudents;
+        public int AllStudents 
+        {
+            get
+            {
+                return this.allStudents;
+            }
+            set
+            {
+                if (this.allStudents != value)
+                {
+
+                    this.allStudents = value;
+                    OnPropertyChanged("AllStudents");
+                }
+            }
+        }
+
         public ListOfStudentsTEACHER()
         {
             StudentList = new ObservableCollection<Student>();
@@ -54,6 +72,8 @@ namespace LicenseApp.ViewModels
                     this.StudentList.Add(i);
                 }
             }
+
+            AllStudents = StudentList.Count;
         }
 
         public ICommand SelctionChanged => new Command<Object>(OnSelectionChanged);

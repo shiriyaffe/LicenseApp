@@ -79,6 +79,17 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        private bool showNavigationBar;
+        public bool ShowNavigationBar 
+        {
+            get => showNavigationBar;
+            set
+            {
+                showNavigationBar = value;
+                OnPropertyChanged("ShowNavigationBar");
+            }
+        }
+
         public HomePageViewModel()
         {
             InstructorList = new ObservableCollection<Instructor>();

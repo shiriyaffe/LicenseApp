@@ -19,6 +19,7 @@ namespace LicenseApp.Views
         {
             HomePageViewModel hpvm = new HomePageViewModel();
             hpvm.CreateInstructorCollection();
+            hpvm.ShowNavigationBar = false;
             this.BindingContext = hpvm;
             InitializeComponent();
         }
@@ -28,6 +29,7 @@ namespace LicenseApp.Views
             HomePageViewModel hpvm = new HomePageViewModel();
             hpvm.InstructorList = instructors;
             hpvm.Search = true;
+            hpvm.ShowNavigationBar = true;
             this.BindingContext = hpvm;
             InitializeComponent();
         }

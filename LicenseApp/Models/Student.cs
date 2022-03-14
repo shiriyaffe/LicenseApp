@@ -39,7 +39,7 @@ namespace LicenseApp.Models
                 LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
                 //Create a source with cache busting!
                 Random r = new Random();
-                return $"{proxy.GetBasePhotoUri()}{this.StudentId}.jpg?{r.Next()}";
+                return $"{proxy.GetBasePhotoUri()}Students/{this.StudentId}.jpg?{r.Next()}";
             }
         }
     }

@@ -233,6 +233,14 @@ namespace LicenseApp.ViewModels
                     SchoolManager schoolM = await proxy.SchoolManagerSignUpAsync(sm);
                     if (schoolM != null)
                     {
+                        if (app.TempUser.UserImg != null)
+                        {
+                            bool success = await proxy.UploadImage(new FileInfo()
+                            {
+                                Name = app.TempUser.UserImg
+                            }, $"SchoolManagers\\{schoolM.SmanagerId}.jpg");
+                        }
+
                         app.CurrentUser = sm;
                         app.MainPage = new NavigationPage(new SchoolManagerMainTabView());
                     }

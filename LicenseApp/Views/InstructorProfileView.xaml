@@ -127,6 +127,7 @@
 
                         <Label FontAttributes="Bold" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="8" FontSize="18" Text="מידע שימושי:"/>
                         <Entry Grid.Column="2" Grid.Row="8" TextColor="Black" FontSize="18" Text="{Binding InstructorDetails}"/>
+                        <Image Source="{Binding DetailError}" HeightRequest="10" WidthRequest="10" Grid.Column="3" Grid.Row="8"/>
                     </Grid>
                     <Label/>
                     <Button Text="עדכן" VerticalOptions="End"  HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SaveDataCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>

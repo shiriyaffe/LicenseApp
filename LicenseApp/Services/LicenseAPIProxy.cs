@@ -135,22 +135,31 @@ namespace LicenseApp.Services
                         if (sm.Smname != null)
                             return sm;
                     }
-                    catch { }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
                     try
                     {
                         Instructor i = JsonSerializer.Deserialize<Instructor>(content, options);
                         if (i.Iname != null)
                             return i;
                     }
-                    catch { }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
                     try
                     {
                         Student s = JsonSerializer.Deserialize<Student>(content, options);
                         if (s.Sname != null)
                             return s;
                     }
-                    catch { }
-                    
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
                     return null;
                 }
                 else
@@ -360,6 +369,34 @@ namespace LicenseApp.Services
             }
         }
 
+        public async Task<WorkingHour> GetHour(string wHour)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetHour?wHour={wHour}");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    WorkingHour wh = JsonSerializer.Deserialize<WorkingHour>(content, options);
+                    return wh;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
         public async Task<ObservableCollection<Instructor>> GetAllInstructorsAsync()
         {
             try
@@ -375,6 +412,34 @@ namespace LicenseApp.Services
                     string content = await response.Content.ReadAsStringAsync();
                     ObservableCollection<Instructor> instructors = JsonSerializer.Deserialize<ObservableCollection<Instructor>>(content, options);
                     return instructors;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<ObservableCollection<Lesson>> GetStudentLessonsAsync(int studentId)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetLessons?studentId={studentId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    ObservableCollection<Lesson> lessons = JsonSerializer.Deserialize<ObservableCollection<Lesson>>(content, options);
+                    return lessons;
                 }
                 else
                 {

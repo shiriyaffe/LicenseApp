@@ -14,7 +14,9 @@ namespace LicenseApp.Views
     {
         public InstructorProfileView()
         {
-            this.BindingContext = new InstructorProfileViewModel();
+            InstructorProfileViewModel ip = new InstructorProfileViewModel();
+            ip.SetImageSourceEvent += Ip_SetImageSourceEvent;
+            this.BindingContext = ip;
             InitializeComponent();
         }
 
@@ -24,6 +26,11 @@ namespace LicenseApp.Views
             app.CurrentUser = null;
             Page p = new OpenningPageView();
             app.MainPage = new NavigationPage(p);
+        }
+
+        private void Ip_SetImageSourceEvent(ImageSource obj)
+        {
+            theImage.Source = obj;
         }
     }
 }

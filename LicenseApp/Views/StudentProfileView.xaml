@@ -89,7 +89,39 @@
                     <Button Text="עדכן" VerticalOptions="End"  HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SaveDataCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
                     <Label/>
                 </StackLayout>
-        </StackLayout>
+
+                <CollectionView EmptyView="- לא התבצעו שיעורים -" x:Name="collectionName" 
+                            ItemsSource="{Binding LessonsList}" SelectionMode="Single"
+                        SelectionChangedCommand="{Binding SelctionChanged}"
+                        SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
+                    <CollectionView.EmptyViewTemplate>
+                        <DataTemplate>
+                            <Label Text="- לא התבצעו שיעורים -"
+                            Margin="10,25,10,10"
+                            FontSize="16"
+                            HorizontalOptions="Fill"
+                            HorizontalTextAlignment="Center" />
+                        </DataTemplate>
+                    </CollectionView.EmptyViewTemplate>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="10" HorizontalOptions="CenterAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Text="{Binding Lday}" FontSize="15" HorizontalOptions="Center"/>
+                                <Label Grid.Column="0" Grid.Row="1" Text="{Binding Ldate}" FontSize="15" HorizontalOptions="Center"/>
+                                <Label Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Text="{Binding IsPaid}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

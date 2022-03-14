@@ -87,7 +87,7 @@ namespace LicenseApp.ViewModels
 
         private async void ShowConditions()
         {
-            await App.Current.MainPage.DisplayAlert("הסיסמה חייבת להכיל:", "- ספרה אחת\n- אות אחת באנגלית\n- אורך מקסימלי 8 ספרות", "אישור", FlowDirection.RightToLeft);
+            await App.Current.MainPage.DisplayAlert("הסיסמה חייבת להכיל:", "- ספרה אחת\n- אות אחת באנגלית\n- אורך מינימלי 8 ספרות", "אישור", FlowDirection.RightToLeft);
         }
         #endregion
 
@@ -350,27 +350,19 @@ namespace LicenseApp.ViewModels
         {
             this.ShowDetailError = (string.IsNullOrEmpty(InstructorDetails));
             if (ShowDetailError)
-                DetailError = "שדה זה אינו תקין";
-            else
-                DetailError = null;
-        }
-        #endregion
-
-        #region UserImgSrc
-        private string userImgSrc;
-        public string UserImgSrc
-        {
-            get => userImgSrc;
-            set
             {
-                userImgSrc = value;
-                OnPropertyChanged("UserImgSrc");
+                this.ShowDetailError = true;
+                this.DetailError = ERROR_PIC;
+            }
+            else
+            {
+                this.ShowDetailError = false;
+                this.DetailError = Correct_PIC;
             }
         }
-        private const string DEFAULT_PHOTO_SRC = "defaultPhoto.png";
         #endregion
 
-
+        #region image
         private string imageUrl;
         public string ImageUrl
         {
@@ -381,6 +373,51 @@ namespace LicenseApp.ViewModels
                 OnPropertyChanged("ImageUrl");
             }
         }
+
+        FileResult imageFileResult;
+        public event Action<ImageSource> SetImageSourceEvent;
+        #region PickImage
+        public ICommand PickImageCommand => new Command(OnPickImage);
+        public async void OnPickImage()
+        {
+            FileResult result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions()
+            {
+                Title = "בחר תמונה"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
+        }
+        #endregion
+
+        //The following command handle the take photo button
+        #region CameraImage
+        public ICommand CameraImageCommand => new Command(OnCameraImage);
+        public async void OnCameraImage()
+        {
+            var result = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions()
+            {
+                Title = "צלם תמונה"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
+        }
+        #endregion
+        #endregion
 
         private int sliderValue;
         public int SliderValue
@@ -408,10 +445,10 @@ namespace LicenseApp.ViewModels
                 PhoneNumber = i.PhoneNumber;
                 Pass = i.Pass;
                 InstructorDetails = i.Details;
-                StartTime = i.StartTime;
-                EndTime = i.EndTime;
-                this.UserImgSrc = i.PhotoURI;
+                GetEndHour(i.EndTime);
+                GetStartHour(i.StartTime);
             }
+
             this.ShowPassError = false;
             this.ShowNumberError = false;
             ShowDetailError = false;
@@ -445,6 +482,32 @@ namespace LicenseApp.ViewModels
                 this.GearboxName = "תיבת הילוכים:";
         }
 
+        private async void GetStartHour(string wHour)
+        {
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            WorkingHour wh = await proxy.GetHour(wHour);
+            if (wh != null)
+            {
+                StartHour = wh;
+                this.StartTime = wHour;
+            }
+            else
+                this.StartTime = "שעת התחלה:";
+        }
+
+        private async void GetEndHour(string wHour)
+        {
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            WorkingHour wh = await proxy.GetHour(wHour);
+            if (wh != null)
+            {
+                EndHour = wh;
+                this.EndTime = wHour;
+            }
+            else
+                this.EndTime = "שעת סיום:";
+        }
+
         private async void GetLessonLength(Instructor i)
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -463,11 +526,11 @@ namespace LicenseApp.ViewModels
             //Validate all fields first
             ValidatePass();
             ValidateNumber();
-            //ValidateDetails();
+            ValidateDetails();
 
 
             //check if any validation failed
-            if (ShowNumberError || ShowPassError)
+            if (ShowNumberError || ShowPassError || ShowDetailError)
                 return false;
             return true;
         }
@@ -511,27 +574,13 @@ namespace LicenseApp.ViewModels
                 }
                 else
                 {
-                    //if (this.imageFileResult != null)
-                    //{
-                    //    bool success = await proxy.UploadImage(new Models.FileInfo()
-                    //    {
-                    //        Name = this.imageFileResult.FullPath
-                    //    }, $"{instructor.InstructorId}.jpg");
-
-                    //    //if (!success)
-                    //    //{
-                    //    //    if (SetImageSourceEvent != null)
-                    //    //        SetImageSourceEvent(theApp.CurrentUser.PhotoURL);
-                    //    //    await App.Current.MainPage.DisplayAlert("עדכון", "יש בעיה בהעלאת התמונה", "אישור", FlowDirection.RightToLeft);
-                    //    //}
-                    //}
-
-                    //theApp.CurrentUser = instructor;
-                    //await App.Current.MainPage.Navigation.PopModalAsync();
-                    //Page page = new AdultMainTab();
-                    //page.Title = $"שלום {user.UserName}";
-                    //App.Current.MainPage = new NavigationPage(page) { BarBackgroundColor = Color.FromHex("#81cfe0") };
-                    //await App.Current.MainPage.DisplayAlert("עדכון", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);
+                    if (this.imageFileResult != null)
+                    {
+                        bool success = await proxy.UploadImage(new Models.FileInfo()
+                        {
+                            Name = this.imageFileResult.FullPath
+                        }, $"Instructors\\{instructor.InstructorId}.jpg");
+                    }
 
                     theApp.CurrentUser = instructor;
                     await App.Current.MainPage.DisplayAlert("עדכון", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);

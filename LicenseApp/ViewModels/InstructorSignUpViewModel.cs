@@ -8,6 +8,8 @@ using LicenseApp.Models;
 using LicenseApp.Views;
 using System.Collections.ObjectModel;
 using LicenseApp.Services;
+using Xamarin.Essentials;
+using System.Windows.Input;
 
 namespace LicenseApp.ViewModels
 {
@@ -237,19 +239,61 @@ namespace LicenseApp.ViewModels
             }
         }
 
-        #region מקור התמונה
-        private string instructorImgSrc;
-
-        public string InstructorImgSrc
+        #region image
+        private string imageUrl;
+        public string ImageUrl
         {
-            get => instructorImgSrc;
+            get { return imageUrl; }
             set
             {
-                instructorImgSrc = value;
-                OnPropertyChanged("InstructorImgSrc");
+                imageUrl = value;
+                OnPropertyChanged("ImageUrl");
             }
         }
-        private const string DEFAULT_PHOTO_SRC = "Default.jpg";
+
+        FileResult imageFileResult;
+        public event Action<ImageSource> SetImageSourceEvent;
+        #region PickImage
+        public ICommand PickImageCommand => new Command(OnPickImage);
+        public async void OnPickImage()
+        {
+            FileResult result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions()
+            {
+                Title = "בחר תמונה"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
+        }
+        #endregion
+
+        //The following command handle the take photo button
+        #region CameraImage
+        public ICommand CameraImageCommand => new Command(OnCameraImage);
+        public async void OnCameraImage()
+        {
+            var result = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions()
+            {
+                Title = "צלם תמונה"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
+        }
+        #endregion
         #endregion
 
         public InstructorSignUpViewModel()
@@ -292,6 +336,14 @@ namespace LicenseApp.ViewModels
 
                 if (instructor != null)
                 {
+                    if (this.imageFileResult != null)
+                    {
+                        bool success = await proxy.UploadImage(new Models.FileInfo()
+                        {
+                            Name = this.imageFileResult.FullPath
+                        }, $"Instructors\\{instructor.InstructorId}.jpg");
+                    }
+
                     app.CurrentUser = instructor;
                     app.MainPage = new NavigationPage(new InstructorMainTabView());
                 }

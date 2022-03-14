@@ -60,11 +60,9 @@ namespace LicenseApp.ViewModels
 
         private void ValidateName()
         {
-            this.ShowConditions = false;
-
             this.ShowNameError = (string.IsNullOrEmpty(Name) || !Regex.IsMatch(this.Name, @"^[\u0590-\u05FF ]+$"));
             if (ShowNameError)
-                NameError = "השם אינו תקין";
+                NameError = "השם אינו תקין! השם חייב להיות בעברית";
             else
                 NameError = null;
         }
@@ -109,7 +107,6 @@ namespace LicenseApp.ViewModels
         }
         private void ValidateMail()
         {
-            this.ShowConditions = false;
 
             this.ShowMailError = string.IsNullOrEmpty(Mail);
             if (!this.ShowMailError)
@@ -121,7 +118,7 @@ namespace LicenseApp.ViewModels
                 }
             }
             else
-                this.MailError = null;
+                this.MailError = "האימייל אינו תקין";
         }
         #endregion
 
@@ -138,19 +135,6 @@ namespace LicenseApp.ViewModels
                 OnPropertyChanged("OriginalPass");
             }
         }
-
-        //private string pass;
-
-        //public string Pass
-        //{
-        //    get => pass;
-        //    set
-        //    {
-        //        pass = value;
-        //        ValidatePass();
-        //        OnPropertyChanged("Pass");
-        //    }
-        //}
 
         private string passError;
 
@@ -177,19 +161,31 @@ namespace LicenseApp.ViewModels
         }
         private void ValidatePass()
         {
-            this.ShowConditions = true;
-
             this.ShowPassError = string.IsNullOrEmpty(OriginalPass);
             if (!this.ShowPassError)
             {
                 if (!Regex.IsMatch(this.OriginalPass, @"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"))
                 {
                     this.ShowPassError = true;
-                    this.PassError = "הסיסמה אינה תקינה";
+                    this.PassError = "הסיסמה אינה תקינה! בדוק שמכילה את כל הקריטריונים";
+                }
+                else
+                {
+                    this.ShowPassError = false;
                 }
             }
             else
-                this.PassError = null;
+            {
+                this.ShowPassError = true;
+                this.PassError = "הסיסמה אינה תקינה! בדוק שמכילה את כל הקריטריונים";
+            }
+        }
+
+        public Command PassConditions { protected set; get; }
+
+        private async void ShowConditions()
+        {
+            await App.Current.MainPage.DisplayAlert("הסיסמה חייבת להכיל:", "- ספרה אחת\n- אות אחת באנגלית\n- אורך מינימלי 8 ספרות", "אישור", FlowDirection.RightToLeft);
         }
         #endregion
 
@@ -231,8 +227,6 @@ namespace LicenseApp.ViewModels
         }
         private void ValidateDate()
         {
-            this.ShowConditions = false;
-
             int year = Date.Year;
             int month = Date.Month;
             int day = Date.Day;
@@ -249,8 +243,14 @@ namespace LicenseApp.ViewModels
                     {
                         if (day > DateTime.Today.Day)
                             this.ShowDateError = true;
+                        else
+                            ShowDateError = false;
                     }
+                    else
+                        ShowDateError = false;
                 }
+                else
+                    ShowDateError = false;
             }
 
             if (ShowDateError)
@@ -300,8 +300,6 @@ namespace LicenseApp.ViewModels
 
         public void ValidateNumber()
         {
-            this.ShowConditions = false;
-
             this.ShowNumberError = string.IsNullOrEmpty(PhoneNumber);
             if (!this.ShowNumberError)
             {
@@ -399,18 +397,6 @@ namespace LicenseApp.ViewModels
             }
         }
 
-        private bool showConditions;
-
-        public bool ShowConditions
-        {
-            get => showConditions;
-            set
-            {
-                showConditions = value;
-                OnPropertyChanged("ShowConditions");
-            }
-        }
-
         public List<Gender> Genders
         {
             get
@@ -439,7 +425,6 @@ namespace LicenseApp.ViewModels
             this.ShowPassError = false;
             this.ShowDateError = false;
             this.ShowNumberError = false;
-            ShowConditions = false;
             ShowNextError = false;
 
             this.UserImgSrc = DEFAULT_PHOTO_SRC;
@@ -447,6 +432,7 @@ namespace LicenseApp.ViewModels
 
             Date = new DateTime(DateTime.Today.Year - 16, DateTime.Today.Month, DateTime.Today.Day);
             this.SaveDataCommand = new Command(() => SaveData());
+            this.PassConditions = new Command(() => ShowConditions());
         }
 
         private bool ValidateForm()
@@ -460,7 +446,7 @@ namespace LicenseApp.ViewModels
 
 
             //check if any validation failed
-            if (ShowNameError || ShowMailError || ShowDateError || ShowNumberError)
+            if (ShowNameError || ShowMailError || ShowDateError || ShowNumberError || ShowPassError)
                 return false;
             return true;
         }

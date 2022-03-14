@@ -18,8 +18,32 @@
                 </Grid>
 
                 <StackLayout Padding="30,0">
-                    <Image Source="{Binding ImageUrl}" HeightRequest="85" WidthRequest="85" HorizontalOptions="Center"></Image>
-                    <Button Text="שנה תמונה" BackgroundColor="Transparent" HorizontalOptions="Center" TextColor="#5fa8d3" FontSize="16"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.3*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="0.3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Frame BorderColor="white"  CornerRadius="100"  Grid.Column="1" Grid.Row="0" IsClippedToBounds="True" Padding="0" HeightRequest="110" WidthRequest="110" HorizontalOptions="CenterAndExpand">
+                            <Image x:Name="theImage" Source="{Binding ImageUrl}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="110" WidthRequest="110"/>
+                        </Frame>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Button Grid.Row="0" Grid.Column="0" Command="{Binding PickImageCommand}" Text="בחר תמונה" BackgroundColor="Transparent" HorizontalOptions="End" TextColor="#5fa8d3" FontSize="14"/>
+                        <Button Grid.Row="0" Grid.Column="1" Command="{Binding CameraImageCommand}" Text="צלם תמונה" BackgroundColor="Transparent" HorizontalOptions="Start" TextColor="#5fa8d3" FontSize="14"/>
+                    </Grid>
+                    
                     <Label/>
                     <Grid Padding="0" HorizontalOptions="CenterAndExpand">
                         <Grid.RowDefinitions>
