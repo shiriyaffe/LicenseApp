@@ -6,7 +6,20 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Padding="40" HorizontalOptions="CenterAndExpand">
-                <Image Source="{Binding ImageUrl}" HeightRequest="85" WidthRequest="85" HorizontalOptions="Center"></Image>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Frame BorderColor="white"  CornerRadius="100"  Grid.Column="1" Grid.Row="0" IsClippedToBounds="True" Padding="0" HeightRequest="110" WidthRequest="110" HorizontalOptions="CenterAndExpand">
+                        <Image x:Name="theImage" Source="{Binding ImageUrl}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="110" WidthRequest="110"/>
+                    </Frame>
+                </Grid>
+                
                 <Label Text="{Binding SName}" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold"></Label>
                 <Label/>
                 <Grid Padding="0" HorizontalOptions="CenterAndExpand">

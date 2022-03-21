@@ -23,11 +23,11 @@
             </x:Arguments>
         </Size>
     </windows:TabbedPage.HeaderIconsSize>
-    <local:Test>
-        <local:Test.IconImageSource>
+    <local:ListOfInstructorsView>
+        <local:ListOfInstructorsView.IconImageSource>
             <FontImageSource Color="#014f86" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.Bars}"/>
-        </local:Test.IconImageSource>
-    </local:Test>
+        </local:ListOfInstructorsView.IconImageSource>
+    </local:ListOfInstructorsView>
     <local:Test>
         <local:Test.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.GraduationCap}"/>

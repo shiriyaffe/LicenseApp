@@ -216,7 +216,7 @@ namespace LicenseApp.ViewModels
                 SchoolManager sm = (SchoolManager)app.CurrentUser;
                 Pass = sm.Pass;
                 PhoneNumber = sm.PhoneNumber;
-                ImageUrl = "defaultPhoto.png";
+                ImageUrl = sm.PhotoURI;
             }
             ShowNumberError = false;
             ShowPassError = false;

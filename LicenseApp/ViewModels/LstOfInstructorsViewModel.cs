@@ -90,7 +90,8 @@ namespace LicenseApp.ViewModels
                     Email = chosenInstructor.Email,
                     PhoneNum = chosenInstructor.PhoneNumber,
                     LessonLength = chosenInstructor.LessonLengthId,
-                    Price = chosenInstructor.Price
+                    Price = chosenInstructor.Price,
+                    InstructorID = chosenInstructor.InstructorId
                 };
 
                 App app = (App)App.Current;
