@@ -34,7 +34,7 @@
                     <Label Grid.Column="1" Grid.Row="3" Text="{Binding SCity}" FontSize="18"/>
                 </Grid>
                 <Label/>
-                <Button BackgroundColor="#caf0f8" Text="  שליחת בקשה להרשמה  " HorizontalOptions="CenterAndExpand" Padding="10" FontSize="20" FontAttributes="Bold" CornerRadius="10" TextColor="Black"></Button>
+                <Button Command="{Binding DeleteStudentCommand}" BackgroundColor="Transparent" Text="מחיקת תלמיד" HorizontalOptions="CenterAndExpand" Padding="10" FontSize="18" CornerRadius="10" TextColor="Red"></Button>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

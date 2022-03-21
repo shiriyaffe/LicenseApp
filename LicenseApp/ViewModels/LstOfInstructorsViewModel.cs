@@ -1,23 +1,17 @@
-﻿using LicenseApp.Services;
+﻿using LicenseApp.Models;
+using LicenseApp.Services;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Xamarin.Essentials;
-using LicenseApp.Models;
 using LicenseApp.Views;
-using LicenseApp.ViewModels;
-
 
 namespace LicenseApp.ViewModels
 {
-    public class HomePageViewModel : INotifyPropertyChanged
+    public class LstOfInstructorsViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
@@ -43,66 +37,42 @@ namespace LicenseApp.ViewModels
             }
         }
 
-        private bool search;
-        public bool Search 
+        private int allInstructors;
+        public int AllInstructors
         {
             get
             {
-                return this.search;
+                return this.allInstructors;
             }
             set
             {
-                if (this.search != value)
+                if (this.allInstructors != value)
                 {
 
-                    this.search = value;
-                    OnPropertyChanged("Search");
+                    this.allInstructors = value;
+                    OnPropertyChanged("AllInstructors");
                 }
             }
         }
 
-        private string starsRating;
-        public string StarsRating
-        {
-            get
-            {
-                return this.starsRating;
-            }
-            set
-            {
-                if (this.starsRating != value)
-                {
-
-                    this.starsRating = value;
-                    OnPropertyChanged("StarsRating");
-                }
-            }
-        }
-
-        private bool showNavigationBar;
-        public bool ShowNavigationBar 
-        {
-            get => showNavigationBar;
-            set
-            {
-                showNavigationBar = value;
-                OnPropertyChanged("ShowNavigationBar");
-            }
-        }
-
-        public HomePageViewModel()
+        public LstOfInstructorsViewModel()
         {
             InstructorList = new ObservableCollection<Instructor>();
+            CreateInstructorCollection();
         }
 
         public async void CreateInstructorCollection()
         {
+            App app = (App)App.Current;
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             ObservableCollection<Instructor> instructors = await proxy.GetAllInstructorsAsync();
             foreach (Instructor i in instructors)
             {
-                this.InstructorList.Add(i);
+                if (i.SchoolManagerId == ((SchoolManager)app.CurrentUser).SmanagerId)
+                    InstructorList.Add(i);
             }
+
+            AllInstructors = InstructorList.Count;
         }
 
         public ICommand SelctionChanged => new Command<Object>(OnSelectionChanged);
@@ -113,35 +83,25 @@ namespace LicenseApp.ViewModels
                 LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
                 Instructor chosenInstructor = (Instructor)obj;
 
-                ShowInstructorViewModel instructorContext = new ShowInstructorViewModel
+                ShowInstrucorSMViewModel instructorContext = new ShowInstrucorSMViewModel
                 {
                     IName = chosenInstructor.Iname,
                     ImageUrl = chosenInstructor.PhotoURI,
-                    Details = chosenInstructor.Details,
+                    Email = chosenInstructor.Email,
                     PhoneNum = chosenInstructor.PhoneNumber,
-                    TeachingArea = await proxy.GetAreaName(chosenInstructor.AreaId),
-                    WorkingTime = $"{chosenInstructor.StartTime}-{chosenInstructor.EndTime}",
+                    LessonLength = chosenInstructor.LessonLengthId,
                     Price = chosenInstructor.Price
                 };
 
                 App app = (App)App.Current;
-                if(app.CurrentUser != null)
+                if (app.CurrentUser != null)
                 {
-                    Page p = new ShowInstructorView(instructorContext);
+                    Page p = new ShowInstructorSMView(instructorContext);
                     await App.Current.MainPage.Navigation.PushAsync(p);
                 }
                 else
                     await App.Current.MainPage.DisplayAlert("שגיאה", "יש להתחבר למערכת כדי לגשת לפרטים נוספים של מורה", "בסדר");
             }
-        }
-
-        public ICommand SearchPageCommand => new Command(OpenSearchPage);
-
-        public async void OpenSearchPage()
-        {
-            App app = (App)App.Current;
-            Page p = new SearchPageView();
-            await App.Current.MainPage.Navigation.PushAsync(p);
         }
     }
 }

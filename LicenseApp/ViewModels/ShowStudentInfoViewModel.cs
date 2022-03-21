@@ -1,7 +1,10 @@
-﻿using System;
+﻿using LicenseApp.Models;
+using LicenseApp.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using Xamarin.Forms;
 
 namespace LicenseApp.ViewModels
 {
@@ -11,6 +14,17 @@ namespace LicenseApp.ViewModels
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private int studentId;
+        public int StudentId
+        {
+            get { return studentId; }
+            set
+            {
+                studentId = value;
+                OnPropertyChanged("StudentId");
+            }
         }
 
         private string sName;
@@ -101,5 +115,16 @@ namespace LicenseApp.ViewModels
             }
         }
 
+
+        public Command DeleteStudentCommand => new Command(DeleteStudent);
+
+        public async void DeleteStudent()
+        {
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            Student s = await proxy.DeleteStudent(StudentId);
+
+            Page p = new Views.InstructorMainTabView();
+            await App.Current.MainPage.Navigation.PushAsync(p);
+        }
     }
 }

@@ -37,6 +37,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+
         private int allStudents;
         public int AllStudents 
         {
@@ -86,7 +87,8 @@ namespace LicenseApp.ViewModels
 
                 ShowStudentInfoViewModel studentContext = new ShowStudentInfoViewModel
                 {
-                    ImageUrl = $"defaultPhoto.png",
+                    ImageUrl = chosenStudent.PhotoURI,
+                    StudentId = chosenStudent.StudentId,
                     SName = chosenStudent.Sname,
                     SAge = DateTime.Today.Year - ((DateTime)chosenStudent.Birthday).Year,
                     SCity = (await proxy.GetCityById(chosenStudent.CityId)).CityName,
