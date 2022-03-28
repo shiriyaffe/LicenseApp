@@ -25,5 +25,10 @@ namespace LicenseApp.Views
         {
             theImage.Source = obj;
         }
+
+        private void GenderPicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

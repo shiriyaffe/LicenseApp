@@ -28,11 +28,11 @@
             <FontImageSource Color="#014f86" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.Bars}"/>
         </local:ListOfInstructorsView.IconImageSource>
     </local:ListOfInstructorsView>
-    <local:Test>
-        <local:Test.IconImageSource>
+    <local:AllStudentsListInSchoolView>
+        <local:AllStudentsListInSchoolView.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.GraduationCap}"/>
-        </local:Test.IconImageSource>
-    </local:Test>
+        </local:AllStudentsListInSchoolView.IconImageSource>
+    </local:AllStudentsListInSchoolView>
     <local:Test>
         <local:Test.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.EnvelopeOpenText}"/>

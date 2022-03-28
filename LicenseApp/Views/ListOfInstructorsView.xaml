@@ -12,7 +12,7 @@
                         <VisualState x:Name="Selected">
                             <VisualState.Setters>
                                 <Setter Property="BackgroundColor"
-                                        Value="#caf0f8" />
+                                        Value="Transparent" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -23,7 +23,10 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Padding="10,10">
-                <SearchBar Placeholder="חפש מורה..." ></SearchBar>
+                <SearchBar x:Name="searchBar" 
+                       Placeholder="חפש מורה לפי שם..." 
+                       Text="{Binding SearchTerm}"
+                       Margin="0,8,0,0"/>
                 <!--<ImageButton BackgroundColor="Transparent" Source="Search.png" Command="{Binding SearchPageCommand}" Padding="5" WidthRequest="35" HeightRequest="35" HorizontalOptions="End"></ImageButton>-->
                 <CollectionView EmptyView="אין מורים במערכת" x:Name="collectionName" 
                             ItemsSource="{Binding InstructorList}" SelectionMode="Single"

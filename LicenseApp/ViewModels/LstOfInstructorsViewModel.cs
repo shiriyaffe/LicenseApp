@@ -91,7 +91,8 @@ namespace LicenseApp.ViewModels
                     PhoneNum = chosenInstructor.PhoneNumber,
                     LessonLength = chosenInstructor.LessonLengthId,
                     Price = chosenInstructor.Price,
-                    InstructorID = chosenInstructor.InstructorId
+                    InstructorID = chosenInstructor.InstructorId,
+                    SLength = (await proxy.GetLessonLengthById(chosenInstructor.LessonLengthId)).Slength
                 };
 
                 App app = (App)App.Current;
@@ -103,6 +104,68 @@ namespace LicenseApp.ViewModels
                 else
                     await App.Current.MainPage.DisplayAlert("שגיאה", "יש להתחבר למערכת כדי לגשת לפרטים נוספים של מורה", "בסדר");
             }
+        }
+
+        //private string searchTerm;
+        //public string SearchTerm
+        //{
+        //    get
+        //    {
+        //        return this.searchTerm;
+        //    }
+        //    set
+        //    {
+        //        if (this.searchTerm != value)
+        //        {
+        //            this.searchTerm = value;
+        //            OnTextChanged(value);
+        //            OnPropertyChanged("SearchTerm");
+        //        }
+        //    }
+        //}
+
+        //public void OnTextChanged(string search)
+        //{
+        //    App app = (App)App.Current;
+
+        //    //Filter the list of shops based on the search term
+        //    if (String.IsNullOrWhiteSpace(search) || String.IsNullOrEmpty(search))
+        //    {
+        //        foreach (Instructor i in )
+        //        {
+        //            if (!this.FilteredShops.Contains(s))
+        //                this.FilteredShops.Add(s);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        foreach (Shop s in app.AllShops)
+        //        {
+        //            string contactString = $"{s.ShopName.ToLower()}|{s.ShopCity.ToLower()}";
+
+        //            if (!this.FilteredShops.Contains(s) && contactString.Contains(search.ToLower()))
+        //                this.FilteredShops.Add(s);
+        //            else if (this.FilteredShops.Contains(s) && !contactString.Contains(search.ToLower()))
+        //                this.FilteredShops.Remove(s);
+        //        }
+        //    }
+        //    this.FilteredShops = new ObservableCollection<Shop>(this.FilteredShops.OrderBy(s => s.ShopName));
+        //}
+
+        public ICommand PerformSearch => new Command<string>(OnSearch);
+
+        public void OnSearch(string search)
+        {
+            if (search != "")
+            {
+                foreach (Instructor i in InstructorList)
+                {
+                    if (!i.Iname.Contains(search))
+                        InstructorList.Remove(i);
+                }
+            }
+            else
+                CreateInstructorCollection();
         }
     }
 }

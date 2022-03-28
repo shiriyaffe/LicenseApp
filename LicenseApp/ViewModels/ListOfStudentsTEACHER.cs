@@ -77,6 +77,24 @@ namespace LicenseApp.ViewModels
             AllStudents = StudentList.Count;
         }
 
+        private double GetAge(DateTime birthday)
+        {
+            int month = 0;
+            if(birthday.Month > DateTime.Today.Month)
+            {
+                if(birthday.Day > DateTime.Today.Day)
+                {
+                    month = DateTime.Today.Month - birthday.Month;
+                }
+                else
+                {
+                    month = (DateTime.Today.Month - birthday.Month) + 1;
+                }
+            }
+
+            return (DateTime.Today.Year - birthday.Year) + (month * 0.1);
+        }
+
         public ICommand SelctionChanged => new Command<Object>(OnSelectionChanged);
         public async void OnSelectionChanged(Object obj)
         {
@@ -90,7 +108,7 @@ namespace LicenseApp.ViewModels
                     ImageUrl = chosenStudent.PhotoURI,
                     StudentId = chosenStudent.StudentId,
                     SName = chosenStudent.Sname,
-                    SAge = DateTime.Today.Year - ((DateTime)chosenStudent.Birthday).Year,
+                    SAge = GetAge(chosenStudent.Birthday),
                     SCity = (await proxy.GetCityById(chosenStudent.CityId)).CityName,
                     LessonsCount = chosenStudent.LessonsCount,
                     PhoneNum = chosenStudent.PhoneNumber

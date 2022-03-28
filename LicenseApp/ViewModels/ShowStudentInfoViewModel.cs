@@ -71,8 +71,8 @@ namespace LicenseApp.ViewModels
             }
         }
 
-        private int sAge;
-        public int SAge
+        private double sAge;
+        public double SAge
         {
             get { return sAge; }
             set

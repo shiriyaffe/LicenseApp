@@ -39,7 +39,7 @@
                     <Label Text="מספר טלפון:" Grid.Column="0" Grid.Row="1" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
                     <Label Grid.Column="1" Grid.Row="1" Text="{Binding PhoneNum}" FontSize="18"/>
                     <Label Text="אורך שיעור:" Grid.Column="0" Grid.Row="2" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                    <Label Grid.Column="1" Grid.Row="2" Text="{Binding LessonLength}" FontSize="18"/>
+                    <Label Grid.Column="1" Grid.Row="2" Text="{Binding SLength}" FontSize="18"/>
                     <Label Text="מחיר לשיעור:" Grid.Column="0" Grid.Row="3" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
                     <Label Grid.Column="1" Grid.Row="3" Text="{Binding Price}" FontSize="18"/>
                 </Grid>

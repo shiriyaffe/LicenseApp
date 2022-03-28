@@ -16,22 +16,30 @@
         <ScrollView>
         <StackLayout Padding="40">
             <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
-                <Picker Title="אזור לימוד" FontAttributes="Bold" ItemsSource="{Binding Areas}" ItemDisplayBinding="{Binding AreaName}" SelectedItem="{Binding Area}">
+                    <Picker SelectedIndex="{Binding AreaPicker}" Title="אזור לימוד" FontAttributes="Bold" ItemsSource="{Binding Areas}" ItemDisplayBinding="{Binding AreaName}" SelectedItem="{Binding Area}">
                 </Picker>
             </Frame>
-            <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
-                <Picker Title="תיבת הילוכים" FontAttributes="Bold" ItemsSource="{Binding Gearboxes}" ItemDisplayBinding="{Binding Type}" SelectedItem="{Binding Gearbox}">
+                <Label Padding="0" Text="{Binding AreaError}" HorizontalOptions="Center" IsVisible="{Binding ShowAreaError}" Style="{StaticResource labelErrorStyle}"/>
+            
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                    <Picker SelectedIndex="{Binding GearboxPicker}" Title="תיבת הילוכים" FontAttributes="Bold" ItemsSource="{Binding Gearboxes}" ItemDisplayBinding="{Binding Type}" SelectedItem="{Binding Gearbox}">
                 </Picker>
             </Frame>
-            <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
-                <Picker Title="סוג רישיון" FontAttributes="Bold" ItemsSource="{Binding LicenseTypes}" ItemDisplayBinding="{Binding Ltype}" SelectedItem="{Binding LicenseType}">
+                <Label Padding="0" Text="{Binding GearboxError}" HorizontalOptions="Center" IsVisible="{Binding ShowGearboxError}" Style="{StaticResource labelErrorStyle}"/>
+            
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                    <Picker SelectedIndex="{Binding LicenseTypePicker}" Title="סוג רישיון" FontAttributes="Bold" ItemsSource="{Binding LicenseTypes}" ItemDisplayBinding="{Binding Ltype}" SelectedItem="{Binding LicenseType}">
                 </Picker>
             </Frame>
-            <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
-                <Picker Title="אורך שיעור (בדקות)" FontAttributes="Bold" ItemsSource="{Binding LessonLengths}" ItemDisplayBinding="{Binding Slength}" SelectedItem="{Binding LessonLength}">
+                <Label Padding="0" Text="{Binding LicenseTypeError}" HorizontalOptions="Center" IsVisible="{Binding ShowLicenseTypeError}" Style="{StaticResource labelErrorStyle}"/>
+            
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                    <Picker SelectedIndex="{Binding LessonLengthPicker}" Title="אורך שיעור (בדקות)" FontAttributes="Bold" ItemsSource="{Binding LessonLengths}" ItemDisplayBinding="{Binding Slength}" SelectedItem="{Binding LessonLength}">
                 </Picker>
             </Frame>
-            <Label/>
+                <Label Padding="0" Text="{Binding LessonLengthError}" HorizontalOptions="Center" IsVisible="{Binding ShowLessonLengthError}" Style="{StaticResource labelErrorStyle}"/>
+            
+                <Label/>
             <Slider Value="{Binding SliderValue}" Minimum="0" Maximum="500" ThumbColor="LightBlue" MaximumTrackColor="Gray" MinimumTrackColor="LightBlue"/>
             <Grid>
                 <Grid.RowDefinitions>
@@ -46,10 +54,12 @@
             </Grid>
             <Label/>
             <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
-                <Picker Title="בית ספר לנהיגה" FontAttributes="Bold" ItemsSource="{Binding DrivingSchools}" ItemDisplayBinding="{Binding SchoolName}" SelectedItem="{Binding DrivingSchool}">
+                    <Picker SelectedIndex="{Binding DrivingSchoolPicker}" Title="בית ספר לנהיגה" FontAttributes="Bold" ItemsSource="{Binding DrivingSchools}" ItemDisplayBinding="{Binding SchoolName}" SelectedItem="{Binding DrivingSchool}">
                 </Picker>
             </Frame>
-            <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                <Label Padding="0" Text="{Binding DrivingSchoolError}" HorizontalOptions="Center" IsVisible="{Binding ShowDrivingSchoolError}" Style="{StaticResource labelErrorStyle}"/>
+            
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -66,7 +76,9 @@
                     </Picker>
                 </Grid>
             </Frame>
-            <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                <Label Padding="0" Text="{Binding WHourError}" HorizontalOptions="Center" IsVisible="{Binding ShowWHourError}" Style="{StaticResource labelErrorStyle}"/>
+            
+                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
                     <Entry FontAttributes="Bold" Placeholder="כתוב על עצמך" Text="{Binding InstructorDetails}"/>
             </Frame>
                 <Label Padding="0" Text="{Binding DetailError}"  HorizontalOptions="Center" IsVisible="{Binding ShowDetailError}" Style="{StaticResource labelErrorStyle}"/>

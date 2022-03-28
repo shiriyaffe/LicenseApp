@@ -21,6 +21,7 @@ namespace LicenseApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        #region area
         public List<Area> Areas
         {
             get
@@ -42,6 +43,55 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public int areaPicker;
+        public int AreaPicker
+        {
+            get { return areaPicker; }
+            set
+            {
+                areaPicker = value;
+                ValidateArea();
+                OnPropertyChanged("AreaPicker");
+            }
+        }
+
+        private string areaError;
+
+        public string AreaError
+        {
+            get => areaError;
+            set
+            {
+                areaError = value;
+                OnPropertyChanged("AreaError");
+            }
+        }
+
+        private bool showAreaError;
+
+        public bool ShowAreaError
+        {
+            get => showAreaError;
+            set
+            {
+                showAreaError = value;
+                OnPropertyChanged("ShowAreaError");
+            }
+        }
+
+        public void ValidateArea()
+        {
+            this.ShowAreaError = AreaPicker == -1;
+            if (this.ShowAreaError)
+            {
+                this.AreaError = "אזור לימוד הוא שדה!";
+            }
+            else
+                this.AreaError = null;
+        }
+        #endregion
+
+        #region year
         public List<int> Years
         {
             get
@@ -60,6 +110,54 @@ namespace LicenseApp.ViewModels
                 OnPropertyChanged("EYear");
             }
         }
+
+        public int eYearPicker;
+        public int EYearPicker
+        {
+            get { return eYearPicker; }
+            set
+            {
+                eYearPicker = value;
+                ValidateEYear();
+                OnPropertyChanged("EYearPicker");
+            }
+        }
+
+        private string eYearError;
+
+        public string EYearError
+        {
+            get => eYearError;
+            set
+            {
+                eYearError = value;
+                OnPropertyChanged("EYearError");
+            }
+        }
+
+        private bool showEYearError;
+
+        public bool ShowEYearError
+        {
+            get => showEYearError;
+            set
+            {
+                showEYearError = value;
+                OnPropertyChanged("ShowEYearError");
+            }
+        }
+
+        public void ValidateEYear()
+        {
+            this.ShowEYearError = EYearPicker == -1;
+            if (this.ShowEYearError)
+            {
+                this.EYearError = "שנת הקמה הוא שדה!";
+            }
+            else
+                this.EYearError = null;
+        }
+        #endregion
 
         #region שם בית ספר
         private string schoolName;
@@ -181,9 +279,14 @@ namespace LicenseApp.ViewModels
 
         public ManagerSignInViewModel()
         {
+            AreaPicker = -1;
+            EYear = -1;
+
             ShowError = false;
             this.ShowNameError = false;
             this.ShowNumberError = false;
+            this.ShowAreaError = false;
+            this.ShowEYearError = false;
         }
 
         private bool ValidateForm()
@@ -191,10 +294,12 @@ namespace LicenseApp.ViewModels
             //Validate all fields first
             ValidateName();
             ValidateNumber();
+            ValidateArea();
+            ValidateEYear();
 
 
             //check if any validation failed
-            if (ShowNameError || ShowNumberError)
+            if (ShowNameError || ShowNumberError || ShowEYearError || ShowAreaError)
                 return false;
             return true;
         }

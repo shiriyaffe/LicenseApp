@@ -32,6 +32,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        #region city
         public List<City> Cities 
         { 
             get 
@@ -53,6 +54,55 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public int cityPicker;
+        public int CityPicker
+        {
+            get { return cityPicker; }
+            set
+            {
+                cityPicker = value;
+                ValidateCity();
+                OnPropertyChanged("CityPicker");
+            }
+        }
+
+        private string cityError;
+
+        public string CityError
+        {
+            get => cityError;
+            set
+            {
+                cityError = value;
+                OnPropertyChanged("CityError");
+            }
+        }
+
+        private bool showCityError;
+
+        public bool ShowCityError
+        {
+            get => showCityError;
+            set
+            {
+                showCityError = value;
+                OnPropertyChanged("ShowCityError");
+            }
+        }
+
+        public void ValidateCity()
+        {
+            this.ShowCityError = CityPicker == -1;
+            if (this.ShowCityError)
+            {
+                this.CityError = "מגדר הוא שדה חובה!";
+            }
+            else
+                this.CityError = null;
+        }
+        #endregion
+
+        #region gender
         public List<Gender> Genders
         {
             get
@@ -74,6 +124,55 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public int genderPicker;
+        public int GenderPicker
+        {
+            get { return genderPicker; }
+            set
+            {
+                genderPicker = value;
+                ValidateGender();
+                OnPropertyChanged("GenderPicker");
+            }
+        }
+
+        private string genderError;
+
+        public string GenderError
+        {
+            get => genderError;
+            set
+            {
+                genderError = value;
+                OnPropertyChanged("GenderError");
+            }
+        }
+
+        private bool showGenderError;
+
+        public bool ShowGenderError
+        {
+            get => showGenderError;
+            set
+            {
+                showGenderError = value;
+                OnPropertyChanged("ShowGenderError");
+            }
+        }
+
+        public void ValidateGender()
+        {
+            this.ShowGenderError = GenderPicker == -1;
+            if (this.ShowGenderError)
+            {
+                this.GenderError = "מגדר הוא שדה חובה!";
+            }
+            else
+                this.GenderError = null;
+        }
+        #endregion
+
+        #region gearbox
         public List<Gearbox> Gearboxes
         {
             get
@@ -95,6 +194,55 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public int gearboxPicker;
+        public int GearboxPicker
+        {
+            get { return gearboxPicker; }
+            set
+            {
+                gearboxPicker = value;
+                ValidateGearbox();
+                OnPropertyChanged("GearboxPicker");
+            }
+        }
+
+        private string gearboxError;
+
+        public string GearboxError
+        {
+            get => gearboxError;
+            set
+            {
+                gearboxError = value;
+                OnPropertyChanged("GearboxError");
+            }
+        }
+
+        private bool showGearboxError;
+
+        public bool ShowGearboxError
+        {
+            get => showGearboxError;
+            set
+            {
+                showGearboxError = value;
+                OnPropertyChanged("ShowGearboxError");
+            }
+        }
+
+        public void ValidateGearbox()
+        {
+            this.ShowGearboxError = GearboxPicker == -1;
+            if (this.ShowGearboxError)
+            {
+                this.GearboxError = "תיבת הילוכים הוא שדה חובה!";
+            }
+            else
+                this.GearboxError = null;
+        }
+        #endregion
+
+        #region license type
         public List<LicenseType> LicenseTypes
         {
             get
@@ -116,6 +264,55 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public int licenseTypePicker;
+        public int LicenseTypePicker
+        {
+            get { return licenseTypePicker; }
+            set
+            {
+                licenseTypePicker = value;
+                ValidateLicenseType();
+                OnPropertyChanged("LicenseTypePicker");
+            }
+        }
+
+        private string licenseTypeError;
+
+        public string LicenseTypeError
+        {
+            get => licenseTypeError;
+            set
+            {
+                licenseTypeError = value;
+                OnPropertyChanged("LicenseTypeError");
+            }
+        }
+
+        private bool showLicenseTypeError;
+
+        public bool ShowLicenseTypeError
+        {
+            get => showLicenseTypeError;
+            set
+            {
+                showLicenseTypeError = value;
+                OnPropertyChanged("ShowLicenseTypeError");
+            }
+        }
+
+        public void ValidateLicenseType()
+        {
+            this.ShowLicenseTypeError = LicenseTypePicker == -1;
+            if (this.ShowLicenseTypeError)
+            {
+                this.LicenseTypeError = "סוג רישיון הוא שדה חובה!";
+            }
+            else
+                this.LicenseTypeError = null;
+        }
+        #endregion
+
+        #region lesson length
         public List<LessonLength> LessonLengths
         {
             get
@@ -136,6 +333,69 @@ namespace LicenseApp.ViewModels
                 OnPropertyChanged("LessonLength");
             }
         }
+
+        public int lessonLengthPicker;
+        public int LessonLengthPicker
+        {
+            get { return lessonLengthPicker; }
+            set
+            {
+                lessonLengthPicker = value;
+                ValidateLessonLength();
+                OnPropertyChanged("LessonLengthPicker");
+            }
+        }
+
+        private string lessonLengthError;
+
+        public string LessonLengthError
+        {
+            get => lessonLengthError;
+            set
+            {
+                lessonLengthError = value;
+                OnPropertyChanged("LessonLengthError");
+            }
+        }
+
+        private bool showLessonLengthError;
+
+        public bool ShowLessonLengthError
+        {
+            get => showLessonLengthError;
+            set
+            {
+                showLessonLengthError = value;
+                OnPropertyChanged("ShowLessonLengthError");
+            }
+        }
+
+        public void ValidateLessonLength()
+        {
+            this.ShowLessonLengthError = LessonLengthPicker == -1;
+            if (this.ShowLessonLengthError)
+            {
+                this.LessonLengthError = "אורך שיעור הוא שדה חובה!";
+            }
+            else
+                this.LessonLengthError = null;
+        }
+        #endregion
+
+        #region מקור התמונה
+        private string studentImgSrc;
+
+        public string StudentImgSrc
+        {
+            get => studentImgSrc;
+            set
+            {
+                studentImgSrc = value;
+                OnPropertyChanged("StudentImgSrc");
+            }
+        }
+        private const string DEFAULT_PHOTO_SRC = "defaultPhoto.png";
+        #endregion
 
         private string address;
         public string Address
@@ -172,26 +432,40 @@ namespace LicenseApp.ViewModels
             }
         }
 
-        #region מקור התמונה
-        private string studentImgSrc;
-
-        public string StudentImgSrc
-        {
-            get => studentImgSrc;
-            set
-            {
-                studentImgSrc = value;
-                OnPropertyChanged("StudentImgSrc");
-            }
-        }
-        private const string DEFAULT_PHOTO_SRC = "defaultPhoto.png";
-        #endregion
-
         public StudentSignUp()
         {
+            GenderPicker = -1;
+            CityPicker = -1;
+            GearboxPicker = -1;
+            LicenseTypePicker = -1;
+            LessonLengthPicker = -1;
+
+            ShowLicenseTypeError = false;
+            ShowLessonLengthError = false;
+            ShowGearboxError = false;
+            ShowCityError = false;
+            ShowGenderError = false;
+
+
             SliderValue = 0;
             ShowError = false;
             this.StudentImgSrc = DEFAULT_PHOTO_SRC;
+        }
+
+        private bool ValidateForm()
+        {
+            //Validate all fields first
+            ValidateGender();
+            ValidateCity();
+            ValidateGearbox();
+            ValidateLessonLength();
+            ValidateLicenseType();
+
+
+            //check if any validation failed
+            if (ShowGenderError || ShowCityError || ShowGearboxError || ShowLessonLengthError || ShowLicenseTypeError)
+                return false;
+            return true;
         }
 
         public Command SignUpCommand => new Command(SignUpAsStudent);
@@ -201,48 +475,54 @@ namespace LicenseApp.ViewModels
             App app = (App)App.Current;
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
 
-            Student s = new Student
+            if (ValidateForm())
             {
-                Sname = app.TempUser.Name,
-                Email = app.TempUser.Email,
-                Pass = app.TempUser.UserPswd,
-                Birthday = app.TempUser.BirthDate,
-                PhoneNumber = app.TempUser.PhoneNumber,
-                GenderId = app.TempUser.Gender.GenderId,
-                Saddress = address,
-                CityId = City.CityId,
-                GearboxId = Gearbox.GearboxId,
-                LicenseTypeId = LicenseType.LicenseTypeId,
-                LessonLengthId = LessonLength.LessonLengthId,
-                TeacherGender = Gender.GenderId,
-                HighestPrice = SliderValue,
-                LessonsCount = 0,
-                RegistrationDate = DateTime.Today,
-                InstructorId = 1
-            };
-
-           
-            Student student = await proxy.StudentSignUpAsync(s);
-
-            if(student != null)
-            {
-                if (app.TempUser.UserImg != null)
+                Student s = new Student
                 {
-                    bool success = await proxy.UploadImage(new FileInfo()
+                    Sname = app.TempUser.Name,
+                    Email = app.TempUser.Email,
+                    Pass = app.TempUser.UserPswd,
+                    Birthday = app.TempUser.BirthDate,
+                    PhoneNumber = app.TempUser.PhoneNumber,
+                    GenderId = app.TempUser.Gender.GenderId,
+                    Saddress = address,
+                    CityId = City.CityId,
+                    GearboxId = Gearbox.GearboxId,
+                    LicenseTypeId = LicenseType.LicenseTypeId,
+                    LessonLengthId = LessonLength.LessonLengthId,
+                    TeacherGender = Gender.GenderId,
+                    HighestPrice = SliderValue,
+                    LessonsCount = 0,
+                    RegistrationDate = DateTime.Today,
+                    InstructorId = 1
+                };
+
+
+                Student student = await proxy.StudentSignUpAsync(s);
+
+                if (student != null)
+                {
+                    if (app.TempUser.UserImg != null)
                     {
-                        Name = app.TempUser.UserImg
-                    }, $"Students\\{student.StudentId}.jpg");
+                        bool success = await proxy.UploadImage(new FileInfo()
+                        {
+                            Name = app.TempUser.UserImg
+                        }, $"Students\\{student.StudentId}.jpg");
+                    }
+
+                    app.CurrentUser = student;
+
+                    app.MainPage = new NavigationPage(new StudentMainTabView());
                 }
 
-                app.CurrentUser = student;
-
-                app.MainPage = new NavigationPage(new StudentMainTabView());
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "ההרשמה נכשלה! בדוק את הפרטים שהזנת ונסה שנית", "בסדר");
+                }
             }
             else
             {
-                //SubmitError = "ההרשמה נכשלה! נסה שנית";
-                //ShowError = true;
-                await App.Current.MainPage.DisplayAlert("שגיאה", "ההרשמה נכשלה! בדוק את הפרטים שהזנת ונסה שנית", "בסדר");
+                await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה! לא ניתן להמשיך בהרשמה", "בסדר");
             }
         }
     }

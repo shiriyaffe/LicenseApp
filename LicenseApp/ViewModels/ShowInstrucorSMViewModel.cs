@@ -82,6 +82,27 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public int sLength;
+        public int SLength
+        {
+            get { return sLength; }
+            set
+            {
+                sLength = value;
+                OnPropertyChanged(" SLength");
+            }
+        }
+
+        //private async void GetLessonLength()
+        //{
+        //    LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+        //    LessonLength l = await proxy.GetLessonLengthById(LessonLength);
+        //    if (l != null)
+        //    {
+        //        this.SLength = l.Slength;
+        //    }
+        //}
+
         private int instructorID;
         public int InstructorID
         {

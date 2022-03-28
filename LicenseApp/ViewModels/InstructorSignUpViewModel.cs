@@ -32,6 +32,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        #region gearbox
         public List<Gearbox> Gearboxes
         {
             get
@@ -53,6 +54,53 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public int gearboxPicker;
+        public int GearboxPicker
+        {
+            get { return gearboxPicker; }
+            set
+            {
+                gearboxPicker = value;
+                ValidateGearbox();
+                OnPropertyChanged("GearboxPicker");
+            }
+        }
+
+        private string gearboxError;
+        public string GearboxError
+        {
+            get => gearboxError;
+            set
+            {
+                gearboxError = value;
+                OnPropertyChanged("GearboxError");
+            }
+        }
+
+        private bool showGearboxError;
+        public bool ShowGearboxError
+        {
+            get => showGearboxError;
+            set
+            {
+                showGearboxError = value;
+                OnPropertyChanged("ShowGearboxError");
+            }
+        }
+
+        public void ValidateGearbox()
+        {
+            this.ShowGearboxError = GearboxPicker == -1;
+            if (this.ShowGearboxError)
+            {
+                this.GearboxError = "תיבת הילוכים הוא שדה חובה!";
+            }
+            else
+                this.GearboxError = null;
+        }
+        #endregion
+
+        #region license type
         public List<LicenseType> LicenseTypes
         {
             get
@@ -74,6 +122,54 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public int licenseTypePicker;
+        public int LicenseTypePicker
+        {
+            get { return licenseTypePicker; }
+            set
+            {
+                licenseTypePicker = value;
+                ValidateLicenseType();
+                OnPropertyChanged("LicenseTypePicker");
+            }
+        }
+
+        private string licenseTypeError;
+
+        public string LicenseTypeError
+        {
+            get => licenseTypeError;
+            set
+            {
+                licenseTypeError = value;
+                OnPropertyChanged("LicenseTypeError");
+            }
+        }
+
+        private bool showLicenseTypeError;
+        public bool ShowLicenseTypeError
+        {
+            get => showLicenseTypeError;
+            set
+            {
+                showLicenseTypeError = value;
+                OnPropertyChanged("ShowLicenseTypeError");
+            }
+        }
+
+        public void ValidateLicenseType()
+        {
+            this.ShowLicenseTypeError = LicenseTypePicker == -1;
+            if (this.ShowLicenseTypeError)
+            {
+                this.LicenseTypeError = "סוג רישיון הוא שדה חובה!";
+            }
+            else
+                this.LicenseTypeError = null;
+        }
+        #endregion
+
+        #region lesson length
         public List<LessonLength> LessonLengths
         {
             get
@@ -95,6 +191,55 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public int lessonLengthPicker;
+        public int LessonLengthPicker
+        {
+            get { return lessonLengthPicker; }
+            set
+            {
+                lessonLengthPicker = value;
+                ValidateLessonLength();
+                OnPropertyChanged("LessonLengthPicker");
+            }
+        }
+
+        private string lessonLengthError;
+
+        public string LessonLengthError
+        {
+            get => lessonLengthError;
+            set
+            {
+                lessonLengthError = value;
+                OnPropertyChanged("LessonLengthError");
+            }
+        }
+
+        private bool showLessonLengthError;
+
+        public bool ShowLessonLengthError
+        {
+            get => showLessonLengthError;
+            set
+            {
+                showLessonLengthError = value;
+                OnPropertyChanged("ShowLessonLengthError");
+            }
+        }
+
+        public void ValidateLessonLength()
+        {
+            this.ShowLessonLengthError = LessonLengthPicker == -1;
+            if (this.ShowLessonLengthError)
+            {
+                this.LessonLengthError = "אורך שיעור הוא שדה חובה!";
+            }
+            else
+                this.LessonLengthError = null;
+        }
+        #endregion
+
+        #region working hour
         public List<WorkingHour> WorkingHours
         {
             get
@@ -127,6 +272,67 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public int startPicker;
+        public int StartPicker
+        {
+            get { return startPicker; }
+            set
+            {
+                startPicker = value;
+                ValidateWHour();
+                OnPropertyChanged("StartPicker");
+            }
+        }
+
+        public int endPicker;
+        public int EndPicker
+        {
+            get { return endPicker; }
+            set
+            {
+                endPicker = value;
+                ValidateWHour();
+                OnPropertyChanged("EndPicker");
+            }
+        }
+
+        private string wHourError;
+
+        public string WHourError
+        {
+            get => wHourError;
+            set
+            {
+                wHourError = value;
+                OnPropertyChanged("WHourError");
+            }
+        }
+
+        private bool showWHourError;
+
+        public bool ShowWHourError
+        {
+            get => showWHourError;
+            set
+            {
+                showWHourError = value;
+                OnPropertyChanged("ShowWHourError");
+            }
+        }
+
+        public void ValidateWHour()
+        {
+            this.ShowWHourError = StartPicker == -1 || EndPicker == -1;
+            if (this.ShowWHourError)
+            {
+                this.WHourError = "שעות התחלה וסיום הם שדות חובה!";
+            }
+            else
+                this.WHourError = null;
+        }
+        #endregion
+
+        #region area
         public List<Area> Areas
         {
             get
@@ -148,6 +354,55 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public int areaPicker;
+        public int AreaPicker
+        {
+            get { return areaPicker; }
+            set
+            {
+                areaPicker = value;
+                ValidateArea();
+                OnPropertyChanged("AreaPicker");
+            }
+        }
+
+        private string areaError;
+
+        public string AreaError
+        {
+            get => areaError;
+            set
+            {
+                areaError = value;
+                OnPropertyChanged("AreaError");
+            }
+        }
+
+        private bool showAreaError;
+
+        public bool ShowAreaError
+        {
+            get => showAreaError;
+            set
+            {
+                showAreaError = value;
+                OnPropertyChanged("ShowAreaError");
+            }
+        }
+
+        public void ValidateArea()
+        {
+            this.ShowAreaError = AreaPicker == -1;
+            if (this.ShowAreaError)
+            {
+                this.AreaError = "אזור לימוד הוא שדה!";
+            }
+            else
+                this.AreaError = null;
+        }
+        #endregion
+
+        #region driving school
         public List<DrivingSchool> DrivingSchools
         {
             get
@@ -168,6 +423,54 @@ namespace LicenseApp.ViewModels
                 OnPropertyChanged("DrivingSchool");
             }
         }
+
+        public int drivingSchoolPicker;
+        public int DrivingSchoolPicker
+        {
+            get { return drivingSchoolPicker; }
+            set
+            {
+                drivingSchoolPicker = value;
+                ValidateDrivingSchool();
+                OnPropertyChanged("DrivingSchoolPicker");
+            }
+        }
+
+        private string drivingSchoolError;
+
+        public string DrivingSchoolError
+        {
+            get => drivingSchoolError;
+            set
+            {
+                drivingSchoolError = value;
+                OnPropertyChanged("DrivingSchoolError");
+            }
+        }
+
+        private bool showDrivingSchoolError;
+
+        public bool ShowDrivingSchoolError
+        {
+            get => showDrivingSchoolError;
+            set
+            {
+                showDrivingSchoolError = value;
+                OnPropertyChanged("ShowDrivingSchoolError");
+            }
+        }
+
+        public void ValidateDrivingSchool()
+        {
+            this.ShowDrivingSchoolError = DrivingSchoolPicker == -1;
+            if (this.ShowDrivingSchoolError)
+            {
+                this.DrivingSchoolError = "בית ספר לנהיגה הוא שדה חובה!";
+            }
+            else
+                this.DrivingSchoolError = null;
+        }
+        #endregion
 
         #region פרטי המורה
         private string instructorDetails;
@@ -298,8 +601,41 @@ namespace LicenseApp.ViewModels
 
         public InstructorSignUpViewModel()
         {
+            StartPicker = -1;
+            EndPicker = -1;
+            LessonLengthPicker = -1;
+            LicenseTypePicker = -1;
+            GearboxPicker = -1;
+            DrivingSchoolPicker = -1;
+            AreaPicker = -1;
+
+            ShowWHourError = false;
+            ShowLessonLengthError = false;
+            ShowLicenseTypeError = false;
+            ShowGearboxError = false;
+            ShowDrivingSchoolError = false;
+            ShowAreaError = false;
+
             SliderValue = 0;
             ShowError = false;
+        }
+
+        private bool ValidateForm()
+        {
+            //Validate all fields first
+            ValidateArea();
+            ValidateDrivingSchool();
+            ValidateGearbox();
+            ValidateLessonLength();
+            ValidateLicenseType();
+            ValidateWHour();
+            ValidateDetails();
+
+
+            //check if any validation failed
+            if (ShowAreaError || ShowDetailError || ShowDrivingSchoolError || ShowWHourError || ShowGearboxError || ShowLessonLengthError || ShowLicenseTypeError)
+                return false;
+            return true;
         }
 
         public Command SignUpCommand => new Command(SignUpAsInstructor);
@@ -308,7 +644,7 @@ namespace LicenseApp.ViewModels
         {
             App app = (App)App.Current;
 
-            if (!ShowDetailError)
+            if (ValidateForm())
             {
                 Instructor i = new Instructor
                 {

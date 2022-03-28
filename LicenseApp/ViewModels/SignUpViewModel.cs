@@ -314,6 +314,19 @@ namespace LicenseApp.ViewModels
         }
 
         #endregion
+        
+        #region UserImgSrc
+        private string userImgSrc;
+        public string UserImgSrc
+        {
+            get => userImgSrc;
+            set
+            {
+                userImgSrc = value;
+                OnPropertyChanged("UserImgSrc");
+            }
+        }
+        private const string DEFAULT_PHOTO_SRC = "defaultPhoto.png";
 
         FileResult imageFileResult;
         public event Action<ImageSource> SetImageSourceEvent;
@@ -359,18 +372,6 @@ namespace LicenseApp.ViewModels
         }
         #endregion
 
-        #region UserImgSrc
-        private string userImgSrc;
-        public string UserImgSrc
-        {
-            get => userImgSrc;
-            set
-            {
-                userImgSrc = value;
-                OnPropertyChanged("UserImgSrc");
-            }
-        }
-        private const string DEFAULT_PHOTO_SRC = "defaultPhoto.png";
         #endregion
 
         private string nextError;
@@ -397,6 +398,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        #region gender
         public List<Gender> Genders
         {
             get
@@ -418,6 +420,54 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public int genderPicker;
+        public int GenderPicker
+        {
+            get { return genderPicker; }
+            set
+            {
+                genderPicker = value;
+                ValidateGender();
+                OnPropertyChanged("GenderPicker");
+            }
+        }
+
+        private string genderError;
+
+        public string GenderError
+        {
+            get => genderError;
+            set
+            {
+                genderError = value;
+                OnPropertyChanged("GenderError");
+            }
+        }
+
+        private bool showGenderError;
+
+        public bool ShowGenderError
+        {
+            get => showGenderError;
+            set
+            {
+                showGenderError = value;
+                OnPropertyChanged("ShowGenderError");
+            }
+        }
+
+        public void ValidateGender()
+        {
+            this.ShowGenderError = GenderPicker == -1;
+            if (this.ShowGenderError)
+            {
+                this.GenderError = "מגדר הוא שדה חובה!";
+            }
+            else
+                this.GenderError = null;
+        }
+        #endregion
+
         public SignUpViewModel()
         {
             this.ShowNameError = false;
@@ -426,6 +476,9 @@ namespace LicenseApp.ViewModels
             this.ShowDateError = false;
             this.ShowNumberError = false;
             ShowNextError = false;
+
+            GenderPicker = -1;
+            ShowGenderError = false;
 
             this.UserImgSrc = DEFAULT_PHOTO_SRC;
             this.imageFileResult = null;
@@ -443,10 +496,11 @@ namespace LicenseApp.ViewModels
             ValidatePass();
             ValidateDate();
             ValidateNumber();
+            ValidateGender();
 
 
             //check if any validation failed
-            if (ShowNameError || ShowMailError || ShowDateError || ShowNumberError || ShowPassError)
+            if (ShowNameError || ShowMailError || ShowDateError || ShowNumberError || ShowPassError || ShowGenderError)
                 return false;
             return true;
         }
@@ -491,8 +545,6 @@ namespace LicenseApp.ViewModels
             }
                 
         }
-
-
     }
 }
 

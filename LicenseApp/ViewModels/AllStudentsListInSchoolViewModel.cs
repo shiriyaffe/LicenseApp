@@ -55,6 +55,7 @@ namespace LicenseApp.ViewModels
         public AllStudentsListInSchoolViewModel()
         {
             StudentList = new ObservableCollection<Student>();
+            CreateStudentCollection();
         }
 
         public async void CreateStudentCollection()

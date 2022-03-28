@@ -241,8 +241,8 @@ namespace LicenseApp.ViewModels
             }
         }
 
-        private int lessonLengthMin;
-        public int LessonLengthMin
+        private string lessonLengthMin;
+        public string LessonLengthMin
         {
             get { return lessonLengthMin; }
             set
@@ -515,10 +515,10 @@ namespace LicenseApp.ViewModels
             if (l != null)
             {
                 this.LessonLength = l;
-                this.LessonLengthMin = l.Slength;
+                this.LessonLengthMin = l.Slength.ToString();
             }
             else
-                this.GearboxName = "אורך שיעור מועדף (בדקות):";
+                this.LessonLengthMin = "אורך שיעור מועדף (בדקות):";
         }
 
         private bool ValidateForm()
