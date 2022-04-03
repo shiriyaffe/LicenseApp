@@ -127,7 +127,12 @@ namespace LicenseApp.ViewModels
                     App.Current.MainPage = new NavigationPage(new StudentMainTabView());
                 }
                 else if (user is Instructor)
-                    App.Current.MainPage = new NavigationPage(new InstructorMainTabView());
+                {
+                    if (((Instructor)user).EStatusId == 1)
+                        await App.Current.MainPage.DisplayAlert("שגיאה", "מנהל בית הספר עדיין לא אישר אותך... נסה במועד מאוחר יותר", "בסדר");
+                    else
+                        App.Current.MainPage = new NavigationPage(new InstructorMainTabView());
+                }
                 else if (user is SchoolManager)
                     App.Current.MainPage = new NavigationPage(new SchoolManagerMainTabView());
             }

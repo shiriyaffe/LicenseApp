@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 namespace LicenseApp.ViewModels
@@ -16,37 +17,39 @@ namespace LicenseApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private ObservableCollection<Student> studentList;
-        public ObservableCollection<Student> StudentList
+        private ObservableCollection<Student> StudentList;
+
+        private ObservableCollection<Student> filteredStudentList;
+        public ObservableCollection<Student> FilteredStudentList
         {
             get
             {
-                return this.studentList;
+                return this.filteredStudentList;
             }
             set
             {
-                if (this.studentList != value)
+                if (this.filteredStudentList != value)
                 {
 
-                    this.studentList = value;
-                    OnPropertyChanged("StudentList");
+                    this.filteredStudentList = value;
+                    OnPropertyChanged("FilteredStudentList");
                 }
             }
         }
 
-        private int allStudents;
-        public int AllStudents
+        private int studentsCount;
+        public int StudentsCount
         {
             get
             {
-                return this.allStudents;
+                return this.studentsCount;
             }
             set
             {
-                if (this.allStudents != value)
+                if (this.studentsCount != value)
                 {
 
-                    this.allStudents = value;
+                    this.studentsCount = value;
                     OnPropertyChanged("AllStudents");
                 }
             }
@@ -71,8 +74,57 @@ namespace LicenseApp.ViewModels
                 }
             }
 
-            AllStudents = StudentList.Count;
+            StudentsCount = StudentList.Count;
+            FilteredStudentList = new ObservableCollection<Student>(this.StudentList.OrderBy(s => s.Sname));
+            this.SearchTerm = string.Empty;
         }
 
+        private string searchTerm;
+        public string SearchTerm
+        {
+            get
+            {
+                return this.searchTerm;
+            }
+            set
+            {
+                if (this.searchTerm != value)
+                {
+                    this.searchTerm = value;
+                    OnTextChanged(value);
+                    OnPropertyChanged("SearchTerm");
+                }
+            }
+        }
+
+        public void OnTextChanged(string search)
+        {
+            App app = (App)App.Current;
+            //Filter the list of contacts based on the search term
+            if (this.StudentList == null)
+                return;
+            if (String.IsNullOrWhiteSpace(search) || String.IsNullOrEmpty(search))
+            {
+                foreach (Student s in this.StudentList)
+                {
+                    if (!this.FilteredStudentList.Contains(s))
+                        this.FilteredStudentList.Add(s);
+                }
+            }
+            else
+            {
+                foreach (Student ins in this.StudentList)
+                {
+                    string instructorString = $"{ins.Sname}";
+
+                    if (!this.FilteredStudentList.Contains(ins))
+                        this.FilteredStudentList.Add(ins);
+                    else if (this.FilteredStudentList.Contains(ins) && !instructorString.Contains(search))
+                        this.FilteredStudentList.Remove(ins);
+                }
+            }
+
+            this.FilteredStudentList = new ObservableCollection<Student>(this.FilteredStudentList.OrderBy(i => i.Sname));
+        }
     }
 }

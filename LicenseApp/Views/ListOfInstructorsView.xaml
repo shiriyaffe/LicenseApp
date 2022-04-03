@@ -29,7 +29,7 @@
                        Margin="0,8,0,0"/>
                 <!--<ImageButton BackgroundColor="Transparent" Source="Search.png" Command="{Binding SearchPageCommand}" Padding="5" WidthRequest="35" HeightRequest="35" HorizontalOptions="End"></ImageButton>-->
                 <CollectionView EmptyView="אין מורים במערכת" x:Name="collectionName" 
-                            ItemsSource="{Binding InstructorList}" SelectionMode="Single"
+                            ItemsSource="{Binding FilteredInstructorList}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelctionChanged}"
                         SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
                     <CollectionView.ItemTemplate>

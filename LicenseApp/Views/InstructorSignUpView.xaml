@@ -69,10 +69,10 @@
                         <ColumnDefinition Width="5"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Picker Title="שעת סיום" HorizontalOptions="End" Grid.Column="0" FontAttributes="Bold" ItemsSource="{Binding WorkingHours}" ItemDisplayBinding="{Binding Whour}" SelectedItem="{Binding EndHour}">
+                        <Picker SelectedIndex="{Binding EndPicker}" Title="שעת סיום" HorizontalOptions="End" Grid.Column="0" FontAttributes="Bold" ItemsSource="{Binding WorkingHours}" ItemDisplayBinding="{Binding Whour}" SelectedItem="{Binding EndHour}">
                     </Picker>
                     <Label Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" Text="-" FontAttributes="Bold"/>
-                    <Picker Title="שעת התחלה" HorizontalOptions="Start" Grid.Column="2" FontAttributes="Bold" ItemsSource="{Binding WorkingHours}" ItemDisplayBinding="{Binding Whour}" SelectedItem="{Binding StartHour}">
+                        <Picker SelectedIndex="{Binding StartPicker}" Title="שעת התחלה" HorizontalOptions="Start" Grid.Column="2" FontAttributes="Bold" ItemsSource="{Binding WorkingHours}" ItemDisplayBinding="{Binding Whour}" SelectedItem="{Binding StartHour}">
                     </Picker>
                 </Grid>
             </Frame>

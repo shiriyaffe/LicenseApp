@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -18,6 +19,8 @@ namespace LicenseApp.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private ObservableCollection<Student> AllStudents;
 
         private ObservableCollection<Student> studentList;
         public ObservableCollection<Student> StudentList
@@ -38,27 +41,27 @@ namespace LicenseApp.ViewModels
         }
 
 
-        private int allStudents;
-        public int AllStudents 
+        private int studentsCount;
+        public int StudentsCount
         {
             get
             {
-                return this.allStudents;
+                return this.studentsCount;
             }
             set
             {
-                if (this.allStudents != value)
+                if (this.studentsCount != value)
                 {
 
-                    this.allStudents = value;
-                    OnPropertyChanged("AllStudents");
+                    this.studentsCount = value;
+                    OnPropertyChanged("StudentsCount");
                 }
             }
         }
 
         public ListOfStudentsTEACHER()
         {
-            StudentList = new ObservableCollection<Student>();
+            AllStudents = new ObservableCollection<Student>();
         }
 
         public async void CreateStudentCollection()
@@ -70,11 +73,13 @@ namespace LicenseApp.ViewModels
                 ObservableCollection<Student> studentsByID = await proxy.GetStudentsByInstructorAsync(((Instructor)app.CurrentUser).InstructorId);
                 foreach (Student i in studentsByID)
                 {
-                    this.StudentList.Add(i);
+                    this.AllStudents.Add(i);
                 }
             }
 
-            AllStudents = StudentList.Count;
+            StudentsCount = AllStudents.Count;
+            StudentList = new ObservableCollection<Student>(this.AllStudents.OrderBy(i => i.Sname));
+            this.SearchTerm = string.Empty;
         }
 
         private double GetAge(DateTime birthday)
@@ -132,6 +137,54 @@ namespace LicenseApp.ViewModels
             App app = (App)App.Current;
             Page p = new SearchPageView();
             await App.Current.MainPage.Navigation.PushAsync(p);
+        }
+
+        private string searchTerm;
+        public string SearchTerm
+        {
+            get
+            {
+                return this.searchTerm;
+            }
+            set
+            {
+                if (this.searchTerm != value)
+                {
+                    this.searchTerm = value;
+                    OnTextChanged(value);
+                    OnPropertyChanged("SearchTerm");
+                }
+            }
+        }
+
+        public void OnTextChanged(string search)
+        {
+            App app = (App)App.Current;
+            //Filter the list of contacts based on the search term
+            if (this.AllStudents == null)
+                return;
+            if (String.IsNullOrWhiteSpace(search) || String.IsNullOrEmpty(search))
+            {
+                foreach (Student i in this.AllStudents)
+                {
+                    if (!this.StudentList.Contains(i))
+                        this.StudentList.Add(i);
+                }
+            }
+            else
+            {
+                foreach (Student ins in this.AllStudents)
+                {
+                    string instructorString = $"{ins.Sname}";
+
+                    if (!this.StudentList.Contains(ins))
+                        this.StudentList.Add(ins);
+                    else if (this.StudentList.Contains(ins) && !instructorString.Contains(search))
+                        this.StudentList.Remove(ins);
+                }
+            }
+
+            this.StudentList = new ObservableCollection<Student>(this.StudentList.OrderBy(i => i.Sname));
         }
     }
 }

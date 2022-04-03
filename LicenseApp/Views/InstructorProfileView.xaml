@@ -101,9 +101,9 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="106"/>
+                                <ColumnDefinition Width="80"/>
                                 <ColumnDefinition Width="5"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="80"/>
                             </Grid.ColumnDefinitions>
                             <Picker Title="{Binding StartTime}" HorizontalOptions="Start" Grid.Column="2" FontAttributes="Bold" ItemsSource="{Binding WorkingHours}" ItemDisplayBinding="{Binding Whour}" SelectedItem="{Binding EndHour}">
                             </Picker>

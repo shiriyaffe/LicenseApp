@@ -24,13 +24,16 @@ namespace LicenseApp.Models
         public int? InstructorId { get; set; }
         public int LessonsCount { get; set; }
         public DateTime RegistrationDate { get; set; }
+        public int? EStatusId { get; set; }
 
         public virtual City City { get; set; }
+        public virtual Estatus EStatus { get; set; }
         public virtual Gearbox Gearbox { get; set; }
         public virtual Gender Gender { get; set; }
         public virtual Instructor Instructor { get; set; }
         public virtual LessonLength LessonLength { get; set; }
         public virtual LicenseType LicenseType { get; set; }
+        public virtual ICollection<EnrollmentRequest> EnrollmentRequests { get; set; }
 
         public string PhotoURI
         {

@@ -15,7 +15,7 @@ namespace LicenseApp.Models
         public List<LessonLength> LessonLengths { get; set; }
         public List<DrivingSchool> DrivingSchools { get; set; }
         public List<WorkingHour> WorkingHours { get; set; }
-
+        public List<Estatus> Status { get; set; }
         public LookupTables() { }
     }
 }

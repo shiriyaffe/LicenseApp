@@ -22,6 +22,10 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Padding="10,20">
+            <SearchBar x:Name="searchBar" 
+                       Placeholder="חפש מורה לפי שם..." 
+                       Text="{Binding SearchTerm}"
+                       Margin="0,8,0,0"/>
             <CollectionView EmptyView="אין תלמידים במערכת" x:Name="collectionName" 
                             ItemsSource="{Binding StudentList}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelctionChanged}"
@@ -34,12 +38,12 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="80" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
-                            <Frame BorderColor="white" Grid.Column="0" Grid.Row="0"  CornerRadius="100" IsClippedToBounds="True" Padding="0" HeightRequest="90" WidthRequest="90" HorizontalOptions="CenterAndExpand">
+                            <Frame BorderColor="white" Grid.Column="0" Grid.Row="0"  CornerRadius="100" IsClippedToBounds="True" Padding="0" HeightRequest="65" WidthRequest="65" HorizontalOptions="CenterAndExpand">
                                 <Image x:Name="theImage" Source="{Binding PhotoURI}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="50" WidthRequest="50"/>
                             </Frame>
                             <Label Grid.Column="0" Grid.Row="1" Text="{Binding Sname}" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center"/>
@@ -51,7 +55,7 @@
             </CollectionView>
             <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="Center">
                 <Label Text="סך התלמידים:" FontAttributes="Bold" TextColor="Gray" HorizontalOptions="Center" FontSize="15"/>
-                <Label Text="{Binding AllStudents}" TextColor="Gray" HorizontalOptions="Center" FontSize="15"/>
+                <Label Text="{Binding StudentsCount}" TextColor="Gray" HorizontalOptions="Center" FontSize="15"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

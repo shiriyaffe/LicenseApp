@@ -27,15 +27,20 @@ namespace LicenseApp.Models
         public DateTime RegistrationDate { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
+        public int? EStatusId { get; set; }
 
         public virtual Area Area { get; set; }
         public virtual DrivingSchool DrivingSchool { get; set; }
+        public virtual Estatus EStatus { get; set; }
         public virtual Gearbox Gearbox { get; set; }
         public virtual Gender Gender { get; set; }
         public virtual LessonLength LessonLength { get; set; }
         public virtual LicenseType LicenseType { get; set; }
         public virtual Rate Rate { get; set; }
         public virtual SchoolManager SchoolManager { get; set; }
+        public virtual ICollection<EnrollmentRequest> EnrollmentRequests { get; set; }
+        public virtual ICollection<Lesson> Lessons { get; set; }
+        public virtual ICollection<Student> Students { get; set; }
 
         public string PhotoURI
         {

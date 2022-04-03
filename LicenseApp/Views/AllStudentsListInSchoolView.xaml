@@ -22,8 +22,12 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Padding="10,20">
+            <SearchBar x:Name="searchBar" 
+                       Placeholder="חפש מורה לפי שם..." 
+                       Text="{Binding SearchTerm}"
+                       Margin="0,8,0,0"/>
             <CollectionView EmptyView="אין תלמידים בבית ספר זה" x:Name="collectionName" 
-                            ItemsSource="{Binding StudentList}" SelectionMode="Single"
+                            ItemsSource="{Binding FilteredStudentList}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelctionChanged}"
                         SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
                 <CollectionView.ItemTemplate>
@@ -53,7 +57,7 @@
             </CollectionView>
             <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="Center">
                 <Label Text="סך התלמידים:" FontAttributes="Bold" TextColor="Gray" HorizontalOptions="Center" FontSize="15"/>
-                <Label Text="{Binding AllStudents}" TextColor="Gray" HorizontalOptions="Center" FontSize="15"/>
+                <Label Text="{Binding StudentsCount}" TextColor="Gray" HorizontalOptions="Center" FontSize="15"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

@@ -664,7 +664,8 @@ namespace LicenseApp.ViewModels
                     EndTime = EndHour.Whour,
                     DrivingSchoolId = DrivingSchool.SchoolId,
                     RegistrationDate = DateTime.Today,
-                    Details = instructorDetails
+                    Details = instructorDetails,
+                    EStatusId = 1
                 };
 
                 LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -672,7 +673,7 @@ namespace LicenseApp.ViewModels
 
                 if (instructor != null)
                 {
-                    if (this.imageFileResult != null)
+                    if (app.TempUser.UserImg != null)
                     {
                         bool success = await proxy.UploadImage(new Models.FileInfo()
                         {

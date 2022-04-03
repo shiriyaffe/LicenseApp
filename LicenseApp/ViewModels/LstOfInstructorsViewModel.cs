@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 using LicenseApp.Views;
+using System.Linq;
 
 namespace LicenseApp.ViewModels
 {
@@ -19,45 +20,48 @@ namespace LicenseApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private ObservableCollection<Instructor> instructorList;
-        public ObservableCollection<Instructor> InstructorList
+
+        private ObservableCollection<Instructor> filteredInstructorList;
+        public ObservableCollection<Instructor> FilteredInstructorList
         {
             get
             {
-                return this.instructorList;
+                return this.filteredInstructorList;
             }
             set
             {
-                if (this.instructorList != value)
+                if (this.filteredInstructorList != value)
                 {
 
-                    this.instructorList = value;
-                    OnPropertyChanged("InstructorList");
+                    this.filteredInstructorList = value;
+                    OnPropertyChanged("FilteredInstructorList");
                 }
             }
         }
 
-        private int allInstructors;
-        public int AllInstructors
+        private ObservableCollection<Instructor> AllInstructors;
+
+        private int instructorsCount;
+        public int InstructorsCount
         {
             get
             {
-                return this.allInstructors;
+                return this.instructorsCount;
             }
             set
             {
-                if (this.allInstructors != value)
+                if (this.instructorsCount != value)
                 {
 
-                    this.allInstructors = value;
-                    OnPropertyChanged("AllInstructors");
+                    this.instructorsCount = value;
+                    OnPropertyChanged("InstructorsCount");
                 }
             }
         }
 
         public LstOfInstructorsViewModel()
         {
-            InstructorList = new ObservableCollection<Instructor>();
+            this.AllInstructors = new ObservableCollection<Instructor>();
             CreateInstructorCollection();
         }
 
@@ -69,10 +73,12 @@ namespace LicenseApp.ViewModels
             foreach (Instructor i in instructors)
             {
                 if (i.SchoolManagerId == ((SchoolManager)app.CurrentUser).SmanagerId)
-                    InstructorList.Add(i);
+                    AllInstructors.Add(i);
             }
 
-            AllInstructors = InstructorList.Count;
+            InstructorsCount = AllInstructors.Count;
+            FilteredInstructorList = new ObservableCollection<Instructor>(this.AllInstructors.OrderBy(i => i.Iname));
+            this.SearchTerm = string.Empty;
         }
 
         public ICommand SelctionChanged => new Command<Object>(OnSelectionChanged);
@@ -106,66 +112,52 @@ namespace LicenseApp.ViewModels
             }
         }
 
-        //private string searchTerm;
-        //public string SearchTerm
-        //{
-        //    get
-        //    {
-        //        return this.searchTerm;
-        //    }
-        //    set
-        //    {
-        //        if (this.searchTerm != value)
-        //        {
-        //            this.searchTerm = value;
-        //            OnTextChanged(value);
-        //            OnPropertyChanged("SearchTerm");
-        //        }
-        //    }
-        //}
-
-        //public void OnTextChanged(string search)
-        //{
-        //    App app = (App)App.Current;
-
-        //    //Filter the list of shops based on the search term
-        //    if (String.IsNullOrWhiteSpace(search) || String.IsNullOrEmpty(search))
-        //    {
-        //        foreach (Instructor i in )
-        //        {
-        //            if (!this.FilteredShops.Contains(s))
-        //                this.FilteredShops.Add(s);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        foreach (Shop s in app.AllShops)
-        //        {
-        //            string contactString = $"{s.ShopName.ToLower()}|{s.ShopCity.ToLower()}";
-
-        //            if (!this.FilteredShops.Contains(s) && contactString.Contains(search.ToLower()))
-        //                this.FilteredShops.Add(s);
-        //            else if (this.FilteredShops.Contains(s) && !contactString.Contains(search.ToLower()))
-        //                this.FilteredShops.Remove(s);
-        //        }
-        //    }
-        //    this.FilteredShops = new ObservableCollection<Shop>(this.FilteredShops.OrderBy(s => s.ShopName));
-        //}
-
-        public ICommand PerformSearch => new Command<string>(OnSearch);
-
-        public void OnSearch(string search)
+        private string searchTerm;
+        public string SearchTerm
         {
-            if (search != "")
+            get
             {
-                foreach (Instructor i in InstructorList)
+                return this.searchTerm;
+            }
+            set
+            {
+                if (this.searchTerm != value)
                 {
-                    if (!i.Iname.Contains(search))
-                        InstructorList.Remove(i);
+                    this.searchTerm = value;
+                    OnTextChanged(value);
+                    OnPropertyChanged("SearchTerm");
+                }
+            }
+        }
+
+        public void OnTextChanged(string search)
+        {
+            App app = (App)App.Current;
+            //Filter the list of contacts based on the search term
+            if (this.AllInstructors == null)
+                return;
+            if (String.IsNullOrWhiteSpace(search) || String.IsNullOrEmpty(search))
+            {
+                foreach (Instructor i in this.AllInstructors)
+                {
+                    if (!this.FilteredInstructorList.Contains(i) && i.SchoolManagerId == ((SchoolManager)app.CurrentUser).SmanagerId)
+                        this.FilteredInstructorList.Add(i);
                 }
             }
             else
-                CreateInstructorCollection();
+            {
+                foreach (Instructor ins in this.AllInstructors)
+                {
+                    string instructorString = $"{ins.Iname}";
+
+                    if (!this.FilteredInstructorList.Contains(ins) && instructorString.Contains(search) && ins.SchoolManagerId == ((SchoolManager)app.CurrentUser).SmanagerId)
+                        this.FilteredInstructorList.Add(ins);
+                    else if (this.FilteredInstructorList.Contains(ins) && !instructorString.Contains(search))
+                        this.FilteredInstructorList.Remove(ins);
+                }
+            }
+
+            this.FilteredInstructorList = new ObservableCollection<Instructor>(this.FilteredInstructorList.OrderBy(i => i.Iname));
         }
     }
 }
