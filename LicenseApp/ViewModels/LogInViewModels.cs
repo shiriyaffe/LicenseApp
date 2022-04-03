@@ -130,11 +130,20 @@ namespace LicenseApp.ViewModels
                 {
                     if (((Instructor)user).EStatusId == 1)
                         await App.Current.MainPage.DisplayAlert("שגיאה", "מנהל בית הספר עדיין לא אישר אותך... נסה במועד מאוחר יותר", "בסדר");
+                    else if(((Instructor)user).EStatusId == 3)
+                        await App.Current.MainPage.DisplayAlert("שגיאה", "לצערנו, מנהל בית הספר לא אישר אותך...", "בסדר");
                     else
                         App.Current.MainPage = new NavigationPage(new InstructorMainTabView());
                 }
                 else if (user is SchoolManager)
-                    App.Current.MainPage = new NavigationPage(new SchoolManagerMainTabView());
+                {
+                    if (((SchoolManager)user).EStatusId == 1)
+                        await App.Current.MainPage.DisplayAlert("שגיאה", "מנהל האפליקציה עדיין לא אישר אותך... נסה במועד מאוחר יותר", "בסדר");
+                    else if (((SchoolManager)user).EStatusId == 3)
+                        await App.Current.MainPage.DisplayAlert("שגיאה", "מנהל האפליקציה לא אישר אותך...", "בסדר");
+                    else
+                        App.Current.MainPage = new NavigationPage(new SchoolManagerMainTabView());
+                }
             }
         }
     }

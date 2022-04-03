@@ -15,6 +15,10 @@ namespace LicenseApp
         public User TempUser { get; set; }
         public LookupTables Tables { get; set; }
         public List<int> ListOfYears { get; set; }
+        
+        public event Action RefreshUI;
+
+        public void UIRefresh() { this.RefreshUI.Invoke(); }
 
         public App()
         {

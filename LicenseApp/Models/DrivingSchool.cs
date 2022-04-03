@@ -13,5 +13,8 @@ namespace LicenseApp.Models
         public int NumOfTeachers { get; set; }
 
         public virtual Area Area { get; set; }
+        public virtual ICollection<EnrollmentRequest> EnrollmentRequests { get; set; }
+        public virtual ICollection<Instructor> Instructors { get; set; }
+        public virtual ICollection<SchoolManager> SchoolManagers { get; set; }
     }
 }

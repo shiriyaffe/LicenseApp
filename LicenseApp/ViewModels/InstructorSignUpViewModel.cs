@@ -21,6 +21,8 @@ namespace LicenseApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        const int STATUS_ID = 1;
+
         private int sliderValue;
         public int SliderValue
         {
@@ -665,7 +667,7 @@ namespace LicenseApp.ViewModels
                     DrivingSchoolId = DrivingSchool.SchoolId,
                     RegistrationDate = DateTime.Today,
                     Details = instructorDetails,
-                    EStatusId = 1
+                    EStatusId = STATUS_ID
                 };
 
                 LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -681,8 +683,17 @@ namespace LicenseApp.ViewModels
                         }, $"Instructors\\{instructor.InstructorId}.jpg");
                     }
 
-                    app.CurrentUser = instructor;
-                    app.MainPage = new NavigationPage(new InstructorMainTabView());
+                    EnrollmentRequest er = new EnrollmentRequest
+                    {
+                        InstructorId = instructor.InstructorId,
+                        StatusId = STATUS_ID,
+                        SchoolId = instructor.DrivingSchoolId
+                    };
+
+                    EnrollmentRequest newEm = await proxy.AddEnrollmentRequest(er);
+
+                    //app.CurrentUser = instructor;
+                    //app.MainPage = new NavigationPage(new InstructorMainTabView());
                 }
                 else
                     await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה! לא ניתן להמשיך בהרשמה", "בסדר");

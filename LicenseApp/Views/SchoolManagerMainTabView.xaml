@@ -33,11 +33,11 @@
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.GraduationCap}"/>
         </local:AllStudentsListInSchoolView.IconImageSource>
     </local:AllStudentsListInSchoolView>
-    <local:Test>
-        <local:Test.IconImageSource>
+    <local:NewInstructorsRequestsView>
+        <local:NewInstructorsRequestsView.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.EnvelopeOpenText}"/>
-        </local:Test.IconImageSource>
-    </local:Test>
+        </local:NewInstructorsRequestsView.IconImageSource>
+    </local:NewInstructorsRequestsView>
     <local:Test>
         <local:Test.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.ChartLine}"/>

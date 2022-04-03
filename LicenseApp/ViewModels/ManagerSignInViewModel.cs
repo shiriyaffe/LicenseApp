@@ -21,6 +21,8 @@ namespace LicenseApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        const int STATUS_ID = 4;
+
         #region area
         public List<Area> Areas
         {
@@ -335,6 +337,7 @@ namespace LicenseApp.ViewModels
                         SchoolId = dSchool.SchoolId,
                         RegistrationDate = DateTime.Today
                     };
+
                     SchoolManager schoolM = await proxy.SchoolManagerSignUpAsync(sm);
                     if (schoolM != null)
                     {

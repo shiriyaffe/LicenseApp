@@ -5,6 +5,7 @@ using System.ComponentModel;
 using LicenseApp.Models;
 using System.Windows.Input;
 using Xamarin.Forms;
+using LicenseApp.Services;
 
 namespace LicenseApp.ViewModels
 {
@@ -15,6 +16,8 @@ namespace LicenseApp.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        const int WAITING_STATUS = 1;
 
         private Area area;
         public Area Area
@@ -104,11 +107,39 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public int instructorID;
+        public int InstructorID
+        {
+            get { return instructorID; }
+            set
+            {
+                instructorID = value;
+                OnPropertyChanged("InstructorID");
+            }
+        }
+
         public ICommand SendEnrollmentCommand => new Command(SendEnrollmentRequest);
 
-        public void SendEnrollmentRequest()
+        public async void SendEnrollmentRequest()
         {
             App app = (App)App.Current;
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+
+            EnrollmentRequest em = new EnrollmentRequest
+            {
+                StudentId = ((Student)app.CurrentUser).StudentId,
+                InstructorId = InstructorID,
+                StatusId = WAITING_STATUS
+            };
+
+            EnrollmentRequest newEm = await proxy.AddEnrollmentRequest(em);
+            
+            if(newEm != null)
+            {
+                await App.Current.MainPage.DisplayAlert("שגיאה", "בקשתך לרישום נשלחה בהצלחה למורה! חזור במועד מאוחר יותר על מנת לראות האם אושרת", "בסדר");
+            }
+            else
+                await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה! בקשתך לא נשלחה. נסה שוב", "בסדר");
         }
     }
 }

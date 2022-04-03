@@ -21,6 +21,8 @@ namespace LicenseApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        const int STATUS_ID = 4;
+
         private int sliderValue;
         public int SliderValue
         {
@@ -494,7 +496,8 @@ namespace LicenseApp.ViewModels
                     HighestPrice = SliderValue,
                     LessonsCount = 0,
                     RegistrationDate = DateTime.Today,
-                    InstructorId = 1
+                    InstructorId = 5,
+                    EStatusId = STATUS_ID
                 };
 
 

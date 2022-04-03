@@ -847,5 +847,62 @@ namespace LicenseApp.Services
                 return null;
             }
         }
+
+        public async Task<bool> ChangeUserStatus(object u)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+
+                if (u is Instructor)
+                {
+                    Instructor t = (Instructor)u;
+                    string jsonObject = JsonSerializer.Serialize<Instructor>(t, options);
+                    StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/ChangeInstructorStatus", content);
+
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+                else if (u is Student)
+                {
+                    Student s = (Student)u;
+                    string jsonObject = JsonSerializer.Serialize<Student>(s, options);
+                    StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/ChangeStudentStatus", content);
+
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+                return false;
+
+            }
+            catch (Exception ee)
+            {
+                Console.WriteLine(ee.Message);
+                return false;
+            }
+        }
     }
 }

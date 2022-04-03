@@ -16,7 +16,9 @@ namespace LicenseApp.Models
         public DateTime RegistrationDate { get; set; }
         public int? SchoolId { get; set; }
         public DateTime Birthday { get; set; }
+        public int EStatusId { get; set; }
 
+        public virtual Estatus EStatus { get; set; }
         public virtual Gender Gender { get; set; }
         public virtual DrivingSchool School { get; set; }
 

@@ -121,7 +121,8 @@ namespace LicenseApp.ViewModels
                     PhoneNum = chosenInstructor.PhoneNumber,
                     TeachingArea = await proxy.GetAreaName(chosenInstructor.AreaId),
                     WorkingTime = $"{chosenInstructor.StartTime}-{chosenInstructor.EndTime}",
-                    Price = chosenInstructor.Price
+                    Price = chosenInstructor.Price,
+                    InstructorID = chosenInstructor.InstructorId
                 };
 
                 App app = (App)App.Current;
