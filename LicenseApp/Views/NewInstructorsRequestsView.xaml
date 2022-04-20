@@ -4,8 +4,8 @@
              x:Class="LicenseApp.Views.NewInstructorsRequestsView"
              FlowDirection="RightToLeft">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="החלק שמאלה או ימינה לאישור או שמאלה לדחייה של המורה" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"></Label>
+        <StackLayout Padding="10,20">
+            <Label Text="החלק שמאלה או ימינה לאישור או לדחייה של המורה" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"></Label>
 
             <CollectionView x:Name="collectionName" 
                                 EmptyView="אין מורים בהמתנה"
@@ -43,15 +43,15 @@
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="100" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <Frame BorderColor="white" Grid.Column="0" Grid.Row="0"  CornerRadius="100" IsClippedToBounds="True" Padding="0" HeightRequest="65" WidthRequest="65" HorizontalOptions="CenterAndExpand">
+                                    <Frame BorderColor="white" Grid.Column="0" Grid.Row="0"  CornerRadius="100" IsClippedToBounds="True" Padding="0" HeightRequest="65" WidthRequest="65" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
                                         <Image x:Name="theImage" Source="{Binding PhotoURI}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="50" WidthRequest="50"/>
                                     </Frame>
                                     <Label Grid.Column="0" Grid.Row="1" Text="{Binding Iname}" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                    <Label Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Text="{Binding PhoneNumber}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                    <Label Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Text="{Binding Details}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Label Grid.Column="1" Grid.Row="1" Text="{Binding PhoneNumber}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding Details}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
                                 </Grid>
 
                             </SwipeView>
@@ -59,6 +59,10 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="Center">
+                <Label Text="סך התלמידים:" FontAttributes="Bold" TextColor="Gray" HorizontalOptions="Center" FontSize="15"/>
+                <Label Text="{Binding AmountOfRequests}" TextColor="Gray" HorizontalOptions="Center" FontSize="15"/>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

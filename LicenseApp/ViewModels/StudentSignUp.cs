@@ -496,7 +496,6 @@ namespace LicenseApp.ViewModels
                     HighestPrice = SliderValue,
                     LessonsCount = 0,
                     RegistrationDate = DateTime.Today,
-                    InstructorId = 5,
                     EStatusId = STATUS_ID
                 };
 

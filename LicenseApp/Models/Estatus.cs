@@ -9,9 +9,9 @@ namespace LicenseApp.Models
         public int StatusId { get; set; }
         public string StatusMeaning { get; set; }
 
-
         public virtual ICollection<EnrollmentRequest> EnrollmentRequests { get; set; }
         public virtual ICollection<Instructor> Instructors { get; set; }
+        public virtual ICollection<Lesson> Lessons { get; set; }
         public virtual ICollection<SchoolManager> SchoolManagers { get; set; }
         public virtual ICollection<Student> Students { get; set; }
     }

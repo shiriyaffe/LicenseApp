@@ -50,7 +50,7 @@ namespace LicenseApp.ViewModels
                 {
 
                     this.studentsCount = value;
-                    OnPropertyChanged("AllStudents");
+                    OnPropertyChanged("StudentsCount");
                 }
             }
         }
@@ -58,6 +58,7 @@ namespace LicenseApp.ViewModels
         public AllStudentsListInSchoolViewModel()
         {
             StudentList = new ObservableCollection<Student>();
+            FilteredStudentList = new ObservableCollection<Student>();
             CreateStudentCollection();
         }
 
@@ -75,7 +76,11 @@ namespace LicenseApp.ViewModels
             }
 
             StudentsCount = StudentList.Count;
-            FilteredStudentList = new ObservableCollection<Student>(this.StudentList.OrderBy(s => s.Sname));
+            foreach(Student s in StudentList)
+            {
+                FilteredStudentList.Add(s);
+            }
+            //FilteredStudentList = (ObservableCollection<Student>)this.FilteredStudentList.OrderBy(s => s.Sname);
             this.SearchTerm = string.Empty;
         }
 

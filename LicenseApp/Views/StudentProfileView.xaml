@@ -3,124 +3,128 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LicenseApp.Views.StudentProfileView"
              FlowDirection="RightToLeft"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             BackgroundImageSource="WallPaper2.jpg">
     <ContentPage.Content>
         <ScrollView>
-        <StackLayout>
-            
-                <Grid HorizontalOptions="FillAndExpand">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Padding="0" x:Name="logout" Clicked="logout_Clicked" Text="התנתקות" Grid.Column="0" FontAttributes="Bold" TextColor="#5fa8d3" BackgroundColor="Transparent" FontSize="17" HorizontalOptions="Start"></Button>
-                </Grid>
+            <StackLayout Padding="15">
+                <Frame Padding="5,0" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
+                    <StackLayout Padding="0">
+                        <Grid HorizontalOptions="FillAndExpand">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Padding="0" x:Name="logout" Clicked="logout_Clicked" Text="התנתקות" Grid.Column="0" FontAttributes="Bold" TextColor="#5fa8d3" BackgroundColor="Transparent" FontSize="17" HorizontalOptions="Start"></Button>
+                        </Grid>
 
-            <StackLayout Padding="30,0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.3*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="0.3*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Frame BorderColor="white"  CornerRadius="100"  Grid.Column="1" Grid.Row="0" IsClippedToBounds="True" Padding="0" HeightRequest="110" WidthRequest="110" HorizontalOptions="CenterAndExpand">
-                            <Image x:Name="theImage" Source="{Binding ImageUrl}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="110" WidthRequest="110"/>
-                        </Frame>
-                    </Grid>
-                
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Button Grid.Row="0" Grid.Column="0" Command="{Binding PickImageCommand}" Text="בחר תמונה" BackgroundColor="Transparent" HorizontalOptions="End" TextColor="#5fa8d3" FontSize="14"/>
-                        <Button Grid.Row="0" Grid.Column="1" Command="{Binding CameraImageCommand}" Text="צלם תמונה" BackgroundColor="Transparent" HorizontalOptions="Start" TextColor="#5fa8d3" FontSize="14"/>
-                    </Grid>
+                        <StackLayout Padding="30,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.3*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0.3*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Frame BorderColor="white"  CornerRadius="100"  Grid.Column="1" Grid.Row="0" IsClippedToBounds="True" Padding="0" HeightRequest="110" WidthRequest="110" HorizontalOptions="CenterAndExpand">
+                                    <Image x:Name="theImage" Source="{Binding ImageUrl}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="110" WidthRequest="110"/>
+                                </Frame>
+                            </Grid>
 
-                    <Grid Padding="0" HorizontalOptions="CenterAndExpand">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="115" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="25" />
-                </Grid.ColumnDefinitions>
-                <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
-                <Label Text="סיסמה:" Grid.Column="0" Grid.Row="0" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                <Entry Text="{Binding Pass}" Grid.Column="2" Grid.Row="0" FontSize="18"/>
-                <Image  Source="{Binding PassError}" HeightRequest="25" WidthRequest="25" Grid.Column="3" Grid.Row="0"/>
-                <ImageButton Padding="0" Command="{Binding PassConditions}" BackgroundColor="Transparent" Source="Info.jpg" HeightRequest="15" WidthRequest="15" Grid.Column="1" Grid.Row="0"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Button Grid.Row="0" Grid.Column="0" Command="{Binding PickImageCommand}" Text="בחר תמונה" BackgroundColor="Transparent" HorizontalOptions="End" TextColor="#5fa8d3" FontSize="14"/>
+                                <Button Grid.Row="0" Grid.Column="1" Command="{Binding CameraImageCommand}" Text="צלם תמונה" BackgroundColor="Transparent" HorizontalOptions="Start" TextColor="#5fa8d3" FontSize="14"/>
+                            </Grid>
 
-                 <Label Text="מספר טלפון:" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                <Entry Grid.Column="2" Grid.Row="1" Text="{Binding PhoneNumber}" FontSize="18"/>
-                 <Image Source="{Binding NumberError}" HeightRequest="10" WidthRequest="10" Grid.Column="3" Grid.Row="1"/>
-                
-                <Label Text="עיר מגורים:" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                <Picker Title="{Binding CityName}" TitleColor="Black" TextColor="Black" FontSize="18" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding Cities}" ItemDisplayBinding="{Binding CityName}" SelectedItem="{Binding City}">
-                </Picker>
+                            <Grid Padding="0" HorizontalOptions="CenterAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="115" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="25" />
+                                </Grid.ColumnDefinitions>
+                                <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
+                                <Label Text="סיסמה:" Grid.Column="0" Grid.Row="0" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                                <Entry Text="{Binding Pass}" Grid.Column="2" Grid.Row="0" FontSize="18"/>
+                                <Image  Source="{Binding PassError}" HeightRequest="25" WidthRequest="25" Grid.Column="3" Grid.Row="0"/>
+                                <ImageButton Padding="0" Command="{Binding PassConditions}" BackgroundColor="Transparent" Source="Info.jpg" HeightRequest="15" WidthRequest="15" Grid.Column="1" Grid.Row="0"/>
 
-                        <Label Text="כתובת:" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                <Entry Grid.Column="2" Grid.Row="3" Text="{Binding SAddress}" FontSize="18"/>
+                                <Label Text="מספר טלפון:" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                                <Entry Grid.Column="2" Grid.Row="1" Text="{Binding PhoneNumber}" FontSize="18"/>
+                                <Image Source="{Binding NumberError}" HeightRequest="10" WidthRequest="10" Grid.Column="3" Grid.Row="1"/>
 
-                        <Label Text="תיבת הילוכים:" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="4" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                <Picker Title="{Binding GearboxName}" TitleColor="Black" TextColor="Black" FontSize="18" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding Gearboxes}" ItemDisplayBinding="{Binding Type}" SelectedItem="{Binding Gearbox}">
-                </Picker>
+                                <Label Text="עיר מגורים:" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                                <Picker Title="{Binding CityName}" TitleColor="Black" TextColor="Black" FontSize="18" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding Cities}" ItemDisplayBinding="{Binding CityName}" SelectedItem="{Binding City}">
+                                </Picker>
 
-                        <Label Text="אורך שיעור:" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="5" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                <Picker Title="{Binding LessonLengthMin}" TitleColor="Black" TextColor="Black" FontSize="18" Grid.Column="2" Grid.Row="5" ItemsSource="{Binding LessonLengths}" ItemDisplayBinding="{Binding Slength}" SelectedItem="{Binding LessonLength}">
-                </Picker>
-                    </Grid>
-            <Label/>
-                    <Button Text="עדכן" VerticalOptions="End"  HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SaveDataCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
-                    <Label/>
-                </StackLayout>
+                                <Label Text="כתובת:" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                                <Entry Grid.Column="2" Grid.Row="3" Text="{Binding SAddress}" FontSize="18"/>
 
-                <CollectionView EmptyView="- לא התבצעו שיעורים -" x:Name="collectionName" 
+                                <Label Text="תיבת הילוכים:" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="4" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                                <Picker Title="{Binding GearboxName}" TitleColor="Black" TextColor="Black" FontSize="18" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding Gearboxes}" ItemDisplayBinding="{Binding Type}" SelectedItem="{Binding Gearbox}">
+                                </Picker>
+
+                                <Label Text="אורך שיעור:" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="5" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                                <Picker Title="{Binding LessonLengthMin}" TitleColor="Black" TextColor="Black" FontSize="18" Grid.Column="2" Grid.Row="5" ItemsSource="{Binding LessonLengths}" ItemDisplayBinding="{Binding Slength}" SelectedItem="{Binding LessonLength}">
+                                </Picker>
+                            </Grid>
+                            <Label/>
+                            <Button Text="עדכן" VerticalOptions="End"  HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SaveDataCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
+                            <Label/>
+                        </StackLayout>
+
+                        <CollectionView HorizontalOptions="CenterAndExpand" EmptyView="- לא התבצעו שיעורים -" x:Name="collectionName" 
                             ItemsSource="{Binding LessonsList}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelctionChanged}"
                         SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
-                    <CollectionView.EmptyViewTemplate>
-                        <DataTemplate>
-                            <Label Text="- לא התבצעו שיעורים -"
+                            <CollectionView.EmptyViewTemplate>
+                                <DataTemplate>
+                                    <Label Text="- לא התבצעו שיעורים -"
                             Margin="10,25,10,10"
                             FontSize="16"
                             HorizontalOptions="Fill"
                             HorizontalTextAlignment="Center" />
-                        </DataTemplate>
-                    </CollectionView.EmptyViewTemplate>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Padding="10" HorizontalOptions="CenterAndExpand">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0" Grid.Row="0" Text="{Binding Lday}" FontSize="15" HorizontalOptions="Center"/>
-                                <Label Grid.Column="0" Grid.Row="1" Text="{Binding Ldate}" FontSize="15" HorizontalOptions="Center"/>
-                                <Label Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Text="{Binding IsPaid}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                                </DataTemplate>
+                            </CollectionView.EmptyViewTemplate>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="10" HorizontalOptions="CenterAndExpand">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" Grid.Row="0" Text="{Binding Lday}" FontSize="15" HorizontalOptions="Center"/>
+                                        <Label Grid.Column="0" Grid.Row="1" Text="{Binding Ldate}" FontSize="15" HorizontalOptions="Center"/>
+                                        <Label Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Text="{Binding IsPaid}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </Frame>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

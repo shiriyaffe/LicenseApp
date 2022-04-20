@@ -18,8 +18,6 @@ namespace LicenseApp
         
         public event Action RefreshUI;
 
-        public void UIRefresh() { this.RefreshUI.Invoke(); }
-
         public App()
         {
             InitializeComponent();
@@ -46,6 +44,8 @@ namespace LicenseApp
             Page p = new OpenningPageView();
             MainPage = new NavigationPage(p);
         }
+
+        public void UIRefresh() { this.RefreshUI.Invoke(); }
 
         protected override void OnSleep()
         {

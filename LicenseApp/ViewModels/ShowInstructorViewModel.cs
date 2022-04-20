@@ -6,6 +6,7 @@ using LicenseApp.Models;
 using System.Windows.Input;
 using Xamarin.Forms;
 using LicenseApp.Services;
+using System.Collections.ObjectModel;
 
 namespace LicenseApp.ViewModels
 {
@@ -18,6 +19,9 @@ namespace LicenseApp.ViewModels
         }
 
         const int WAITING_STATUS = 1;
+        const int APPROVED_STATUS = 2;
+        const int REJECTED_STATUS = 3;
+        const int nonexistent_STATUS = 4;
 
         private Area area;
         public Area Area
@@ -107,7 +111,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
-        public int instructorID;
+        private int instructorID;
         public int InstructorID
         {
             get { return instructorID; }
@@ -118,28 +122,100 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public int collHeight;
+        public int CollHeight
+        {
+            get { return collHeight; }
+            set
+            {
+                collHeight = value;
+                OnPropertyChanged("CollHeight");
+            }
+        }
+
+        private ObservableCollection<Review> reviewList;
+        public ObservableCollection<Review> ReviewList
+        {
+            get
+            {
+                return this.reviewList;
+            }
+            set
+            {
+                if (this.reviewList != value)
+                {
+
+                    this.reviewList = value;
+                    OnPropertyChanged("ReviewList");
+                }
+            }
+        }
+
+        public async void CreateReviewsCollection()
+        {
+            App app = (App)App.Current;
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            ObservableCollection<Review> reviews = await proxy.GetInstructorReviewsAsync(instructorID);
+            foreach (Review r in reviews)
+            {
+                this.ReviewList.Add(r);
+            }
+
+            if (ReviewList.Count == 0)
+            {
+                CollHeight = 40;
+            }
+            else if(ReviewList.Count > 0)
+            {
+                CollHeight = 120 * ReviewList.Count;
+            }
+        }
+        
+        public ShowInstructorViewModel()
+        {
+            ReviewList = new ObservableCollection<Review>();
+            CollHeight = 0;
+            CreateReviewsCollection();
+        }
+
         public ICommand SendEnrollmentCommand => new Command(SendEnrollmentRequest);
 
         public async void SendEnrollmentRequest()
         {
             App app = (App)App.Current;
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
-
-            EnrollmentRequest em = new EnrollmentRequest
+            if (app.CurrentUser is Student)
             {
-                StudentId = ((Student)app.CurrentUser).StudentId,
-                InstructorId = InstructorID,
-                StatusId = WAITING_STATUS
-            };
+                Student current = (Student)app.CurrentUser;
+                if (current.EStatusId == WAITING_STATUS || current.EStatusId == APPROVED_STATUS)
+                {
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "בקשתך לרישום אצל מורה נוסף קיימת במערכת! לא ניתן להרשם לשני מורים במקביל..", "בסדר");
+                }
+                else
+                {
+                    current.EStatusId = WAITING_STATUS;
+                    bool ok = await proxy.ChangeUserStatus(current);
 
-            EnrollmentRequest newEm = await proxy.AddEnrollmentRequest(em);
-            
-            if(newEm != null)
-            {
-                await App.Current.MainPage.DisplayAlert("שגיאה", "בקשתך לרישום נשלחה בהצלחה למורה! חזור במועד מאוחר יותר על מנת לראות האם אושרת", "בסדר");
+                    if (ok)
+                    {
+                        EnrollmentRequest em = new EnrollmentRequest
+                        {
+                            StudentId = ((Student)app.CurrentUser).StudentId,
+                            InstructorId = InstructorID,
+                            StatusId = WAITING_STATUS
+                        };
+
+                        EnrollmentRequest newEm = await proxy.AddEnrollmentRequest(em);
+
+                        if (newEm != null)
+                        {
+                            await App.Current.MainPage.DisplayAlert("שגיאה", "בקשתך לרישום נשלחה בהצלחה למורה! חזור במועד מאוחר יותר על מנת לראות האם אושרת", "בסדר");
+                        }
+                        else
+                            await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה! בקשתך לא נשלחה. נסה שוב", "בסדר");
+                    }
+                }
             }
-            else
-                await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה! בקשתך לא נשלחה. נסה שוב", "בסדר");
         }
     }
 }

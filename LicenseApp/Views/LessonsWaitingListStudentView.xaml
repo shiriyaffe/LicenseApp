@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LicenseApp.Views.LessonsWaitingListStudentView"
+             FlowDirection="RightToLeft"
+             BackgroundImageSource="WallPaper2.jpg">
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <Frame Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
+                <StackLayout>
+                    <Label Text="שיעורים עתידיים:" FontAttributes="Bold" FontSize="20"></Label>
+                    <CollectionView HorizontalOptions="Center" BackgroundColor="Transparent" EmptyView="אין לך שיעורים עתידיים במערכת" x:Name="collectionName" 
+                            ItemsSource="{Binding UpComingLessonsList}" SelectionMode="Single"
+                        SelectionChangedCommand="{Binding SelctionChanged}"
+                        SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="10" HorizontalOptions="CenterAndExpand">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
+                                    <Label Grid.Column="0" Grid.Row="0" Text="{Binding Lday}" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding Ldate}" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                    <Label Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Text="{Binding LTime}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+
+                    <Label></Label>
+                    <Label Text="שיעורים שטרם אושרו:" FontAttributes="Bold" FontSize="20"></Label>
+                    <CollectionView HorizontalOptions="Center" BackgroundColor="Transparent" EmptyView="אין לך שיעורים בהמתנה במערכת" x:Name="WaitingLessons" 
+                            ItemsSource="{Binding WaitingLessonsList}" SelectionMode="Single"
+                        SelectionChangedCommand="{Binding SelctionChanged}"
+                        SelectionChangedCommandParameter="{Binding Source={x:Reference WaitingLessons}, Path=SelectedItem}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="10" HorizontalOptions="CenterAndExpand">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
+                                    <Label Grid.Column="0" Grid.Row="0" Text="{Binding Lday}" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding Ldate}" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                    <Label Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Text="{Binding LTime}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

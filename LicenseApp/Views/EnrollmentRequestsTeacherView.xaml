@@ -1,17 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="LicenseApp.Views.EnrollmentRequestsTeacherView">
+             x:Class="LicenseApp.Views.EnrollmentRequestsTeacherView"
+             FlowDirection="RightToLeft">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="החלק שמאלה או ימינה לאישור או שמאלה לדחייה של המורה" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"></Label>
+        <StackLayout Padding="20,20">
+            <Label Text="החלק שמאלה או ימינה לאישור או לדחייה של המורה" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"></Label>
 
             <CollectionView x:Name="collectionName" 
-                                EmptyView="אין מורים בהמתנה"
-                                ItemsSource="{Binding StudentsList}" SelectionMode="Single"
-                                SelectionChangedCommand="{Binding SelectionChanged}"
-                                SelectedItem="{Binding SelectedItem}"
-                                SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}" >
+                                EmptyView="אין תלמידים בהמתנה"
+                                ItemsSource="{Binding StudentsList}" >
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <RefreshView x:Name="refreshView" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
@@ -48,9 +46,9 @@
                                     <Frame BorderColor="white" Grid.Column="0" Grid.Row="0"  CornerRadius="100" IsClippedToBounds="True" Padding="0" HeightRequest="65" WidthRequest="65" HorizontalOptions="CenterAndExpand">
                                         <Image x:Name="theImage" Source="{Binding PhotoURI}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="50" WidthRequest="50"/>
                                     </Frame>
-                                    <Label Grid.Column="0" Grid.Row="1" Text="{Binding Iname}" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Label Grid.Column="0" Grid.Row="1" Text="{Binding Sname}" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
                                     <Label Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Text="{Binding PhoneNumber}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                    <Label Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Text="{Binding Details}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Label Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Text="{Binding Birthday}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
                                 </Grid>
 
                             </SwipeView>

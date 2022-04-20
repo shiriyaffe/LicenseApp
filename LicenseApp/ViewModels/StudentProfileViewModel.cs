@@ -385,7 +385,8 @@ namespace LicenseApp.ViewModels
             ObservableCollection<Lesson> lessons = await proxy.GetStudentLessonsAsync(((Student)app.CurrentUser).StudentId);
             foreach (Lesson l in lessons)
             {
-                this.LessonsList.Add(l);
+                if(l.HasDone)
+                    this.LessonsList.Add(l);
             }
         }
 

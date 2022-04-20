@@ -2,6 +2,7 @@
 using LicenseApp.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 using Xamarin.Forms;
@@ -82,27 +83,54 @@ namespace LicenseApp.ViewModels
             }
         }
 
-        private DateTime summeryDate;
-        public DateTime SummeryDate
+        #region סיכום שיעור
+        private ObservableCollection<Lesson> lessons;
+        public ObservableCollection<Lesson> Lessons
         {
-            get { return summeryDate; }
+            get { return lessons; }
             set
             {
-                summeryDate = value;
-                OnPropertyChanged("SummeryDate");
+                lessons = value;
+                OnPropertyChanged("Lessons");
             }
         }
 
-        private string lessonSummery;
-        public string LessonSummery
+        public async void GetLessons()
         {
-            get { return lessonSummery; }
-            set
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            Lessons = new ObservableCollection<Lesson>();
+
+            ObservableCollection < Lesson > list = await proxy.GetStudentLessonsAsync(StudentId);
+
+            foreach(Lesson l in list)
             {
-                lessonSummery = value;
-                OnPropertyChanged("LessonSummery");
+                if (l.HasDone)
+                    Lessons.Add(l);
             }
         }
+
+        private string lessonSum;
+        public string LessonSum
+        {
+            get { return lessonSum; }
+            set
+            {
+                lessonSum = value;
+                OnPropertyChanged("LessonSum");
+            }
+        }
+
+        private Lesson lesson;
+        public Lesson Lesson
+        {
+            get { return lesson; }
+            set
+            {
+                lesson = value;
+                OnPropertyChanged("Lesson");
+            }
+        }
+        #endregion
 
         private string sCity;
         public string SCity
@@ -115,7 +143,6 @@ namespace LicenseApp.ViewModels
             }
         }
 
-
         public Command DeleteStudentCommand => new Command(DeleteStudent);
 
         public async void DeleteStudent()
@@ -125,6 +152,52 @@ namespace LicenseApp.ViewModels
 
             Page p = new Views.InstructorMainTabView();
             await App.Current.MainPage.Navigation.PushAsync(p);
+        }
+
+        public Command AddSummaryCommand => new Command(AddSummary);
+
+        public async void AddSummary()
+        {
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+
+            Review r = new Review
+            {
+                Content = LessonSum,
+                WrittenOn = DateTime.Today
+            };
+
+            Review newR = await proxy.AddReview(r);
+
+            if(newR != null)
+            {
+                StudentSummary sum = new StudentSummary
+                {
+                    ReviewId = newR.ReviewId,
+                    StudentId = StudentId
+                };
+
+                StudentSummary newSum = await proxy.AddSummary(sum);
+
+                if(newSum != null)
+                {
+                    Lesson l = new Lesson
+                    {
+                        Ldate = Lesson.Ldate,
+                        LessonId = Lesson.LessonId,
+                        HasDone = Lesson.HasDone,
+                        Lday = Lesson.Lday,
+                        IsAvailable = Lesson.IsAvailable,
+                        IsPaid = Lesson.IsPaid,
+                        StuudentId = Lesson.StuudentId,
+                        InstructorId = Lesson.InstructorId,
+                        ReviewId = newR.ReviewId
+                    };
+
+                    Lesson newL = await proxy.UpdateLessonSum(l);
+                }
+            }
+            else
+                await App.Current.MainPage.DisplayAlert("שגיאה", "שליחת סיכום השיעור נכשלה", "בסדר");
         }
     }
 }

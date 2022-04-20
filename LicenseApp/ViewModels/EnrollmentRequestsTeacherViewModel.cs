@@ -10,7 +10,7 @@ using Xamarin.Forms;
 
 namespace LicenseApp.ViewModels
 {
-    public class NewInstructorsListViewModel : INotifyPropertyChanged
+    public class EnrollmentRequestsTeacherViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
@@ -22,20 +22,20 @@ namespace LicenseApp.ViewModels
         public const int PERMITTED_STATUS = 2;
         public const int WAITING_STATUS = 1;
 
-        private ObservableCollection<Instructor> instructorsList;
-        public ObservableCollection<Instructor> InstructorsList
+        private ObservableCollection<Student> studentsList;
+        public ObservableCollection<Student> StudentsList
         {
             get
             {
-                return this.instructorsList;
+                return this.studentsList;
             }
             set
             {
-                if (this.instructorsList != value)
+                if (this.studentsList != value)
                 {
 
-                    this.instructorsList = value;
-                    OnPropertyChanged("InstructorsList");
+                    this.studentsList = value;
+                    OnPropertyChanged("StudentsList");
                 }
             }
         }
@@ -79,9 +79,9 @@ namespace LicenseApp.ViewModels
         }
         #endregion
 
-        public NewInstructorsListViewModel()
+        public EnrollmentRequestsTeacherViewModel()
         {
-            InstructorsList = new ObservableCollection<Instructor>();
+            StudentsList = new ObservableCollection<Student>();
             IsRefreshing = false;
             CreateCollection();
         }
@@ -92,18 +92,22 @@ namespace LicenseApp.ViewModels
 
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             App app = (App)App.Current;
-            ObservableCollection<Instructor> instructors = new ObservableCollection<Instructor>();
-            instructors = await proxy.GetAllInstructorsAsync();
-            foreach(Instructor i in instructors)
+            ObservableCollection<Student> students = new ObservableCollection<Student>();
+            if (app.CurrentUser is Instructor)
             {
-                if(i.EStatusId == WAITING_STATUS && i.DrivingSchoolId == ((SchoolManager)app.CurrentUser).SchoolId)
+                Instructor instructor = (Instructor)app.CurrentUser;
+                students = await proxy.GetAllWaitingStudentsByInstructor(instructor.InstructorId);
+                if (students.Count != 0)
                 {
-                    InstructorsList.Add(i);
-                }
-            }
+                    foreach (Student i in students)
+                    {
+                        StudentsList.Add(i);
+                    }
 
-            AmountOfRequests = InstructorsList.Count;
-            IsRefreshing = false;
+                    AmountOfRequests = StudentsList.Count;
+                }
+                IsRefreshing = false;
+            }
         }
 
         public ICommand DisapproveCommand => new Command(OnDisapprove);
@@ -111,12 +115,12 @@ namespace LicenseApp.ViewModels
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
 
-            if (obj is Instructor)
+            if (obj is Student)
             {
-                Instructor i = (Instructor)obj;
-                i.EStatusId = UNPERMITTED_STATUS;
+                Student s = (Student)obj;
+                s.EStatusId = UNPERMITTED_STATUS;
 
-                bool ok = await proxy.ChangeUserStatus(i);
+                bool ok = await proxy.ChangeUserStatus(s);
                 if (ok)
                 {
                     OnRefresh();
@@ -140,9 +144,9 @@ namespace LicenseApp.ViewModels
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
 
-            if (obj is Instructor)
+            if (obj is Student)
             {
-                Instructor i = (Instructor)obj;
+                Student i = (Student)obj;
                 i.EStatusId = PERMITTED_STATUS;
 
                 bool ok = await proxy.ChangeUserStatus(i);

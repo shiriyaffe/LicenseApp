@@ -14,6 +14,7 @@ namespace LicenseApp.Views
     {
         public ShowStudentInfoView(ShowStudentInfoViewModel studentContext)
         {
+            studentContext.GetLessons();
             this.BindingContext = studentContext;
             this.Title = studentContext.SName;
             InitializeComponent();

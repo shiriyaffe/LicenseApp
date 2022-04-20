@@ -6,6 +6,7 @@
     <StackLayout>
         <Button Text="Click Me" Command="{Binding ShowLbl}"/>
         <Label Text="{Binding Text}"/>
+
     </StackLayout>
 
 </ContentPage>

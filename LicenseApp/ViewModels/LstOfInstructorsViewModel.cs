@@ -20,6 +20,7 @@ namespace LicenseApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private const int APPROVED_STATUS = 2;
 
         private ObservableCollection<Instructor> filteredInstructorList;
         public ObservableCollection<Instructor> FilteredInstructorList
@@ -72,7 +73,7 @@ namespace LicenseApp.ViewModels
             ObservableCollection<Instructor> instructors = await proxy.GetAllInstructorsAsync();
             foreach (Instructor i in instructors)
             {
-                if (i.SchoolManagerId == ((SchoolManager)app.CurrentUser).SmanagerId)
+                if (i.SchoolManagerId == ((SchoolManager)app.CurrentUser).SmanagerId && i.EStatusId == APPROVED_STATUS)
                     AllInstructors.Add(i);
             }
 

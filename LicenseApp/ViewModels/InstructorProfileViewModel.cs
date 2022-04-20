@@ -2,6 +2,7 @@
 using LicenseApp.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -430,9 +431,105 @@ namespace LicenseApp.ViewModels
             }
         }
 
-       
+        #region Reviews
+        public int collHeight;
+        public int CollHeight
+        {
+            get { return collHeight; }
+            set
+            {
+                collHeight = value;
+                OnPropertyChanged("CollHeight");
+            }
+        }
+
+        private ObservableCollection<Review> reviewList;
+        public ObservableCollection<Review> ReviewList
+        {
+            get
+            {
+                return this.reviewList;
+            }
+            set
+            {
+                if (this.reviewList != value)
+                {
+
+                    this.reviewList = value;
+                    OnPropertyChanged("ReviewList");
+                }
+            }
+        }
+
+        public async void CreateReviewsCollection()
+        {
+            App app = (App)App.Current;
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            if (app.CurrentUser is Instructor)
+            {
+                ObservableCollection<Review> reviews = await proxy.GetInstructorReviewsAsync(((Instructor)app.CurrentUser).InstructorId);
+                foreach (Review r in reviews)
+                {
+                    this.ReviewList.Add(r);
+                }
+
+                if (ReviewList.Count == 0)
+                {
+                    CollHeight = 40;
+                }
+                else if (ReviewList.Count > 0)
+                {
+                    CollHeight = 120 * ReviewList.Count;
+                }
+            }
+        }
+        #endregion
+
+        #region Refresh
+        private bool isRefreshing;
+        public bool IsRefreshing
+        {
+            get => isRefreshing;
+            set
+            {
+                if (this.isRefreshing != value)
+                {
+                    this.isRefreshing = value;
+                    OnPropertyChanged(nameof(IsRefreshing));
+                }
+            }
+        }
+
+        public ICommand RefreshCommand => new Command(OnRefresh);
+        public void OnRefresh()
+        {
+            IsRefreshing = true;
+            App a = (App)App.Current;
+            Instructor i = (Instructor)a.CurrentUser;
+
+            if (i != null)
+            {
+                GetArea(i);
+                GetGearbox(i);
+                GetLessonLength(i);
+                ImageUrl = i.PhotoURI;
+                SliderValue = i.Price;
+                PhoneNumber = i.PhoneNumber;
+                Pass = i.Pass;
+                InstructorDetails = i.Details;
+                GetEndHour(i.EndTime);
+                GetStartHour(i.StartTime);
+
+                CreateReviewsCollection();
+            }
+            IsRefreshing = false;
+        }
+        #endregion
+
         public InstructorProfileViewModel()
         {
+            IsRefreshing = false;
+
             App app = (App)App.Current;
             if (app.CurrentUser != null && app.CurrentUser is Instructor)
             {
@@ -454,6 +551,12 @@ namespace LicenseApp.ViewModels
             ShowDetailError = false;
             this.SaveDataCommand = new Command(() => SaveData());
             this.PassConditions = new Command(() => ShowConditions());
+            
+            ReviewList = new ObservableCollection<Review>();
+            CollHeight = 0;
+            CreateReviewsCollection();
+
+            ((App)App.Current).RefreshUI += OnRefresh;
         }
 
         private async void GetArea(Instructor i)
@@ -584,6 +687,7 @@ namespace LicenseApp.ViewModels
 
                     theApp.CurrentUser = instructor;
                     await App.Current.MainPage.DisplayAlert("עדכון", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);
+                    OnRefresh();
                 }
             }
             else

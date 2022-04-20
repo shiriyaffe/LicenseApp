@@ -10,11 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace LicenseApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class EnrollmentRequestsTeacherView : ContentPage
+    public partial class MyInstructorView : ContentPage
     {
-        public EnrollmentRequestsTeacherView()
+        public MyInstructorView()
         {
-            this.BindingContext = new EnrollmentRequestsTeacherViewModel();
+            this.BindingContext = new MyInstructorViewModel();
             InitializeComponent();
         }
     }

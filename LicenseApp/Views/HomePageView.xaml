@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LicenseApp.Views.HomePageView"
              FlowDirection="RightToLeft"
-             NavigationPage.HasNavigationBar="{Binding}">
+             NavigationPage.HasNavigationBar="{Binding}"
+             BackgroundImageSource="Wallpaper2.jpg">
     <ContentPage.Resources>
         <Style TargetType="Grid">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -25,7 +26,8 @@
         <ScrollView>
             <StackLayout Padding="10,10">
                 <ImageButton BackgroundColor="Transparent" Source="Search.png" Command="{Binding SearchPageCommand}" Padding="5" WidthRequest="35" HeightRequest="35" HorizontalOptions="End"></ImageButton>
-                <CollectionView EmptyView="אין מורים במערכת" x:Name="collectionName" 
+                <Frame Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
+                <CollectionView HorizontalOptions="Center" BackgroundColor="Transparent" EmptyView="אין מורים במערכת" x:Name="collectionName" 
                             ItemsSource="{Binding InstructorList}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelctionChanged}"
                         SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
@@ -33,7 +35,7 @@
                         <DataTemplate>
                             <Grid Padding="10" HorizontalOptions="CenterAndExpand">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="70" />
+                                    <RowDefinition Height="70"/>
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
@@ -46,12 +48,12 @@
                                     <Image x:Name="theImage" Source="{Binding PhotoURI}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="50" WidthRequest="50"/>
                                 </Frame>
                                 <Label Grid.Column="0" Grid.Row="1" Text="{Binding Iname}" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                <Label Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Text="{Binding Details}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                <Label Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Text="{Binding Details}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black"/>
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-                
+                </Frame>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

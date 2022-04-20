@@ -2,6 +2,7 @@
 using LicenseApp.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 using Xamarin.Forms;
@@ -102,6 +103,62 @@ namespace LicenseApp.ViewModels
         //        this.SLength = l.Slength;
         //    }
         //}
+
+        public int collHeight;
+        public int CollHeight
+        {
+            get { return collHeight; }
+            set
+            {
+                collHeight = value;
+                OnPropertyChanged("CollHeight");
+            }
+        }
+
+        private ObservableCollection<Review> reviewList;
+        public ObservableCollection<Review> ReviewList
+        {
+            get
+            {
+                return this.reviewList;
+            }
+            set
+            {
+                if (this.reviewList != value)
+                {
+
+                    this.reviewList = value;
+                    OnPropertyChanged("ReviewList");
+                }
+            }
+        }
+
+        public async void CreateReviewsCollection()
+        {
+            App app = (App)App.Current;
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            ObservableCollection<Review> reviews = await proxy.GetInstructorReviewsAsync(instructorID);
+            foreach (Review r in reviews)
+            {
+                this.ReviewList.Add(r);
+            }
+
+            if (ReviewList.Count == 0)
+            {
+                CollHeight = 40;
+            }
+            else if (ReviewList.Count > 0)
+            {
+                CollHeight = 120 * ReviewList.Count;
+            }
+        }
+
+        public ShowInstrucorSMViewModel()
+        {
+            ReviewList = new ObservableCollection<Review>();
+            CollHeight = 0;
+            CreateReviewsCollection();
+        }
 
         private int instructorID;
         public int InstructorID

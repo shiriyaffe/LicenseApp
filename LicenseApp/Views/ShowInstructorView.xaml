@@ -47,7 +47,36 @@
                     <Label Grid.Column="1" Grid.Row="4" Text="{Binding Details}" FontSize="18"/>
                 </Grid>
                 <Label/>
-                <Button BackgroundColor="#caf0f8" Text="  שליחת בקשה להרשמה  " HorizontalOptions="CenterAndExpand" Padding="10" FontSize="20" FontAttributes="Bold" CornerRadius="10" TextColor="Black"></Button>
+
+                <CollectionView HeightRequest="{Binding CollHeight}" EmptyView="- לא קיימות ביקורות במערכת -" x:Name="collectionName" 
+                            ItemsSource="{Binding ReviewList}">
+                    <CollectionView.EmptyViewTemplate>
+                        <DataTemplate>
+                            <Label Text="- לא קיימות ביקורות במערכת -"
+                            Margin="10,25,10,10"
+                            FontSize="16"
+                            
+                            HorizontalTextAlignment="Center" />
+                        </DataTemplate>
+                    </CollectionView.EmptyViewTemplate>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="10" HorizontalOptions="CenterAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="90" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Text="{Binding WrittenOn}" FontSize="15" HorizontalOptions="Center"/>
+                                <Label Grid.Column="1" Grid.Row="0" Text="{Binding Content}" FontSize="15" HorizontalOptions="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Label/>
+                <Button Command="{Binding SendEnrollmentCommand}" BorderWidth="1" BorderColor="#61a5c2" BackgroundColor="#caf0f8" Text="         שליחת בקשה להרשמה         " HorizontalOptions="CenterAndExpand" Padding="10" FontSize="18" FontAttributes="Bold" CornerRadius="15" TextColor="Black"></Button>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
