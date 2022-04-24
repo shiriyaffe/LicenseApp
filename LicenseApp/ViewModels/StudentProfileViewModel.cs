@@ -472,7 +472,7 @@ namespace LicenseApp.ViewModels
                     }
 
                     theApp.CurrentUser = student;
-                    await App.Current.MainPage.DisplayAlert("עדכון", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);
+                    await App.Current.MainPage.DisplayAlert("", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);
                 }
             }
             else

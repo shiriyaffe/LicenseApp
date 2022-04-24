@@ -34,6 +34,8 @@ namespace LicenseApp.Models
         public virtual LessonLength LessonLength { get; set; }
         public virtual LicenseType LicenseType { get; set; }
         public virtual ICollection<EnrollmentRequest> EnrollmentRequests { get; set; }
+        public virtual ICollection<Lesson> Lessons { get; set; }
+        public virtual ICollection<StudentSummary> StudentSummaries { get; set; }
 
         public string PhotoURI
         {

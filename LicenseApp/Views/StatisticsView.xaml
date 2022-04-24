@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LicenseApp.Views.StatisticsView"
+             FlowDirection="RightToLeft"
+             BackgroundImageSource="Wallpaper2.png">
+    <ContentPage.Content>
+        <StackLayout Padding="15">
+            <Frame Padding="5,0" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent" VerticalOptions="CenterAndExpand">
+                <StackLayout Padding="20">
+                    <Label Text="תלמידים חדשים בביהס:" FontAttributes="Bold" TextColor="#003049" FontSize="22" TextDecorations="Underline"/>
+                    <StackLayout Orientation="Horizontal" Padding="0">
+                        <Grid Padding="15" HorizontalOptions="CenterAndExpand">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0" Grid.Column="0" Text="הצטרפו היום:" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" FontSize="18"/>
+                            <Frame Grid.Row="1" Grid.Column="0" CornerRadius="20" BackgroundColor="#caf0f8" BorderColor="#61a5c2" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="{Binding NewToday}" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" FontSize="19"/>
+                            </Frame>
+                        </Grid>
+
+                        <Grid Padding="15" HorizontalOptions="CenterAndExpand">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0" Grid.Column="0" Text="הצטרפו השבוע:" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" FontSize="18"/>
+                            <Frame Grid.Row="1" Grid.Column="0" CornerRadius="20" BackgroundColor="#caf0f8" BorderColor="#61a5c2" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="{Binding NewWeek}" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" FontSize="19"/>
+                            </Frame>
+                        </Grid>
+                    </StackLayout>
+                    
+
+                    <Grid Padding="15" HorizontalOptions="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Text="הצטרפו החודש:" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" FontSize="18"/>
+                        <Frame Grid.Row="1" Grid.Column="0" CornerRadius="20" BackgroundColor="#caf0f8" BorderColor="#61a5c2" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Label Text="{Binding NewMonth}" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" FontSize="19"/>
+                        </Frame>
+                    </Grid>
+                    <Label/>
+
+                    <Label Text="דירוג ממוצע של מוריך:" FontAttributes="Bold" TextColor="#003049" FontSize="22" TextDecorations="Underline"/>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

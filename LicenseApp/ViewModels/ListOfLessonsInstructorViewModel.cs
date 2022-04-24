@@ -10,7 +10,7 @@ using Xamarin.Forms;
 
 namespace LicenseApp.ViewModels
 {
-    public class LessonsWaitingListStudentViewModel : INotifyPropertyChanged
+    public class ListOfLessonsInstructorViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
@@ -80,11 +80,32 @@ namespace LicenseApp.ViewModels
         }
         #endregion
 
-        public LessonsWaitingListStudentViewModel()
+        private DateTime chosenDate;
+        public DateTime ChosenDate
+        {
+            get
+            {
+                return this.chosenDate;
+            }
+            set
+            {
+                if (this.chosenDate != value)
+                {
+
+                    this.chosenDate = value;
+                    OnPropertyChanged("ChosenDate");
+                }
+            }
+        }
+
+
+        public ListOfLessonsInstructorViewModel()
         {
             UpComingLessonsList = new ObservableCollection<Lesson>();
             WaitingLessonsList = new ObservableCollection<Lesson>();
             IsRefreshing = false;
+            ChosenDate = new DateTime(2022, 04, 25);
+
             CreateLessonsList();
         }
 
@@ -95,20 +116,23 @@ namespace LicenseApp.ViewModels
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             App app = (App)App.Current;
 
-            if (app.CurrentUser is Student)
+            if (app.CurrentUser is Instructor)
             {
-                Student s = (Student)app.CurrentUser;
+                Instructor i = (Instructor)app.CurrentUser;
                 ObservableCollection<Lesson> list = new ObservableCollection<Lesson>();
-                list = await proxy.GetStudentLessonsAsync(s.StudentId);
+                list = await proxy.GetInstructorLessonsAsync(i.InstructorId);
 
                 if (list != null)
                 {
                     foreach (Lesson l in list)
                     {
-                        if (!l.HasDone && l.EStatusId == APPROVED)
-                            UpComingLessonsList.Add(l);
-                        else if (!l.HasDone && l.EStatusId == WAITING)
-                            waitingLessonsList.Add(l);
+                        if (l.Ldate.Date == ChosenDate.Date)
+                        {
+                            if (!l.HasDone && l.EStatusId == APPROVED)
+                                UpComingLessonsList.Add(l);
+                            else if (!l.HasDone && l.EStatusId == WAITING)
+                                waitingLessonsList.Add(l);
+                        }
                     }
                 }
             }
@@ -122,7 +146,7 @@ namespace LicenseApp.ViewModels
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
 
-            if(obj is Lesson)
+            if (obj is Lesson)
             {
                 Lesson chosen = (Lesson)obj;
 
@@ -145,7 +169,7 @@ namespace LicenseApp.ViewModels
 
                 if (cancelled != null)
                 {
-                    await App.Current.MainPage.DisplayAlert("", "שיעורך בוטל בהצלחה! מומלץ לקבוע שיעור נוסף במקודם:)", "בסדר");
+                    await App.Current.MainPage.DisplayAlert("", "שיעור זה בוטל בהצלחה!:)", "בסדר");
                     //OnRefresh();
                     //((App)App.Current).UIRefresh();
                 }

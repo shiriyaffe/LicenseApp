@@ -28,21 +28,25 @@
             <FontImageSource Color="#014f86" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.Bars}"/>
         </local:ListOfInstructorsView.IconImageSource>
     </local:ListOfInstructorsView>
+    
     <local:AllStudentsListInSchoolView>
         <local:AllStudentsListInSchoolView.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.GraduationCap}"/>
         </local:AllStudentsListInSchoolView.IconImageSource>
     </local:AllStudentsListInSchoolView>
+    
     <local:NewInstructorsRequestsView>
         <local:NewInstructorsRequestsView.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.EnvelopeOpenText}"/>
         </local:NewInstructorsRequestsView.IconImageSource>
     </local:NewInstructorsRequestsView>
-    <local:Test>
-        <local:Test.IconImageSource>
+    
+    <local:StatisticsView>
+        <local:StatisticsView.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.ChartLine}"/>
-        </local:Test.IconImageSource>
-    </local:Test>
+        </local:StatisticsView.IconImageSource>
+    </local:StatisticsView>
+    
     <local:SManagerProfileView>
         <local:SManagerProfileView.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.CircleUser}"/>

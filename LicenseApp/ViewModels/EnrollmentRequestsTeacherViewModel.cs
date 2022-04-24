@@ -106,8 +106,8 @@ namespace LicenseApp.ViewModels
 
                     AmountOfRequests = StudentsList.Count;
                 }
-                IsRefreshing = false;
             }
+                IsRefreshing = false;
         }
 
         public ICommand DisapproveCommand => new Command(OnDisapprove);
@@ -123,8 +123,8 @@ namespace LicenseApp.ViewModels
                 bool ok = await proxy.ChangeUserStatus(s);
                 if (ok)
                 {
-                    OnRefresh();
-                    ((App)App.Current).UIRefresh();
+                    //OnRefresh();
+                    //((App)App.Current).UIRefresh();
                 }
                 else
                 {

@@ -209,7 +209,7 @@ namespace LicenseApp.ViewModels
 
                         if (newEm != null)
                         {
-                            await App.Current.MainPage.DisplayAlert("שגיאה", "בקשתך לרישום נשלחה בהצלחה למורה! חזור במועד מאוחר יותר על מנת לראות האם אושרת", "בסדר");
+                            await App.Current.MainPage.DisplayAlert("", "בקשתך לרישום נשלחה בהצלחה למורה! חזור במועד מאוחר יותר על מנת לראות האם אושרת", "בסדר");
                         }
                         else
                             await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה! בקשתך לא נשלחה. נסה שוב", "בסדר");

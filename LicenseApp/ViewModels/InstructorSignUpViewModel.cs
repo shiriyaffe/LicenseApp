@@ -694,7 +694,7 @@ namespace LicenseApp.ViewModels
 
                     //app.CurrentUser = instructor;
                     //app.MainPage = new NavigationPage(new InstructorMainTabView());
-                    await App.Current.MainPage.DisplayAlert("שגיאה", "ההרשמה בוצעה בהצלחה! לפני השימוש באפליקציה, עלייך לחכות שמנהל בית הספר יאשר אותך", "בסדר");
+                    await App.Current.MainPage.DisplayAlert("", "ההרשמה בוצעה בהצלחה! לפני השימוש באפליקציה, עלייך לחכות שמנהל בית הספר יאשר אותך", "בסדר");
                     app.MainPage = new NavigationPage(new OpenningPageView());
                 }
                 else

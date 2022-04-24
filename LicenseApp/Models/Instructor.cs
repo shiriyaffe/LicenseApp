@@ -38,6 +38,7 @@ namespace LicenseApp.Models
         public virtual Rate Rate { get; set; }
         public virtual SchoolManager SchoolManager { get; set; }
         public virtual ICollection<EnrollmentRequest> EnrollmentRequests { get; set; }
+        public virtual ICollection<InstructorReview> InstructorReviews { get; set; }
         public virtual ICollection<Lesson> Lessons { get; set; }
         public virtual ICollection<Student> Students { get; set; }
 

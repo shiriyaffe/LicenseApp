@@ -11812,10 +11812,13 @@ namespace LicenseApp.Droid
 			public const int tooltip_frame_light = 2131165335;
 			
 			// aapt resource value: 0x7F070098
-			public const int Wallpaper1 = 2131165336;
+			public const int TrashCan = 2131165336;
 			
 			// aapt resource value: 0x7F070099
-			public const int Wallpaper2 = 2131165337;
+			public const int Wallpaper1 = 2131165337;
+			
+			// aapt resource value: 0x7F07009A
+			public const int Wallpaper2 = 2131165338;
 			
 			static Drawable()
 			{

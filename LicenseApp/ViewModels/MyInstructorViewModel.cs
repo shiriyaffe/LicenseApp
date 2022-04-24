@@ -142,7 +142,7 @@ namespace LicenseApp.ViewModels
                 }
                 else
                 {
-                    await App.Current.MainPage.DisplayAlert("שגיאה", "ביקורתך נקלטה בהצלחה! תודה על מתן הביקורת", "בסדר");
+                    await App.Current.MainPage.DisplayAlert("", "ביקורתך נקלטה בהצלחה! תודה על מתן הביקורת", "בסדר");
                 }
             }
             else

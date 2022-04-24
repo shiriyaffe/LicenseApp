@@ -686,7 +686,7 @@ namespace LicenseApp.ViewModels
                     }
 
                     theApp.CurrentUser = instructor;
-                    await App.Current.MainPage.DisplayAlert("עדכון", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);
+                    await App.Current.MainPage.DisplayAlert("", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);
                     OnRefresh();
                 }
             }

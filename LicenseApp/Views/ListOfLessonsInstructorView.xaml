@@ -1,14 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="LicenseApp.Views.LessonsWaitingListStudentView"
+             x:Class="LicenseApp.Views.ListOfLessonsInstructorView"
+             x:Name="LessonsList"
              FlowDirection="RightToLeft"
-             BackgroundImageSource="WallPaper2.jpg"
-             x:Name="LessonsList">
+             BackgroundImageSource="WallPaper2.jpg">
     <ContentPage.Content>
         <StackLayout Padding="20">
             <Frame Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
                 <StackLayout>
+                    <StackLayout Padding="0" Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="Center">
+                        <Label Text="תאריך:" FontAttributes="Bold" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Center" FontSize="17"/>
+                        <Label Text="{Binding ChosenDate.Date}" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Center" FontSize="17"/>
+                    </StackLayout>
+                    <Label Padding="0" FontSize="3"/>
                     <Label TextDecorations="Underline" Text="שיעורים עתידיים:" FontAttributes="Bold" FontSize="20"></Label>
                     <CollectionView HorizontalOptions="Center" BackgroundColor="Transparent" EmptyView="אין לך שיעורים עתידיים במערכת" x:Name="collectionName" 
                             ItemsSource="{Binding UpComingLessonsList}">
@@ -24,10 +29,10 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    
-                                    <Label Grid.Column="0" Grid.Row="0" Text="{Binding Lday}" FontSize="17" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
-                                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding Ldate}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
-                                    <Label Grid.Column="2" Grid.Row="0" Text="{Binding Ltime}" FontSize="17" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black"/>
+                                    <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
+                                    <Label Grid.Column="0" Grid.Row="0" Text="{Binding Ltime}" FontSize="17" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding Stuudent.Sname}" FontSize="17" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                    <Label Grid.Column="2" Grid.Row="0" Text="{Binding Stuudent.Saddress}" FontSize="17" HorizontalOptions="Center" VerticalOptions="Center"/>
                                     <ImageButton Grid.Column="3" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" Source="TrashCan.png" Command="{Binding Source={x:Reference LessonsList}, Path=BindingContext.CancelLessonCommand}" CommandParameter="{Binding}"/>
                                 </Grid>
                             </DataTemplate>
@@ -36,7 +41,7 @@
 
 
                     <Label></Label>
-                    <Label Text="שיעורים שטרם אושרו:" TextDecorations="Underline" FontAttributes="Bold" FontSize="20"></Label>
+                    <Label Text="שיעורים ברשימת המתנה:" TextDecorations="Underline" FontAttributes="Bold" FontSize="20"></Label>
                     <CollectionView HorizontalOptions="Center" BackgroundColor="Transparent" EmptyView="אין לך שיעורים בהמתנה במערכת" x:Name="WaitingLessons" 
                             ItemsSource="{Binding WaitingLessonsList}">
                         <CollectionView.ItemTemplate>
@@ -51,10 +56,10 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    
-                                    <Label Grid.Column="0" Grid.Row="0" Text="{Binding Lday}" FontSize="17" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
-                                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding Ldate}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
-                                    <Label Grid.Column="2" Grid.Row="0" Text="{Binding Ltime}" FontSize="17" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black"/>
+                                    <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
+                                    <Label Grid.Column="0" Grid.Row="0" Text="{Binding Ltime}" FontSize="17" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding Stuudent.Sname}" FontSize="17" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                    <Label Grid.Column="2" Grid.Row="0" Text="{Binding Stuudent.Saddress}" FontSize="17" HorizontalOptions="Center" VerticalOptions="Center"/>
                                     <ImageButton Grid.Column="3" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" Source="TrashCan.png" Command="{Binding Source={x:Reference LessonsList}, Path=BindingContext.CancelLessonCommand}" CommandParameter="{Binding}"/>
                                 </Grid>
                             </DataTemplate>

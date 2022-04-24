@@ -35,11 +35,11 @@
         </local:EnrollmentRequestsTeacherView.IconImageSource>
     </local:EnrollmentRequestsTeacherView>
     
-    <local:Test>
-        <local:Test.IconImageSource>
+    <local:ListOfLessonsInstructorView>
+        <local:ListOfLessonsInstructorView.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MyRegularFonts" Glyph="{x:Static fonts:IconRegularFonts.Calendar}"/>
-        </local:Test.IconImageSource>
-    </local:Test>
+        </local:ListOfLessonsInstructorView.IconImageSource>
+    </local:ListOfLessonsInstructorView>
     
     <local:InstructorProfileView>
         <local:InstructorProfileView.IconImageSource>
