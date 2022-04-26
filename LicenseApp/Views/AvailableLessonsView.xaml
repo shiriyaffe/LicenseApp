@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LicenseApp.Views.AvailableLessonsView"
+             FlowDirection="RightToLeft"
+             BackgroundImageSource="Wallpaper2.jpg">
+    <ContentPage.Resources>
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <Frame Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
+                <StackLayout>
+                    <StackLayout Padding="0" Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="Center">
+                        <Label Text="תאריך:" FontAttributes="Bold" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Center" FontSize="18"/>
+                        <Label Text="{Binding ChosenDate.Date}" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Center" FontSize="18"/>
+                    </StackLayout>
+                    <Label Padding="0" FontSize="3"/>
+                    <CollectionView EmptyView="אין שיעורים פנויים בתאריך זה" x:Name="collectionName" 
+                            ItemsSource="{Binding AvailableList}" SelectionMode="Single"
+                        SelectionChangedCommand="{Binding SelctionChanged}"
+                        SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical" Span="2"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="10" Margin="0" HorizontalOptions="CenterAndExpand">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Frame Grid.Column="0" Grid.Row="0" BackgroundColor="#CED4DA" BorderColor="#495057" CornerRadius="18" HorizontalOptions="Center" VerticalOptions="Center">
+                                        <Label Padding="1" TextColor="Black" Text="{Binding Whour}" FontAttributes="Bold" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Frame>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

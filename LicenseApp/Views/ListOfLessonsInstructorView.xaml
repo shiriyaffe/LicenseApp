@@ -7,7 +7,7 @@
              BackgroundImageSource="WallPaper2.jpg">
     <ContentPage.Content>
         <StackLayout Padding="20">
-            <Frame Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
+            <Frame Padding="15" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
                 <StackLayout>
                     <StackLayout Padding="0" Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="Center">
                         <Label Text="תאריך:" FontAttributes="Bold" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Center" FontSize="17"/>
@@ -55,12 +55,14 @@
                                         <ColumnDefinition Width="80" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
                                     <Label Grid.Column="0" Grid.Row="0" Text="{Binding Ltime}" FontSize="17" VerticalOptions="Center" HorizontalOptions="Center"/>
                                     <Label Grid.Column="1" Grid.Row="0" Text="{Binding Stuudent.Sname}" FontSize="17" VerticalOptions="Center" HorizontalOptions="Center"/>
                                     <Label Grid.Column="2" Grid.Row="0" Text="{Binding Stuudent.Saddress}" FontSize="17" HorizontalOptions="Center" VerticalOptions="Center"/>
                                     <ImageButton Grid.Column="3" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" Source="TrashCan.png" Command="{Binding Source={x:Reference LessonsList}, Path=BindingContext.CancelLessonCommand}" CommandParameter="{Binding}"/>
+                                    <ImageButton Grid.Column="4" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent" HeightRequest="27" WidthRequest="27" Source="Correct.png" Command="{Binding Source={x:Reference LessonsList}, Path=BindingContext.ApproveLessonCommand}" CommandParameter="{Binding}"/>
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>

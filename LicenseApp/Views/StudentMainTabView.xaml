@@ -35,7 +35,7 @@
         </local:LessonsWaitingListStudentView.IconImageSource>
     </local:LessonsWaitingListStudentView>
     
-    <!--<local:MyInstructorView>
+    <local:MyInstructorView>
         <local:MyInstructorView.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.GraduationCap}"/>
         </local:MyInstructorView.IconImageSource>
@@ -45,6 +45,6 @@
         <local:StudentProfileView.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.CircleUser}"/>
         </local:StudentProfileView.IconImageSource>
-    </local:StudentProfileView>-->
+    </local:StudentProfileView>
 
 </TabbedPage>

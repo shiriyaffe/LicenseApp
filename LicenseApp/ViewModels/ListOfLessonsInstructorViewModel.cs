@@ -177,5 +177,29 @@ namespace LicenseApp.ViewModels
                     await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה בעת ביטול השיעור. נסת שנית מאוחר יותר", "בסדר");
             }
         }
+
+        public ICommand ApproveLessonCommand => new Command(ApproveLesson);
+        public async void ApproveLesson(Object obj)
+        {
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+
+            if (obj is Lesson)
+            {
+                Lesson chosen = (Lesson)obj;
+                chosen.EStatusId = APPROVED;
+
+                Lesson approved = await proxy.ApproveLesson(chosen);
+
+                if (approved != null)
+                {
+                    await App.Current.MainPage.DisplayAlert("", "שיעור זה אושר בהצלחה!:)", "בסדר");
+                    //OnRefresh();
+                    //((App)App.Current).UIRefresh();
+                }
+                else
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה בעת אישור השיעור. נסת שנית מאוחר יותר", "בסדר");
+            }
+
+        }
     }
 }

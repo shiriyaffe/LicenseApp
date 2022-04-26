@@ -148,5 +148,14 @@ namespace LicenseApp.ViewModels
             else
                 await App.Current.MainPage.DisplayAlert("שגיאה", "שליחת ביקורת נכשלה", "בסדר");
         }
+
+        public ICommand BookALessonCommand => new Command(BookALesson);
+
+        public void BookALesson()
+        {
+            App app = (App)App.Current;
+            Page p = new AvailableLessonsView();
+            app.MainPage.Navigation.PushAsync(p);
+        }
     }
 }

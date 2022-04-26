@@ -2,60 +2,65 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LicenseApp.Views.EnrollmentRequestsTeacherView"
-             FlowDirection="RightToLeft">
+             FlowDirection="RightToLeft"
+             BackgroundImageSource="Wallpaper2.jpg">
     <ContentPage.Content>
         <StackLayout Padding="20,20">
-            <Label Text="החלק שמאלה או ימינה לאישור או לדחייה של המורה" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"></Label>
+            <Frame Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
+                    <StackLayout>
+                        <Label Text="החלק שמאלה או ימינה לאישור או לדחייה של המורה" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"></Label>
 
-            <CollectionView x:Name="collectionName" 
+                        <CollectionView x:Name="collectionName" 
                                 EmptyView="אין תלמידים בהמתנה"
                                 ItemsSource="{Binding StudentsList}" >
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <RefreshView x:Name="refreshView" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
-                            <SwipeView>
-                                <SwipeView.LeftItems>
-                                    <SwipeItems SwipeBehaviorOnInvoked="Auto">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <RefreshView x:Name="refreshView" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+                                        <SwipeView>
+                                            <SwipeView.LeftItems>
+                                                <SwipeItems SwipeBehaviorOnInvoked="Auto">
 
-                                        <SwipeItem Text="אשר"
+                                                    <SwipeItem Text="אשר"
                                                BackgroundColor="#80ed99"
                                                Command="{Binding Source={x:Reference collectionName}, Path= BindingContext.ApproveCommand}"
                                                CommandParameter="{Binding}"/>
 
-                                    </SwipeItems>
-                                </SwipeView.LeftItems>
+                                                </SwipeItems>
+                                            </SwipeView.LeftItems>
 
-                                <SwipeView.RightItems>
+                                            <SwipeView.RightItems>
 
-                                    <SwipeItem Text="דחה"
+                                                <SwipeItem Text="דחה"
                                                BackgroundColor="#e56b6f"
                                                Command="{Binding Source={x:Reference collectionName}, Path= BindingContext.DisapproveCommand}"
                                                CommandParameter="{Binding}"/>
-                                </SwipeView.RightItems>
+                                            </SwipeView.RightItems>
 
 
-                                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White" >
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Frame BorderColor="white" Grid.Column="0" Grid.Row="0"  CornerRadius="100" IsClippedToBounds="True" Padding="0" HeightRequest="65" WidthRequest="65" HorizontalOptions="CenterAndExpand">
-                                        <Image x:Name="theImage" Source="{Binding PhotoURI}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="50" WidthRequest="50"/>
-                                    </Frame>
-                                    <Label Grid.Column="0" Grid.Row="1" Text="{Binding Sname}" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                    <Label Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Text="{Binding PhoneNumber}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                    <Label Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Text="{Binding Birthday}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                </Grid>
+                                            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White" >
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Frame BorderColor="white" Grid.Column="0" Grid.Row="0"  CornerRadius="100" IsClippedToBounds="True" Padding="0" HeightRequest="65" WidthRequest="65" HorizontalOptions="CenterAndExpand">
+                                                    <Image x:Name="theImage" Source="{Binding PhotoURI}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="50" WidthRequest="50"/>
+                                                </Frame>
+                                                <Label Grid.Column="0" Grid.Row="1" Text="{Binding Sname}" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                <Label Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Text="{Binding PhoneNumber}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                <Label Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Text="{Binding Birthday}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            </Grid>
 
-                            </SwipeView>
-                        </RefreshView>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </StackLayout>
+                                        </SwipeView>
+                                    </RefreshView>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
     </ContentPage.Content>
 </ContentPage>
