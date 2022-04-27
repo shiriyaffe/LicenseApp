@@ -2,16 +2,21 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LicenseApp.Views.SignUpAsView"
-             FlowDirection="RightToLeft">
+             FlowDirection="RightToLeft"
+             BackgroundImageSource="Wallpaper2.jpg">
     <ContentPage.Content>
-        <StackLayout Padding="40" VerticalOptions="Center" HorizontalOptions="Center">
-            <!--<Label Text="המשך בתור:" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="50" TextColor="#003049" HorizontalOptions="Center"/>
-            <Label Padding="0"/>-->
-            <Button Padding="15" x:Name="Student" Text="תלמיד" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold" FontSize="20" Clicked="Student_Clicked"/>
-            <Label Padding="0"/>
-            <Button Padding="15" x:Name="Instructor" Text="מורה" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold" FontSize="20" Clicked="Instructor_Clicked"/>
-            <Label Padding="0"/>
-            <Button Padding="15" x:Name="Manager" Text="מנהל בית ספר" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold" FontSize="20" Clicked="Manager_Clicked"/>
+        <StackLayout Padding="10">
+            <Frame VerticalOptions="CenterAndExpand" HeightRequest="560" Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
+                <StackLayout Padding="40" VerticalOptions="CenterAndExpand" HorizontalOptions="Center">
+                    <!--<Label Text="המשך בתור:" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="50" TextColor="#003049" HorizontalOptions="Center"/>
+                    <Label Padding="0"/>-->
+                    <Button Padding="15" x:Name="Student" Text="תלמיד" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold" FontSize="20" Clicked="Student_Clicked"/>
+                    <Label Padding="0"/>
+                    <Button Padding="15" x:Name="Instructor" Text="מורה" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold" FontSize="20" Clicked="Instructor_Clicked"/>
+                    <Label Padding="0"/>
+                    <Button Padding="15" x:Name="Manager" Text="מנהל בית ספר" BackgroundColor="LightBlue" CornerRadius="50" FontAttributes="Bold" FontSize="20" Clicked="Manager_Clicked"/>
+                </StackLayout>
+            </Frame>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -148,8 +148,8 @@ namespace LicenseApp.ViewModels
                 bool ok = await proxy.ChangeUserStatus(i);
                 if (ok)
                 {
-                    //OnRefresh();
-                    //((App)App.Current).UIRefresh();
+                    OnRefresh();
+                    ((App)App.Current).UIRefresh();
                 }
                 else
                 {

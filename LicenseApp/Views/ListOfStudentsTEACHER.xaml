@@ -22,7 +22,7 @@
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout Padding="10,20">
+        <StackLayout Padding="10">
             <Frame Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
                 <StackLayout>
                     <SearchBar x:Name="searchBar" 

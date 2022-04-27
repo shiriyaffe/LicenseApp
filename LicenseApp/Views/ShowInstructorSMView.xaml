@@ -2,81 +2,86 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LicenseApp.Views.ShowInstructorSMView"
-             FlowDirection="RightToLeft">
+             FlowDirection="RightToLeft"
+             BackgroundImageSource="Wallpaper2.jpg">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="40" HorizontalOptions="CenterAndExpand">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.3*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="0.3*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Frame BorderColor="white"  CornerRadius="100"  Grid.Column="1" Grid.Row="0" IsClippedToBounds="True" Padding="0" HeightRequest="110" WidthRequest="110" HorizontalOptions="CenterAndExpand">
-                        <Image x:Name="theImage" Source="{Binding ImageUrl}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="110" WidthRequest="110"/>
-                    </Frame>
-                </Grid>
-                
-                <Label Text="{Binding IName}" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold"></Label>
-                <Label/>
-                <Grid Padding="0" HorizontalOptions="CenterAndExpand">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
-                    <Label Text="כתובת מייל" Grid.Column="0" Grid.Row="0" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                    <Label Text="{Binding Email}" Grid.Column="1" Grid.Row="0" FontSize="18"/>
-                    <Label Text="מספר טלפון:" Grid.Column="0" Grid.Row="1" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                    <Label Grid.Column="1" Grid.Row="1" Text="{Binding PhoneNum}" FontSize="18"/>
-                    <Label Text="אורך שיעור:" Grid.Column="0" Grid.Row="2" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                    <Label Grid.Column="1" Grid.Row="2" Text="{Binding SLength}" FontSize="18"/>
-                    <Label Text="מחיר לשיעור:" Grid.Column="0" Grid.Row="3" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                    <Label Grid.Column="1" Grid.Row="3" Text="{Binding Price}" FontSize="18"/>
-                </Grid>
-                <Label/>
-                <Button Command="{Binding OpenStudentsList}" BackgroundColor="#caf0f8" Text="תלמידים משויכים" HorizontalOptions="CenterAndExpand" Padding="10" FontSize="18" FontAttributes="Bold" CornerRadius="10" TextColor="Black"></Button>
-                <Label/>
+            <StackLayout Padding="10">
+                <Frame Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
+                    <StackLayout Padding="40" HorizontalOptions="CenterAndExpand">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.3*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="0.3*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Frame BorderColor="white"  CornerRadius="100"  Grid.Column="1" Grid.Row="0" IsClippedToBounds="True" Padding="0" HeightRequest="110" WidthRequest="110" HorizontalOptions="CenterAndExpand">
+                                <Image x:Name="theImage" Source="{Binding ImageUrl}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="110" WidthRequest="110"/>
+                            </Frame>
+                        </Grid>
 
-                <CollectionView HeightRequest="{Binding CollHeight}" EmptyView="- לא קיימות ביקורות במערכת -" x:Name="collectionName" 
+                        <Label Text="{Binding IName}" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold"></Label>
+                        <Label/>
+                        <Grid Padding="0" HorizontalOptions="CenterAndExpand">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
+                            <Label Text="כתובת מייל" Grid.Column="0" Grid.Row="0" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                            <Label Text="{Binding Email}" Grid.Column="1" Grid.Row="0" FontSize="18"/>
+                            <Label Text="מספר טלפון:" Grid.Column="0" Grid.Row="1" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                            <Label Grid.Column="1" Grid.Row="1" Text="{Binding PhoneNum}" FontSize="18"/>
+                            <Label Text="אורך שיעור:" Grid.Column="0" Grid.Row="2" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                            <Label Grid.Column="1" Grid.Row="2" Text="{Binding SLength}" FontSize="18"/>
+                            <Label Text="מחיר לשיעור:" Grid.Column="0" Grid.Row="3" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                            <Label Grid.Column="1" Grid.Row="3" Text="{Binding Price}" FontSize="18"/>
+                        </Grid>
+                        <Label/>
+                        <Button Command="{Binding OpenStudentsList}" BackgroundColor="#caf0f8" Text="תלמידים משויכים" HorizontalOptions="CenterAndExpand" Padding="10" FontSize="18" FontAttributes="Bold" CornerRadius="10" TextColor="Black"></Button>
+                        <Label/>
+
+                        <CollectionView HeightRequest="{Binding CollHeight}" EmptyView="- לא קיימות ביקורות במערכת -" x:Name="collectionName" 
                             ItemsSource="{Binding ReviewList}">
-                    <CollectionView.EmptyViewTemplate>
-                        <DataTemplate>
-                            <Label Text="- לא קיימות ביקורות במערכת -"
+                            <CollectionView.EmptyViewTemplate>
+                                <DataTemplate>
+                                    <Label Text="- לא קיימות ביקורות במערכת -"
                             Margin="10,25,10,10"
                             FontSize="16"
                             
                             HorizontalTextAlignment="Center" />
-                        </DataTemplate>
-                    </CollectionView.EmptyViewTemplate>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Padding="10" HorizontalOptions="CenterAndExpand">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="90" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0" Grid.Row="0" Text="{Binding WrittenOn}" FontSize="15" HorizontalOptions="Center"/>
-                                <Label Grid.Column="1" Grid.Row="0" Text="{Binding Content}" FontSize="15" HorizontalOptions="Center"/>
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-                <Label/>
+                                </DataTemplate>
+                            </CollectionView.EmptyViewTemplate>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="10" HorizontalOptions="CenterAndExpand">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" Grid.Row="0" Text="{Binding WrittenOn}" FontSize="15" HorizontalOptions="Center"/>
+                                        <Label Grid.Column="1" Grid.Row="0" Text="{Binding Content}" FontSize="15" HorizontalOptions="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        <Label/>
 
-                <Button Command="{Binding DeleteStudentCommand}" BackgroundColor="Transparent" Text="מחיקת מורה" HorizontalOptions="CenterAndExpand" Padding="10" FontSize="18" CornerRadius="10" TextColor="Red"></Button>
+                        <Button Command="{Binding DeleteStudentCommand}" BackgroundColor="Transparent" Text="מחיקת מורה" HorizontalOptions="CenterAndExpand" Padding="10" FontSize="18" CornerRadius="10" TextColor="Red"></Button>
+                    </StackLayout>
+                </Frame>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

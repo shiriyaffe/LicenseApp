@@ -2,36 +2,41 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LicenseApp.Views.LogIn"
-             FlowDirection="RightToLeft">
+             FlowDirection="RightToLeft"
+             BackgroundImageSource="Wallpaper2.jpg">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="40">
-                <Label Text="התחברות" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="60" TextColor="#003049" HorizontalOptions="Center"/>
-                <Label/>
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="300" HeightRequest="40" Padding="10">
-                    <Entry Placeholder="אימייל" Text="{Binding Email}"/>
-                </Frame>
-                
-                    <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="300" HeightRequest="40" Padding="10">
-                    <StackLayout>
-                    <Grid HorizontalOptions="FillAndExpand">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="27"/>
-                        </Grid.ColumnDefinitions>
-                            <Entry Placeholder="סיסמה" Grid.Row="0" Grid.Column="0" Text="{Binding Password}" IsPassword="{Binding ShowPass}"/>
-                            <ImageButton Grid.Row="0" Grid.Column="1" HorizontalOptions="End" BackgroundColor="Transparent" Source="{Binding ImgSource}" Command="{Binding PassCommand}" HeightRequest="27" WidthRequest="27"/>
-                        </Grid>
+            <StackLayout Padding="10">
+                <Frame Padding="10" HeightRequest="560" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
+                    <StackLayout Padding="30">
+                        <Label Text="התחברות" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="60" TextColor="#003049" HorizontalOptions="Center"/>
+                        <Label/>
+                        <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="300" HeightRequest="40" Padding="10">
+                            <Entry Placeholder="אימייל" Text="{Binding Email}"/>
+                        </Frame>
+
+                        <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="300" HeightRequest="40" Padding="10">
+                            <StackLayout>
+                                <Grid HorizontalOptions="FillAndExpand">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="27"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Entry Placeholder="סיסמה" Grid.Row="0" Grid.Column="0" Text="{Binding Password}" IsPassword="{Binding ShowPass}"/>
+                                    <ImageButton Grid.Row="0" Grid.Column="1" HorizontalOptions="End" BackgroundColor="Transparent" Source="{Binding ImgSource}" Command="{Binding PassCommand}" HeightRequest="27" WidthRequest="27"/>
+                                </Grid>
+                            </StackLayout>
+                        </Frame>
+                        <Label/>
+
+                        <Button Text="שלח" VerticalOptions="End"  HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding LogInCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
+                        <Label/>
+                        <Label Text="{Binding ErrorMessage}" TextColor="Red" HorizontalOptions="Center" FontSize="16"/>
                     </StackLayout>
                 </Frame>
-                <Label/>
-
-                <Button Text="שלח" VerticalOptions="End"  HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding LogInCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
-                <Label/>
-                <Label Text="{Binding ErrorMessage}" TextColor="Red" HorizontalOptions="Center" FontSize="16"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LicenseApp.Views.ManagerSignUpView"
-             FlowDirection="RightToLeft">
+             FlowDirection="RightToLeft"
+             BackgroundImageSource="Wallpaper2.jpg">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="labelErrorStyle" TargetType="Label">
@@ -14,26 +15,30 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="40">
-                <Label Text="הוסף בית ספר" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#003049" FontSize="22"></Label>
-                <Label></Label>
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
-                    <Entry Placeholder="שם בית הספר" FontAttributes="Bold" Text="{Binding SchoolName}"/>
+            <StackLayout Padding="10">
+                <Frame HeightRequest="560" Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
+                    <StackLayout Padding="30">
+                        <Label Text="הוסף בית ספר" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#003049" FontSize="26"></Label>
+                        <Label></Label>
+                        <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                            <Entry Placeholder="שם בית הספר" FontAttributes="Bold" Text="{Binding SchoolName}"/>
+                        </Frame>
+                        <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                            <Picker Title="אזור לימוד" FontAttributes="Bold" ItemsSource="{Binding Areas}" ItemDisplayBinding="{Binding AreaName}" SelectedItem="{Binding Area}">
+                            </Picker>
+                        </Frame>
+                        <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                            <Picker Title="שנת הקמה" FontAttributes="Bold" ItemsSource="{Binding Years}" SelectedItem="{Binding EYear}">
+                            </Picker>
+                        </Frame>
+                        <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                            <Entry FontAttributes="Bold" Text="{Binding NumOfTeachers}" Placeholder="מספר מורים כרגע:" ></Entry>
+                        </Frame>
+                        <Label Padding="0"/>
+                        <Button Text="שלח" HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SignUpCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
+                        <Label Padding="0" Text="{Binding SubmitError}" HorizontalOptions="Center" IsVisible="{Binding ShowError}" Style="{StaticResource labelErrorStyle}"></Label>
+                    </StackLayout>
                 </Frame>
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
-                    <Picker Title="אזור לימוד" FontAttributes="Bold" ItemsSource="{Binding Areas}" ItemDisplayBinding="{Binding AreaName}" SelectedItem="{Binding Area}">
-                    </Picker>
-                </Frame>
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
-                    <Picker Title="שנת הקמה" FontAttributes="Bold" ItemsSource="{Binding Years}" SelectedItem="{Binding EYear}">
-                    </Picker>
-                </Frame>
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
-                    <Entry FontAttributes="Bold" Text="{Binding NumOfTeachers}" Placeholder="מספר מורים כרגע:" ></Entry>
-                </Frame>
-                <Label Padding="0"/>
-                <Button Text="שלח" HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SignUpCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
-                <Label Padding="0" Text="{Binding SubmitError}" HorizontalOptions="Center" IsVisible="{Binding ShowError}" Style="{StaticResource labelErrorStyle}"></Label>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

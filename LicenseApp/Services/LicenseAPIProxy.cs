@@ -1300,5 +1300,27 @@ namespace LicenseApp.Services
                 return null;
             }
         }
+
+        public async Task<bool> CheckIfMailExists(string mail)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/CheckIfMailExists?mail={mail}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ee)
+            {
+                Console.WriteLine(ee.Message);
+                return false;
+            }
+        }
     }
 }

@@ -6,7 +6,7 @@
              FlowDirection="RightToLeft"
              BackgroundImageSource="WallPaper2.jpg">
     <ContentPage.Content>
-        <StackLayout Padding="20">
+        <StackLayout Padding="10">
             <Frame Padding="15" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
                 <StackLayout>
                     <StackLayout Padding="0" Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="Center">

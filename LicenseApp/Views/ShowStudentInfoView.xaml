@@ -2,62 +2,67 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LicenseApp.Views.ShowStudentInfoView"
-             FlowDirection="RightToLeft">
+             FlowDirection="RightToLeft"
+             BackgroundImageSource="Wallpaper2.jpg">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="40" HorizontalOptions="CenterAndExpand">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.3*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="0.3*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Frame BorderColor="white"  CornerRadius="100"  Grid.Column="1" Grid.Row="0" IsClippedToBounds="True" Padding="0" HeightRequest="110" WidthRequest="110" HorizontalOptions="CenterAndExpand">
-                        <Image x:Name="theImage" Source="{Binding ImageUrl}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="110" WidthRequest="110"/>
-                    </Frame>
-                </Grid>
-                
-                <Label Text="{Binding SName}" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold"></Label>
-                <Label/>
-                <Grid Padding="0" HorizontalOptions="CenterAndExpand">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
-                    <Label Text="גיל:" Grid.Column="0" Grid.Row="0" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                    <Label Text="{Binding SAge}" Grid.Column="1" Grid.Row="0" FontSize="18"/>
-                    
-                    <Label Text="מספר שיעורים:" Grid.Column="0" Grid.Row="1" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                    <Label Grid.Column="1" Grid.Row="1" Text="{Binding LessonsCount}" FontSize="18"/>
-                    
-                    <Label Text="מספר טלפון:" Grid.Column="0" Grid.Row="2" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                    <Label Grid.Column="1" Grid.Row="2" Text="{Binding PhoneNum}" FontSize="18"/>
-                    
-                    <Label Text="עיר מגורים:" Grid.Column="0" Grid.Row="3" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
-                    <Label Grid.Column="1" Grid.Row="3" Text="{Binding SCity}" FontSize="18"/>
+            <StackLayout Padding="10">
+                <Frame Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
+                    <StackLayout Padding="40" HorizontalOptions="CenterAndExpand">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.3*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="0.3*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Frame BorderColor="white"  CornerRadius="100"  Grid.Column="1" Grid.Row="0" IsClippedToBounds="True" Padding="0" HeightRequest="110" WidthRequest="110" HorizontalOptions="CenterAndExpand">
+                                <Image x:Name="theImage" Source="{Binding ImageUrl}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="110" WidthRequest="110"/>
+                            </Frame>
+                        </Grid>
 
-                </Grid>
-                <Label Text="הוספת סיכום שיעור:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"/>
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="140" Padding="10">
-                    <StackLayout>
-                        <Picker HorizontalOptions="CenterAndExpand" Title="בחר תאריך:" ItemsSource="{Binding Lessons}" ItemDisplayBinding="{Binding Ldate}" SelectedItem="{Binding Lesson}">
-                        </Picker>
-                        <Entry HorizontalOptions="CenterAndExpand" VerticalTextAlignment="Center" Placeholder="כתוב סיכום כאן:" Text="{Binding LessonSum}"/>
-                        <Button VerticalOptions="Center" HorizontalOptions="End" FontSize="14" Text="הוסף סיכום שיעור" BackgroundColor="Transparent" TextColor="#5fa8d3" Command="{Binding AddSummaryCommand}"/>
+                        <Label Text="{Binding SName}" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold"></Label>
+                        <Label/>
+                        <Grid Padding="0" HorizontalOptions="CenterAndExpand">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
+                            <Label Text="גיל:" Grid.Column="0" Grid.Row="0" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                            <Label Text="{Binding SAge}" Grid.Column="1" Grid.Row="0" FontSize="18"/>
+
+                            <Label Text="מספר שיעורים:" Grid.Column="0" Grid.Row="1" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                            <Label Grid.Column="1" Grid.Row="1" Text="{Binding LessonsCount}" FontSize="18"/>
+
+                            <Label Text="מספר טלפון:" Grid.Column="0" Grid.Row="2" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                            <Label Grid.Column="1" Grid.Row="2" Text="{Binding PhoneNum}" FontSize="18"/>
+
+                            <Label Text="עיר מגורים:" Grid.Column="0" Grid.Row="3" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                            <Label Grid.Column="1" Grid.Row="3" Text="{Binding SCity}" FontSize="18"/>
+
+                        </Grid>
+                        <Label Text="הוספת סיכום שיעור:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"/>
+                        <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="140" Padding="10">
+                            <StackLayout>
+                                <Picker HorizontalOptions="CenterAndExpand" Title="בחר תאריך:" ItemsSource="{Binding Lessons}" ItemDisplayBinding="{Binding Ldate}" SelectedItem="{Binding Lesson}">
+                                </Picker>
+                                <Entry HorizontalOptions="CenterAndExpand" VerticalTextAlignment="Center" Placeholder="כתוב סיכום כאן:" Text="{Binding LessonSum}"/>
+                                <Button VerticalOptions="Center" HorizontalOptions="End" FontSize="14" Text="הוסף סיכום שיעור" BackgroundColor="Transparent" TextColor="#5fa8d3" Command="{Binding AddSummaryCommand}"/>
+                            </StackLayout>
+                        </Frame>
+                        <Label Padding="0" HeightRequest="20"/>
+                        <Button Command="{Binding DeleteStudentCommand}" BackgroundColor="Transparent" Text="מחיקת תלמיד" HorizontalOptions="CenterAndExpand" Padding="10" FontSize="18" CornerRadius="10" TextColor="Red"></Button>
                     </StackLayout>
                 </Frame>
-                <Label Padding="0" HeightRequest="20"/>
-                <Button Command="{Binding DeleteStudentCommand}" BackgroundColor="Transparent" Text="מחיקת תלמיד" HorizontalOptions="CenterAndExpand" Padding="10" FontSize="18" CornerRadius="10" TextColor="Red"></Button>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

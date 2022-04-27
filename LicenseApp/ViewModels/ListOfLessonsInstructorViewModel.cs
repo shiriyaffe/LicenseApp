@@ -192,9 +192,16 @@ namespace LicenseApp.ViewModels
 
                 if (approved != null)
                 {
-                    await App.Current.MainPage.DisplayAlert("", "שיעור זה אושר בהצלחה!:)", "בסדר");
-                    //OnRefresh();
-                    //((App)App.Current).UIRefresh();
+                    if (approved.InstructorId == 0)
+                    {
+                        await App.Current.MainPage.DisplayAlert("אישור השיעור התבטל!", "ישנו שיעור שכבר אושר בתאריך ושעה אלו:)", "בסדר");
+                    }
+                    else
+                    {
+                        await App.Current.MainPage.DisplayAlert("", "שיעור זה אושר בהצלחה!:)", "בסדר");
+                        //OnRefresh();
+                        //((App)App.Current).UIRefresh();
+                    }
                 }
                 else
                     await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה בעת אישור השיעור. נסת שנית מאוחר יותר", "בסדר");

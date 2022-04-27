@@ -5,7 +5,7 @@
              FlowDirection="RightToLeft"
              BackgroundImageSource="Wallpaper2.jpg">
     <ContentPage.Content>
-        <StackLayout Padding="20,20">
+        <StackLayout Padding="10">
             <Frame Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
                     <StackLayout>
                         <Label Text="החלק שמאלה או ימינה לאישור או לדחייה של המורה" TextColor="Black" FontSize="16" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"></Label>

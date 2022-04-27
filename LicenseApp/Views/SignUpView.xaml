@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LicenseApp.Views.SignUpView"
-             FlowDirection="RightToLeft">
+             FlowDirection="RightToLeft"
+             BackgroundImageSource="Wallpaper2.jpg">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="labelNameStyle" TargetType="Label">
@@ -22,96 +23,100 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="40" VerticalOptions="CenterAndExpand">
-                <!--<Label Text="הרשמה" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="65" TextColor="#003049" HorizontalOptions="Center"/>
+            <StackLayout Padding="10">
+                <Frame Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
+                    <StackLayout Padding="20" VerticalOptions="CenterAndExpand">
+                        <!--<Label Text="הרשמה" FontFamily="Segoe UI Semibold" FontAttributes="Bold" FontSize="65" TextColor="#003049" HorizontalOptions="Center"/>
             <Label Padding="0"/>-->
 
-                 <!--תמונה--> 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.3*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="0.3*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Frame BorderColor="white"  CornerRadius="100"  Grid.Column="1" Grid.Row="0" IsClippedToBounds="True" Padding="0" HeightRequest="110" WidthRequest="110" HorizontalOptions="CenterAndExpand">
-                        <Image x:Name="theImage" Source="{Binding UserImgSrc}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="110" WidthRequest="110"/>
-                    </Frame>
-                </Grid>
+                        <!--תמונה-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.3*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="0.3*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Frame BorderColor="white"  CornerRadius="100"  Grid.Column="1" Grid.Row="0" IsClippedToBounds="True" Padding="0" HeightRequest="110" WidthRequest="110" HorizontalOptions="CenterAndExpand">
+                                <Image x:Name="theImage" Source="{Binding UserImgSrc}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="110" WidthRequest="110"/>
+                            </Frame>
+                        </Grid>
 
-                <!--<Image Source="{Binding UserImgSrc}" HeightRequest="85" WidthRequest="85" HorizontalOptions="Center"></Image>-->
+                        <!--<Image Source="{Binding UserImgSrc}" HeightRequest="85" WidthRequest="85" HorizontalOptions="Center"></Image>-->
 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Button Grid.Row="0" Grid.Column="0" Command="{Binding PickImageCommand}" Text="בחר תמונה" BackgroundColor="Transparent" HorizontalOptions="End" TextColor="#5fa8d3" FontSize="14"/>
-                    <Button Grid.Row="0" Grid.Column="1" Command="{Binding CameraImageCommand}" Text="צלם תמונה" BackgroundColor="Transparent" HorizontalOptions="Start" TextColor="#5fa8d3" FontSize="14"/>
-                </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Button Grid.Row="0" Grid.Column="0" Command="{Binding PickImageCommand}" Text="בחר תמונה" BackgroundColor="Transparent" HorizontalOptions="End" TextColor="#5fa8d3" FontSize="14"/>
+                            <Button Grid.Row="0" Grid.Column="1" Command="{Binding CameraImageCommand}" Text="צלם תמונה" BackgroundColor="Transparent" HorizontalOptions="Start" TextColor="#5fa8d3" FontSize="14"/>
+                        </Grid>
 
-                <!-- שם -->
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
-                    <Entry Placeholder="שם" Text="{Binding Name}"/>
+                        <!-- שם -->
+                        <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                            <Entry Placeholder="שם" Text="{Binding Name}"/>
+                        </Frame>
+                        <Label Padding="0" Text="{Binding NameError}"  HorizontalOptions="Center" IsVisible="{Binding ShowNameError}" Style="{StaticResource labelErrorStyle}"/>
+
+                        <!-- אימייל -->
+
+                        <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                            <Entry Placeholder="אימייל" Text="{Binding Mail}" Keyboard="Email"/>
+                        </Frame>
+                        <Label Padding="0" Text="{Binding MailError}" HorizontalOptions="Center" IsVisible="{Binding ShowMailError}"  Style="{StaticResource labelErrorStyle}"/>
+
+
+                        <!-- סיסמה -->
+                        <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="20"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Entry Placeholder="סיסמה" Text="{Binding OriginalPass}"/>
+                                <ImageButton Padding="0" Command="{Binding PassConditions}" BackgroundColor="Transparent" Source="Info.jpg" HeightRequest="15" WidthRequest="15" Grid.Column="1" Grid.Row="0"/>
+                            </Grid>
+                        </Frame>
+
+                        <Label Padding="0" Text="{Binding PassError}" HorizontalOptions="Center" IsVisible="{Binding ShowPassError}"  Style="{StaticResource labelErrorStyle}"/>
+
+
+                        <!--תאריך לידה-->
+
+
+                        <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                            <DatePicker Date="{Binding Date}">
+                            </DatePicker>
+                        </Frame>
+                        <Label Padding="0" Text="{Binding DateError}" HorizontalOptions="Center" IsVisible="{Binding ShowDateError}" Style="{StaticResource labelErrorStyle}"/>
+
+                        <!--מספר טלפון-->
+                        <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
+                            <Entry Placeholder="מספר טלפון" Text="{Binding PhoneNumber}"/>
+                        </Frame>
+                        <Label Padding="0" Text="{Binding NumberError}" HorizontalOptions="Center" IsVisible="{Binding ShowNumberError}" Style="{StaticResource labelErrorStyle}"/>
+
+                        <!--מגדר-->
+                        <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
+                            <Picker SelectedIndex="{Binding GenderPicker}" Title="מגדר" ItemsSource="{Binding Genders}" ItemDisplayBinding="{Binding GenderType}" SelectedItem="{Binding Gender}">
+                            </Picker>
+                        </Frame>
+                        <Label Padding="0" Text="{Binding GenderError}" HorizontalOptions="Center" IsVisible="{Binding ShowGenderError}" Style="{StaticResource labelErrorStyle}"/>
+                        <Label/>
+                        <Button Text="הבא" HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SaveDataCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
+
+                        <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}" Style="{StaticResource labelErrorStyle}"/>
+                    </StackLayout>
                 </Frame>
-                <Label Padding="0" Text="{Binding NameError}"  HorizontalOptions="Center" IsVisible="{Binding ShowNameError}" Style="{StaticResource labelErrorStyle}"/>
-
-                <!-- אימייל -->
-
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
-                    <Entry Placeholder="אימייל" Text="{Binding Mail}" Keyboard="Email"/>
-                </Frame>
-                <Label Padding="0" Text="{Binding MailError}" HorizontalOptions="Center" IsVisible="{Binding ShowMailError}"  Style="{StaticResource labelErrorStyle}"/>
-
-
-                <!-- סיסמה -->
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="20"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Entry Placeholder="סיסמה" Text="{Binding OriginalPass}"/>
-                        <ImageButton Padding="0" Command="{Binding PassConditions}" BackgroundColor="Transparent" Source="Info.jpg" HeightRequest="15" WidthRequest="15" Grid.Column="1" Grid.Row="0"/>
-                    </Grid>
-                </Frame>
-
-                <Label Padding="0" Text="{Binding PassError}" HorizontalOptions="Center" IsVisible="{Binding ShowPassError}"  Style="{StaticResource labelErrorStyle}"/>
-
-
-                <!--תאריך לידה-->
-
-
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
-                    <DatePicker Date="{Binding Date}">
-                    </DatePicker>
-                </Frame>
-                <Label Padding="0" Text="{Binding DateError}" HorizontalOptions="Center" IsVisible="{Binding ShowDateError}" Style="{StaticResource labelErrorStyle}"/>
-
-                <!--מספר טלפון-->
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10" >
-                    <Entry Placeholder="מספר טלפון" Text="{Binding PhoneNumber}"/>
-                </Frame>
-                <Label Padding="0" Text="{Binding NumberError}" HorizontalOptions="Center" IsVisible="{Binding ShowNumberError}" Style="{StaticResource labelErrorStyle}"/>
-
-                <!--מגדר-->
-                <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="40" Padding="10">
-                    <Picker SelectedIndex="{Binding GenderPicker}" Title="מגדר" ItemsSource="{Binding Genders}" ItemDisplayBinding="{Binding GenderType}" SelectedItem="{Binding Gender}">
-                    </Picker>
-                </Frame>
-                <Label Padding="0" Text="{Binding GenderError}" HorizontalOptions="Center" IsVisible="{Binding ShowGenderError}" Style="{StaticResource labelErrorStyle}"/>
-                <Label/>
-                <Button Text="הבא" HorizontalOptions="Center" Padding="0" FontSize="20" FontAttributes="Bold" Command="{Binding SaveDataCommand}" BackgroundColor="LightGray" CornerRadius="10" TextColor="Black"/>
-
-                <Label Padding="0" Text="{Binding NextError}" HorizontalOptions="Center" IsVisible="{Binding ShowNextError}" Style="{StaticResource labelErrorStyle}"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -9,6 +9,7 @@ using LicenseApp.Views;
 using LicenseApp.Services;
 using Xamarin.Essentials;
 using System.Windows.Input;
+using System.Threading.Tasks;
 
 namespace LicenseApp.ViewModels
 {
@@ -105,16 +106,31 @@ namespace LicenseApp.ViewModels
                 OnPropertyChanged("ShowMailError");
             }
         }
-        private void ValidateMail()
-        {
 
+        private async Task<bool> SameMail(string mail)
+        {
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            bool same = await proxy.CheckIfMailExists(mail);
+
+            return same;
+        }
+
+        private async void ValidateMail()
+        {
+            bool exist = false;
             this.ShowMailError = string.IsNullOrEmpty(Mail);
             if (!this.ShowMailError)
             {
+                exist = await SameMail(Mail);
                 if (!Regex.IsMatch(this.Mail, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"))
                 {
                     this.ShowMailError = true;
                     this.MailError = "האימייל אינו תקין";
+                }
+                else if (exist)
+                {
+                    this.ShowMailError = true;
+                    this.MailError = "לא תקין! כבר קיים במערכת משתמש בעל כתובת מייל זו";
                 }
             }
             else
