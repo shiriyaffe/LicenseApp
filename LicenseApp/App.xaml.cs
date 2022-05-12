@@ -45,7 +45,7 @@ namespace LicenseApp
             MainPage = new NavigationPage(p);
         }
 
-        public void UIRefresh() { this.RefreshUI.Invoke(); }
+        public void UIRefresh() { this.RefreshUI?.Invoke(); }
 
         protected override void OnSleep()
         {

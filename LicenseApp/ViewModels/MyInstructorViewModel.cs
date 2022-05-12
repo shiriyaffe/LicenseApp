@@ -142,6 +142,7 @@ namespace LicenseApp.ViewModels
                 }
                 else
                 {
+                    Review = "";
                     await App.Current.MainPage.DisplayAlert("", "ביקורתך נקלטה בהצלחה! תודה על מתן הביקורת", "בסדר");
                 }
             }

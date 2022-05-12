@@ -94,6 +94,7 @@ namespace LicenseApp.ViewModels
             App app = (App)App.Current;
             ObservableCollection<Instructor> instructors = new ObservableCollection<Instructor>();
             instructors = await proxy.GetAllInstructorsAsync();
+            InstructorsList.Clear();
             foreach(Instructor i in instructors)
             {
                 if(i.EStatusId == WAITING_STATUS && i.DrivingSchoolId == ((SchoolManager)app.CurrentUser).SchoolId)

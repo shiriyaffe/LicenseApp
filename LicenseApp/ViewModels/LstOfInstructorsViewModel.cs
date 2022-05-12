@@ -63,6 +63,13 @@ namespace LicenseApp.ViewModels
         public LstOfInstructorsViewModel()
         {
             this.AllInstructors = new ObservableCollection<Instructor>();
+            App theApp = (App)Application.Current;
+            theApp.RefreshUI += TheApp_RefreshUI;
+            CreateInstructorCollection();
+        }
+
+        private void TheApp_RefreshUI()
+        {
             CreateInstructorCollection();
         }
 
@@ -71,6 +78,7 @@ namespace LicenseApp.ViewModels
             App app = (App)App.Current;
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             ObservableCollection<Instructor> instructors = await proxy.GetAllInstructorsAsync();
+            AllInstructors.Clear();
             foreach (Instructor i in instructors)
             {
                 if (i.SchoolManagerId == ((SchoolManager)app.CurrentUser).SmanagerId && i.EStatusId == APPROVED_STATUS)

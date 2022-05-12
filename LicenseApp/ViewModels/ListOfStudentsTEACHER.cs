@@ -20,6 +20,8 @@ namespace LicenseApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private const int APPROVED = 2;
+
         private ObservableCollection<Student> AllStudents;
 
         private ObservableCollection<Student> studentList;
@@ -62,18 +64,27 @@ namespace LicenseApp.ViewModels
         public ListOfStudentsTEACHER()
         {
             AllStudents = new ObservableCollection<Student>();
+            App theApp = (App)Application.Current;
+            theApp.RefreshUI += TheApp_RefreshUI;
+        }
+
+        private void TheApp_RefreshUI()
+        {
+            CreateStudentCollection();
         }
 
         public async void CreateStudentCollection()
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             App app = (App)App.Current;
+            AllStudents.Clear();
             if (app.CurrentUser is Instructor)
             {
                 ObservableCollection<Student> studentsByID = await proxy.GetStudentsByInstructorAsync(((Instructor)app.CurrentUser).InstructorId);
                 foreach (Student i in studentsByID)
                 {
-                    this.AllStudents.Add(i);
+                    if(i.EStatusId == APPROVED)
+                        this.AllStudents.Add(i);
                 }
             }
 

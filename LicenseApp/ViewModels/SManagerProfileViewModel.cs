@@ -275,6 +275,8 @@ namespace LicenseApp.ViewModels
 
                     theApp.CurrentUser = sManager;
                     await App.Current.MainPage.DisplayAlert("", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);
+                    
+                    ((App)App.Current).UIRefresh();
                 }
             }
             else

@@ -57,11 +57,17 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public void OnRefresh()
+        {
+            CreateLessonsList();
+        }
+
         public AvailableLessonsViewModel()
         {
             ChosenDate = new DateTime(2022, 04, 25);
             AvailableList = new ObservableCollection<WorkingHour>();
-
+            App app = (App)App.Current;
+            app.RefreshUI += OnRefresh;
             CreateLessonsList();
         }
 
@@ -70,7 +76,7 @@ namespace LicenseApp.ViewModels
             App app = (App)App.Current;
             Student current = new Student();
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
-
+            AvailableList.Clear();
             ObservableCollection<Student> allStudents = await proxy.GetStudentsByInstructorAsync((int)(((Student)app.CurrentUser).InstructorId));
             foreach(Student s in allStudents)
             {
@@ -152,6 +158,8 @@ namespace LicenseApp.ViewModels
                     if(newL != null)
                     {
                         await App.Current.MainPage.DisplayAlert("", $"בקשתך לשיעור נשלחה למורה בהצלחה!", "בסדר");
+                        OnRefresh();
+                        ((App)App.Current).UIRefresh();
                     }
                     else
                         await App.Current.MainPage.DisplayAlert("שגיאה!", $"בקשתך לשיעור נכשלה.. נסה שוב", "בסדר");

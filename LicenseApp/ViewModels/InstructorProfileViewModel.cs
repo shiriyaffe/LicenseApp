@@ -468,6 +468,7 @@ namespace LicenseApp.ViewModels
             if (app.CurrentUser is Instructor)
             {
                 ObservableCollection<Review> reviews = await proxy.GetInstructorReviewsAsync(((Instructor)app.CurrentUser).InstructorId);
+                ReviewList.Clear();
                 foreach (Review r in reviews)
                 {
                     this.ReviewList.Add(r);
@@ -554,9 +555,10 @@ namespace LicenseApp.ViewModels
             
             ReviewList = new ObservableCollection<Review>();
             CollHeight = 0;
-            CreateReviewsCollection();
 
             ((App)App.Current).RefreshUI += OnRefresh;
+
+            CreateReviewsCollection();
         }
 
         private async void GetArea(Instructor i)
@@ -687,7 +689,9 @@ namespace LicenseApp.ViewModels
 
                     theApp.CurrentUser = instructor;
                     await App.Current.MainPage.DisplayAlert("", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);
+
                     OnRefresh();
+                    ((App)App.Current).UIRefresh();
                 }
             }
             else

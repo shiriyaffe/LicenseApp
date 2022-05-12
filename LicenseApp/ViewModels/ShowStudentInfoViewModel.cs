@@ -150,8 +150,16 @@ namespace LicenseApp.ViewModels
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             Student s = await proxy.DeleteStudent(StudentId);
 
-            Page p = new Views.InstructorMainTabView();
-            await App.Current.MainPage.Navigation.PushAsync(p);
+            if (s != null)
+            {
+                ((App)App.Current).UIRefresh();
+                await App.Current.MainPage.Navigation.PopToRootAsync();
+            }
+            else
+                await App.Current.MainPage.DisplayAlert("שגיאה", "מחיקת התלמיד נכשלה! נסה שנית מאוחר יותר", "בסדר");
+
+            //Page p = new Views.InstructorMainTabView();
+            //await App.Current.MainPage.Navigation.PushAsync(p);
         }
 
         public Command AddSummaryCommand => new Command(AddSummary);
@@ -194,6 +202,12 @@ namespace LicenseApp.ViewModels
                     };
 
                     Lesson newL = await proxy.UpdateLessonSum(l);
+
+                    if (newL != null)
+                    {
+                        ((App)App.Current).UIRefresh();
+                        LessonSum = "";
+                    }
                 }
             }
             else

@@ -85,6 +85,8 @@ namespace LicenseApp.ViewModels
             UpComingLessonsList = new ObservableCollection<Lesson>();
             WaitingLessonsList = new ObservableCollection<Lesson>();
             IsRefreshing = false;
+            App app = (App)App.Current;
+            app.RefreshUI += OnRefresh;
             CreateLessonsList();
         }
 
@@ -100,7 +102,8 @@ namespace LicenseApp.ViewModels
                 Student s = (Student)app.CurrentUser;
                 ObservableCollection<Lesson> list = new ObservableCollection<Lesson>();
                 list = await proxy.GetStudentLessonsAsync(s.StudentId);
-
+                UpComingLessonsList.Clear();
+                WaitingLessonsList.Clear();
                 if (list != null)
                 {
                     foreach (Lesson l in list)
@@ -146,8 +149,8 @@ namespace LicenseApp.ViewModels
                 if (cancelled != null)
                 {
                     await App.Current.MainPage.DisplayAlert("", "שיעורך בוטל בהצלחה! מומלץ לקבוע שיעור נוסף במקודם:)", "בסדר");
-                    //OnRefresh();
-                    //((App)App.Current).UIRefresh();
+                    OnRefresh();
+                    ((App)App.Current).UIRefresh();
                 }
                 else
                     await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה בעת ביטול השיעור. נסת שנית מאוחר יותר", "בסדר");

@@ -133,11 +133,22 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        private int instructorID;
+        public int InstructorID
+        {
+            get { return instructorID; }
+            set
+            {
+                instructorID = value;
+                OnPropertyChanged("InstructorID");
+            }
+        }
+
         public async void CreateReviewsCollection()
         {
             App app = (App)App.Current;
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
-            ObservableCollection<Review> reviews = await proxy.GetInstructorReviewsAsync(instructorID);
+            ObservableCollection<Review> reviews = await proxy.GetInstructorReviewsAsync(InstructorID);
             foreach (Review r in reviews)
             {
                 this.ReviewList.Add(r);
@@ -160,26 +171,22 @@ namespace LicenseApp.ViewModels
             CreateReviewsCollection();
         }
 
-        private int instructorID;
-        public int InstructorID
-        {
-            get { return instructorID; }
-            set
-            {
-                instructorID = value;
-                OnPropertyChanged("InstructorID");
-            }
-        }
+        public Command DeleteInstructorCommand => new Command(DeleteInstructor);
 
-        public Command DeleteStudentCommand => new Command(DeleteStudent);
-
-        public async void DeleteStudent()
+        public async void DeleteInstructor()
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             Instructor i = await proxy.DeleteInstructor(InstructorID);
 
-            Page p = new Views.SchoolManagerMainTabView();
-            await App.Current.MainPage.Navigation.PushAsync(p);
+            if (i != null)
+            {
+                ((App)App.Current).UIRefresh();
+                await App.Current.MainPage.Navigation.PopToRootAsync();
+            }
+            else
+                await App.Current.MainPage.DisplayAlert("שגיאה", "מחיקת המורה מבית הספר נכשלה! נסה שנית מאוחר יותר", "בסדר");
+            //Page p = new Views.SchoolManagerMainTabView();
+            //await App.Current.MainPage.Navigation.PushAsync(p);
         }
 
         public Command OpenStudentsList => new Command(StudentsList);

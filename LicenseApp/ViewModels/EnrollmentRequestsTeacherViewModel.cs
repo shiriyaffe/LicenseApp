@@ -97,6 +97,7 @@ namespace LicenseApp.ViewModels
             {
                 Instructor instructor = (Instructor)app.CurrentUser;
                 students = await proxy.GetAllWaitingStudentsByInstructor(instructor.InstructorId);
+                StudentsList.Clear();
                 if (students.Count != 0)
                 {
                     foreach (Student i in students)
@@ -123,8 +124,8 @@ namespace LicenseApp.ViewModels
                 bool ok = await proxy.ChangeUserStatus(s);
                 if (ok)
                 {
-                    //OnRefresh();
-                    //((App)App.Current).UIRefresh();
+                    OnRefresh();
+                    ((App)App.Current).UIRefresh();
                 }
                 else
                 {

@@ -23,5 +23,8 @@ namespace LicenseApp.Models
         public virtual Review Review { get; set; }
         public virtual Student Stuudent { get; set; }
         public virtual ICollection<EnrollmentRequest> EnrollmentRequests { get; set; }
+
+        public string Summary { get; set; }
+        public string Paid { get; set; }
     }
 }

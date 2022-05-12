@@ -40,18 +40,18 @@
                                             <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White" >
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="*" />
-                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="50"/>
                                                 </Grid.RowDefinitions>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="150" />
                                                     <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
                                                 <Frame BorderColor="white" Grid.Column="0" Grid.Row="0"  CornerRadius="100" IsClippedToBounds="True" Padding="0" HeightRequest="65" WidthRequest="65" HorizontalOptions="CenterAndExpand">
                                                     <Image x:Name="theImage" Source="{Binding PhotoURI}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="50" WidthRequest="50"/>
                                                 </Frame>
                                                 <Label Grid.Column="0" Grid.Row="1" Text="{Binding Sname}" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                <Label Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Text="{Binding PhoneNumber}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                <Label Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Text="{Binding Birthday}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                <Label Grid.Column="1" Grid.Row="1" Text="{Binding PhoneNumber}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                <Label Grid.Column="1" Grid.Row="0" Text="{Binding Birthday}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
                                             </Grid>
 
                                         </SwipeView>

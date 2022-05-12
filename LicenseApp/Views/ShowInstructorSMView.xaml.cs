@@ -14,6 +14,7 @@ namespace LicenseApp.Views
     {
         public ShowInstructorSMView(ShowInstrucorSMViewModel instructorContext)
         {
+            instructorContext.CreateReviewsCollection();
             this.BindingContext = instructorContext;
             this.Title = instructorContext.IName;
             InitializeComponent();

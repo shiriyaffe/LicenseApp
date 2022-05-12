@@ -77,6 +77,16 @@ namespace LicenseApp.ViewModels
             NewWeek = 0;
             NewToday = 0;
 
+            App app = (App)App.Current;
+            app.RefreshUI += OnRefresh;
+
+            GetNewStudentsThisMonth();
+            GetNewStudentsThisWeek();
+            GetNewStudentsToday();
+        }
+
+        public void OnRefresh()
+        {
             GetNewStudentsThisMonth();
             GetNewStudentsThisWeek();
             GetNewStudentsToday();

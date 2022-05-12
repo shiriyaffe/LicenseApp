@@ -156,6 +156,7 @@ namespace LicenseApp.ViewModels
             App app = (App)App.Current;
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             ObservableCollection<Review> reviews = await proxy.GetInstructorReviewsAsync(instructorID);
+            ReviewList.Clear();
             foreach (Review r in reviews)
             {
                 this.ReviewList.Add(r);
@@ -175,6 +176,13 @@ namespace LicenseApp.ViewModels
         {
             ReviewList = new ObservableCollection<Review>();
             CollHeight = 0;
+            App app = (App)App.Current;
+            app.RefreshUI += TheApp_RefreshUI;
+            CreateReviewsCollection();
+        }
+
+        private void TheApp_RefreshUI()
+        {
             CreateReviewsCollection();
         }
 
@@ -210,6 +218,7 @@ namespace LicenseApp.ViewModels
                         if (newEm != null)
                         {
                             await App.Current.MainPage.DisplayAlert("", "בקשתך לרישום נשלחה בהצלחה למורה! חזור במועד מאוחר יותר על מנת לראות האם אושרת", "בסדר");
+                            ((App)App.Current).UIRefresh();
                         }
                         else
                             await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה! בקשתך לא נשלחה. נסה שוב", "בסדר");

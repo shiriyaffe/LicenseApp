@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -121,6 +122,8 @@ namespace LicenseApp.ViewModels
                 Instructor i = (Instructor)app.CurrentUser;
                 ObservableCollection<Lesson> list = new ObservableCollection<Lesson>();
                 list = await proxy.GetInstructorLessonsAsync(i.InstructorId);
+                UpComingLessonsList.Clear();
+                WaitingLessonsList.Clear();
 
                 if (list != null)
                 {
@@ -131,7 +134,7 @@ namespace LicenseApp.ViewModels
                             if (!l.HasDone && l.EStatusId == APPROVED)
                                 UpComingLessonsList.Add(l);
                             else if (!l.HasDone && l.EStatusId == WAITING)
-                                waitingLessonsList.Add(l);
+                                WaitingLessonsList.Add(l);
                         }
                     }
                 }
@@ -170,8 +173,8 @@ namespace LicenseApp.ViewModels
                 if (cancelled != null)
                 {
                     await App.Current.MainPage.DisplayAlert("", "שיעור זה בוטל בהצלחה!:)", "בסדר");
-                    //OnRefresh();
-                    //((App)App.Current).UIRefresh();
+                    OnRefresh();
+                    ((App)App.Current).UIRefresh();
                 }
                 else
                     await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה בעת ביטול השיעור. נסת שנית מאוחר יותר", "בסדר");
@@ -199,8 +202,8 @@ namespace LicenseApp.ViewModels
                     else
                     {
                         await App.Current.MainPage.DisplayAlert("", "שיעור זה אושר בהצלחה!:)", "בסדר");
-                        //OnRefresh();
-                        //((App)App.Current).UIRefresh();
+                        OnRefresh();
+                        ((App)App.Current).UIRefresh();
                     }
                 }
                 else

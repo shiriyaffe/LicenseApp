@@ -360,6 +360,7 @@ namespace LicenseApp.ViewModels
         #endregion
         #endregion
 
+
         private ObservableCollection<Lesson> lessonsList;
         public ObservableCollection<Lesson> LessonsList
         {
@@ -386,7 +387,27 @@ namespace LicenseApp.ViewModels
             foreach (Lesson l in lessons)
             {
                 if(l.HasDone)
+                {
+                    GetLessonSum(l);
+
+                    if (l.IsPaid)
+                        l.Paid = "שולם";
+                    else
+                        l.Paid = "לא שולם"; 
                     this.LessonsList.Add(l);
+                }  
+            }
+        }
+
+        public async void GetLessonSum(Lesson l)
+        {
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            string summary = await proxy.GetLessonSumAsync((int)l.ReviewId);
+            if (summary != null)
+                l.Summary = summary;
+            else
+            {
+                l.Summary = "לא קיים סיכום לשיעור זה";
             }
         }
 
@@ -408,6 +429,8 @@ namespace LicenseApp.ViewModels
             this.ShowPassError = false;
             this.SaveDataCommand = new Command(() => SaveData());
             this.PassConditions = new Command(() => ShowConditions());
+
+            LessonsList = new ObservableCollection<Lesson>();
 
             CreateLessonsCollection();
         }

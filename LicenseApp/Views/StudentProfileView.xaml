@@ -115,10 +115,12 @@
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <Label Grid.Column="0" Grid.Row="0" Text="{Binding Lday}" FontSize="15" HorizontalOptions="Center"/>
-                                        <Label Grid.Column="0" Grid.Row="1" Text="{Binding Ldate}" FontSize="15" HorizontalOptions="Center"/>
-                                        <Label Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Text="{Binding IsPaid}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                        <Label Grid.Column="1" Grid.Row="0" Text="{Binding Ldate}" FontSize="15" HorizontalOptions="Center"/>
+                                        <Label Grid.Column="2" Grid.Row="0" Text="{Binding Paid}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                        <Label Grid.Column="3" Grid.Row="0" Text="{Binding Summary}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
                                     </Grid>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
