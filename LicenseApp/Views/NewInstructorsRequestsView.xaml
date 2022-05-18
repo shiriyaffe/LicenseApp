@@ -40,16 +40,16 @@
                                         </SwipeView.RightItems>
 
 
-                                        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White" >
+                                        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White" Padding="10,15">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*" />
-                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="40"/>
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition Width="90" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            <Frame BorderColor="white" Grid.Column="0" Grid.Row="0"  CornerRadius="100" IsClippedToBounds="True" Padding="0" HeightRequest="65" WidthRequest="65" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
+                                            <Frame BorderColor="white" Grid.Column="0" Grid.Row="0"  CornerRadius="100" IsClippedToBounds="True" Padding="0" HeightRequest="65" WidthRequest="65" VerticalOptions="Center" HorizontalOptions="Center">
                                                 <Image x:Name="theImage" Source="{Binding PhotoURI}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="50" WidthRequest="50"/>
                                             </Frame>
                                             <Label Grid.Column="0" Grid.Row="1" Text="{Binding Iname}" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
