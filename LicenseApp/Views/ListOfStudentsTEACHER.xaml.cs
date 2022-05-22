@@ -29,5 +29,10 @@ namespace LicenseApp.Views
             this.BindingContext = listOfStudents;
             InitializeComponent();
         }
+
+        private void collectionName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            collectionName.SelectedItem = null;
+        }
     }
 }

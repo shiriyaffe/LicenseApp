@@ -28,7 +28,7 @@
                 <ImageButton BackgroundColor="Transparent" Source="Search.png" Command="{Binding SearchPageCommand}" Padding="5" WidthRequest="35" HeightRequest="35" HorizontalOptions="End"></ImageButton>
                 <Frame Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
                 <CollectionView HorizontalOptions="Center" BackgroundColor="Transparent" EmptyView="אין מורים במערכת" x:Name="collectionName" 
-                            ItemsSource="{Binding InstructorList}" SelectionMode="Single"
+                            ItemsSource="{Binding InstructorList}" SelectionMode="Single" SelectionChanged="collectionName_SelectionChanged"
                         SelectionChangedCommand="{Binding SelctionChanged}"
                         SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
                     <CollectionView.ItemTemplate>

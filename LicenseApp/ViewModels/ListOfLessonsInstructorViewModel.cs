@@ -105,6 +105,7 @@ namespace LicenseApp.ViewModels
             if (DateTime.Compare(DateTime.Today, ChosenDate) > 0)
             {
                 App.Current.MainPage.DisplayAlert("", "תאריך זה כבר עבר", "בסדר");
+                ChosenDate = DateTime.Today;
             }
             else
                 OnRefresh();

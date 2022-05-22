@@ -168,50 +168,62 @@ namespace LicenseApp.ViewModels
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
 
-            Review r = new Review
+            bool exist = await proxy.CheckIfSumExists(Lesson.LessonId);
+
+            if (exist)
             {
-                Content = LessonSum,
-                WrittenOn = DateTime.Today
-            };
-
-            Review newR = await proxy.AddReview(r);
-
-            if(newR != null)
-            {
-                StudentSummary sum = new StudentSummary
-                {
-                    ReviewId = newR.ReviewId,
-                    StudentId = StudentId
-                };
-
-                StudentSummary newSum = await proxy.AddSummary(sum);
-
-                if(newSum != null)
-                {
-                    Lesson l = new Lesson
-                    {
-                        Ldate = Lesson.Ldate,
-                        LessonId = Lesson.LessonId,
-                        HasDone = Lesson.HasDone,
-                        Lday = Lesson.Lday,
-                        IsAvailable = Lesson.IsAvailable,
-                        IsPaid = Lesson.IsPaid,
-                        StuudentId = Lesson.StuudentId,
-                        InstructorId = Lesson.InstructorId,
-                        ReviewId = newR.ReviewId
-                    };
-
-                    Lesson newL = await proxy.UpdateLessonSum(l);
-
-                    if (newL != null)
-                    {
-                        ((App)App.Current).UIRefresh();
-                        LessonSum = "";
-                    }
-                }
+                await App.Current.MainPage.DisplayAlert("", "כבר כתבת סיכום שיעור לשיעור זה", "בסדר");
             }
             else
-                await App.Current.MainPage.DisplayAlert("שגיאה", "שליחת סיכום השיעור נכשלה", "בסדר");
+            {
+                Review r = new Review
+                {
+                    Content = LessonSum,
+                    WrittenOn = DateTime.Today
+                };
+
+                Review newR = await proxy.AddReview(r);
+
+                if (newR != null)
+                {
+                    StudentSummary sum = new StudentSummary
+                    {
+                        ReviewId = newR.ReviewId,
+                        StudentId = StudentId,
+                        LessonId = Lesson.LessonId
+                    };
+
+                    StudentSummary newSum = await proxy.AddSummary(sum);
+
+                    if (newSum != null)
+                    {
+                        Lesson l = new Lesson
+                        {
+                            Ldate = Lesson.Ldate,
+                            LessonId = Lesson.LessonId,
+                            HasDone = Lesson.HasDone,
+                            Lday = Lesson.Lday,
+                            IsAvailable = Lesson.IsAvailable,
+                            IsPaid = Lesson.IsPaid,
+                            StuudentId = Lesson.StuudentId,
+                            InstructorId = Lesson.InstructorId,
+                            ReviewId = newR.ReviewId
+                        };
+
+                        Lesson newL = await proxy.UpdateLessonSum(l);
+
+                        if (newL != null)
+                        {
+                            ((App)App.Current).UIRefresh();
+                            LessonSum = "";
+                        }
+                    }
+
+                }
+
+                else
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "שליחת סיכום השיעור נכשלה", "בסדר");
+            }
         }
     }
 }

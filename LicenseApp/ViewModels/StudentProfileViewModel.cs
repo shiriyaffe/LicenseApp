@@ -402,13 +402,18 @@ namespace LicenseApp.ViewModels
         public async void GetLessonSum(Lesson l)
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
-            string summary = await proxy.GetLessonSumAsync((int)l.ReviewId);
-            if (summary != null)
-                l.Summary = summary;
-            else
+            if (l.ReviewId != null)
             {
-                l.Summary = "לא קיים סיכום לשיעור זה";
+                string summary = await proxy.GetLessonSumAsync((int)l.ReviewId);
+                if (summary != null)
+                    l.Summary = summary;
+                else
+                {
+                    l.Summary = "אין סיכום שיעור";
+                }
             }
+            else
+                l.Summary = "אין סיכום שיעור";
         }
 
         public StudentProfileViewModel()

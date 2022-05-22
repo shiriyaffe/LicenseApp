@@ -30,7 +30,7 @@
                        Text="{Binding SearchTerm}"
                        Margin="0,8,0,0"/>
                     <CollectionView EmptyView="אין תלמידים במערכת" x:Name="collectionName" 
-                            ItemsSource="{Binding StudentList}" SelectionMode="Single"
+                            ItemsSource="{Binding StudentList}" SelectionMode="Single" SelectionChanged="collectionName_SelectionChanged"
                         SelectionChangedCommand="{Binding SelctionChanged}"
                         SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
                         <CollectionView.ItemTemplate>

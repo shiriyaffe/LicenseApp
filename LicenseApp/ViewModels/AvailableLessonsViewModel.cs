@@ -63,6 +63,7 @@ namespace LicenseApp.ViewModels
             if(DateTime.Compare(DateTime.Today, ChosenDate) > 0)
             {
                 App.Current.MainPage.DisplayAlert("", "תאריך זה כבר עבר", "בסדר");
+                ChosenDate = DateTime.Today;
             }
             else
                 OnRefresh();
@@ -75,12 +76,13 @@ namespace LicenseApp.ViewModels
 
         public AvailableLessonsViewModel()
         {
-            ChosenDate = new DateTime();
-            ChosenDate = DateTime.Today;
-
             AvailableList = new ObservableCollection<WorkingHour>();
             App app = (App)App.Current;
             app.RefreshUI += OnRefresh;
+
+            ChosenDate = new DateTime();
+            ChosenDate = DateTime.Today;
+
             CreateLessonsList();
         }
 

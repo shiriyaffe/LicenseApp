@@ -429,7 +429,7 @@ namespace LicenseApp.Services
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetLessons?studentId={studentId}");
+                 HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetLessons?studentId={studentId}");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
@@ -1347,6 +1347,28 @@ namespace LicenseApp.Services
             {
                 Console.WriteLine(e.Message);
                 return null;
+            }
+        }
+
+        public async Task<bool> CheckIfSumExists(int lessonId)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/CheckIfSumExists?lessonId={lessonId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ee)
+            {
+                Console.WriteLine(ee.Message);
+                return false;
             }
         }
     }

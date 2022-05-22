@@ -33,5 +33,10 @@ namespace LicenseApp.Views
             this.BindingContext = hpvm;
             InitializeComponent();
         }
+
+        private void collectionName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            collectionName.SelectedItem = null;
+        }
     }
 }

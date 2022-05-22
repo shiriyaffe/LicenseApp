@@ -17,5 +17,10 @@ namespace LicenseApp.Views
             this.BindingContext = new LstOfInstructorsViewModel();
             InitializeComponent();
         }
+
+        private void collectionName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            collectionName.SelectedItem = null;
+        }
     }
 }
