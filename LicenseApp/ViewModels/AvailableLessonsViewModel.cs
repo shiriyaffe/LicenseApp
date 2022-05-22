@@ -52,9 +52,20 @@ namespace LicenseApp.ViewModels
                 {
 
                     this.chosenDate = value;
+                    ValidateDate();
                     OnPropertyChanged("ChosenDate");
                 }
             }
+        }
+
+        private void ValidateDate()
+        {
+            if(DateTime.Compare(DateTime.Today, ChosenDate) > 0)
+            {
+                App.Current.MainPage.DisplayAlert("", "תאריך זה כבר עבר", "בסדר");
+            }
+            else
+                OnRefresh();
         }
 
         public void OnRefresh()
@@ -64,7 +75,9 @@ namespace LicenseApp.ViewModels
 
         public AvailableLessonsViewModel()
         {
-            ChosenDate = new DateTime(2022, 04, 25);
+            ChosenDate = new DateTime();
+            ChosenDate = DateTime.Today;
+
             AvailableList = new ObservableCollection<WorkingHour>();
             App app = (App)App.Current;
             app.RefreshUI += OnRefresh;
@@ -77,12 +90,14 @@ namespace LicenseApp.ViewModels
             Student current = new Student();
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             AvailableList.Clear();
-            ObservableCollection<Student> allStudents = await proxy.GetStudentsByInstructorAsync((int)(((Student)app.CurrentUser).InstructorId));
-            foreach(Student s in allStudents)
-            {
-                if (s.StudentId == ((Student)app.CurrentUser).StudentId)
-                    current = s;
-            }
+            //ObservableCollection<Student> allStudents = await proxy.GetStudentsByInstructorAsync((int)(((Student)app.CurrentUser).InstructorId));
+            //foreach(Student s in allStudents)
+            //{
+            //    if (s.StudentId == ((Student)app.CurrentUser).StudentId)
+            //        current = s;
+            //}
+
+            current = (Student)app.CurrentUser;
 
             List<WorkingHour> allHours = app.Tables.WorkingHours;
             Lesson l = new Lesson();

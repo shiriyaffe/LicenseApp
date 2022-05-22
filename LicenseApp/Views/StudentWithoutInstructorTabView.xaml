@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LicenseApp.Views.StudentWithoutInstructorTabView"
             xmlns:fonts="clr-namespace:Fonts"
             xmlns:local="clr-namespace:LicenseApp.Views"
-             x:Class="LicenseApp.Views.StudentMainTabView"
             xmlns:windows="clr-namespace:Xamarin.Forms.PlatformConfiguration.WindowsSpecific;assembly=Xamarin.Forms.Core"
             windows:TabbedPage.HeaderIconsEnabled="true"
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
@@ -12,9 +12,7 @@
             SelectedTabColor="#014f86"
             UnselectedTabColor="Black"
             NavigationPage.HasNavigationBar="False">
-
-    <!--Pages can be added as references or inline-->
-
+  <!--Pages can be added as references or inline-->
     <windows:TabbedPage.HeaderIconsSize>
         <Size>
             <x:Arguments>
@@ -24,22 +22,15 @@
         </Size>
     </windows:TabbedPage.HeaderIconsSize>
     
-    <local:LessonsWaitingListStudentView>
-        <local:LessonsWaitingListStudentView.IconImageSource>
-            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.Clock}"/>
-        </local:LessonsWaitingListStudentView.IconImageSource>
-    </local:LessonsWaitingListStudentView>
-
-    <local:MyInstructorView>
-        <local:MyInstructorView.IconImageSource>
-            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.GraduationCap}"/>
-        </local:MyInstructorView.IconImageSource>
-    </local:MyInstructorView>
+    <local:HomePageView>
+        <local:HomePageView.IconImageSource>
+            <FontImageSource Color="#014f86" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.Bars}"/>
+        </local:HomePageView.IconImageSource>
+    </local:HomePageView>
 
     <local:StudentProfileView>
         <local:StudentProfileView.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.CircleUser}"/>
         </local:StudentProfileView.IconImageSource>
     </local:StudentProfileView>
-
 </TabbedPage>

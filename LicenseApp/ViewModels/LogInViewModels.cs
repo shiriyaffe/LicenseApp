@@ -124,7 +124,10 @@ namespace LicenseApp.ViewModels
 
                 if (user is Student)
                 {
-                    App.Current.MainPage = new NavigationPage(new StudentMainTabView());
+                    if(((Student)user).InstructorId == null)
+                        App.Current.MainPage = new NavigationPage(new StudentWithoutInstructorTabView());
+                    else
+                        App.Current.MainPage = new NavigationPage(new StudentMainTabView());
                 }
                 else if (user is Instructor)
                 {

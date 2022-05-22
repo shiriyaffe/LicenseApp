@@ -512,9 +512,10 @@ namespace LicenseApp.ViewModels
                         }, $"Students\\{student.StudentId}.jpg");
                     }
 
-                    app.CurrentUser = student;
+                    app.CurrentUser = await proxy.LoginAsync(student.Email, student.Pass);
 
-                    app.MainPage = new NavigationPage(new StudentMainTabView());
+                    if(app.CurrentUser != null)
+                        app.MainPage = new NavigationPage(new StudentWithoutInstructorTabView());
                 }
 
                 else

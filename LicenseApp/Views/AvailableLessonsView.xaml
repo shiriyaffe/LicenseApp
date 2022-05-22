@@ -27,7 +27,8 @@
                 <StackLayout>
                     <StackLayout Padding="0" Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="Center">
                         <Label Text="תאריך:" FontAttributes="Bold" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Center" FontSize="18"/>
-                        <Label Text="{Binding ChosenDate.Date}" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Center" FontSize="18"/>
+                        <DatePicker Date="{Binding ChosenDate}" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Center" FontSize="18"/>
+                        <!--<Label Text="{Binding ChosenDate.Date}" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Center" FontSize="18"/>-->
                     </StackLayout>
                     <Label Padding="0" FontSize="3"/>
                     <CollectionView EmptyView="אין שיעורים פנויים בתאריך זה" x:Name="collectionName" 

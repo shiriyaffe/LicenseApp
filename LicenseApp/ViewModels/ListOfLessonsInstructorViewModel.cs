@@ -94,9 +94,20 @@ namespace LicenseApp.ViewModels
                 {
 
                     this.chosenDate = value;
+                    ValidateDate();
                     OnPropertyChanged("ChosenDate");
                 }
             }
+        }
+
+        private void ValidateDate()
+        {
+            if (DateTime.Compare(DateTime.Today, ChosenDate) > 0)
+            {
+                App.Current.MainPage.DisplayAlert("", "תאריך זה כבר עבר", "בסדר");
+            }
+            else
+                OnRefresh();
         }
 
 
@@ -105,7 +116,8 @@ namespace LicenseApp.ViewModels
             UpComingLessonsList = new ObservableCollection<Lesson>();
             WaitingLessonsList = new ObservableCollection<Lesson>();
             IsRefreshing = false;
-            ChosenDate = new DateTime(2022, 04, 25);
+            ChosenDate = new DateTime();
+            ChosenDate = DateTime.Today;
 
             CreateLessonsList();
         }

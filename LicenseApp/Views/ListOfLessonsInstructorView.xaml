@@ -11,7 +11,8 @@
                 <StackLayout>
                     <StackLayout Padding="0" Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="Center">
                         <Label Text="תאריך:" FontAttributes="Bold" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Center" FontSize="17"/>
-                        <Label Text="{Binding ChosenDate.Date}" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Center" FontSize="17"/>
+                        <!--<Label Text="{Binding ChosenDate.Date}" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Center" FontSize="17"/>-->
+                        <DatePicker Date="{Binding ChosenDate}" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Center" FontSize="17"/>
                     </StackLayout>
                     <Label Padding="0" FontSize="3"/>
                     <Label TextDecorations="Underline" Text="שיעורים עתידיים:" FontAttributes="Bold" FontSize="20"></Label>
