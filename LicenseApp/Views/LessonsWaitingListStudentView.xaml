@@ -6,7 +6,7 @@
              BackgroundImageSource="WallPaper2.jpg"
              x:Name="LessonsList">
     <ContentPage.Content>
-        <StackLayout Padding="20">
+        <StackLayout Padding="10">
             <Frame Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
                 <StackLayout>
                     <Label TextDecorations="Underline" Text="שיעורים עתידיים:" FontAttributes="Bold" FontSize="20"></Label>

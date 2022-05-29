@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LicenseApp.Views.AllStudentsListInSchoolView"
              FlowDirection="RightToLeft"
-             BackgroundImageSource="Wallpaper2.jpg">
+             BackgroundImageSource="Wallpaper2.jpg"
+             NavigationPage.HasNavigationBar="False"    >
     <ContentPage.Resources>
         <Style TargetType="Grid">
             <Setter Property="VisualStateManager.VisualStateGroups">

@@ -661,7 +661,7 @@ namespace LicenseApp.ViewModels
                     GearboxId = Gearbox.GearboxId,
                     LicenseTypeId = LicenseType.LicenseTypeId,
                     LessonLengthId = LessonLength.LessonLengthId,
-                    RateId = 6,
+                    RateId = 0,
                     StartTime = StartHour.Whour,
                     EndTime = EndHour.Whour,
                     DrivingSchoolId = DrivingSchool.SchoolId,

@@ -24,6 +24,8 @@ namespace LicenseApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private const int APPROVED = 2;
+
         private ObservableCollection<Instructor> instructors;
         public ObservableCollection<Instructor> InstructorsList;
 
@@ -139,45 +141,48 @@ namespace LicenseApp.ViewModels
 
             foreach (Instructor i in instructors)
             {
-                if (sliderValue == 0 || sliderValue >= i.Price)
+                if (i.EStatusId == APPROVED)
                 {
-                    InstructorsList.Add(i);
-                    added = true;
-                }
-                
-                if (Area != null && Area.AreaId != i.AreaId)
-                {
-                    if(added)
+                    if (sliderValue == 0 || sliderValue >= i.Price)
                     {
-                        InstructorsList.Remove(i);
-                        added = false;
+                        InstructorsList.Add(i);
+                        added = true;
                     }
-                }
 
-                if(Gender != null && Gender.GenderId != i.GenderId)
-                {
-                    if (added)
+                    if (Area != null && Area.AreaId != i.AreaId)
                     {
-                        InstructorsList.Remove(i);
-                        added = false;
+                        if (added)
+                        {
+                            InstructorsList.Remove(i);
+                            added = false;
+                        }
                     }
-                }
 
-                if(Gearbox != null && Gearbox.GearboxId != i.GearboxId)
-                {
-                    if (added)
+                    if (Gender != null && Gender.GenderId != i.GenderId)
                     {
-                        InstructorsList.Remove(i);
-                        added = false;
+                        if (added)
+                        {
+                            InstructorsList.Remove(i);
+                            added = false;
+                        }
                     }
-                }
 
-                if (LicenseType != null && LicenseType.LicenseTypeId != i.LicenseTypeId)
-                {
-                    if (added)
+                    if (Gearbox != null && Gearbox.GearboxId != i.GearboxId)
                     {
-                        InstructorsList.Remove(i);
-                        added = false;
+                        if (added)
+                        {
+                            InstructorsList.Remove(i);
+                            added = false;
+                        }
+                    }
+
+                    if (LicenseType != null && LicenseType.LicenseTypeId != i.LicenseTypeId)
+                    {
+                        if (added)
+                        {
+                            InstructorsList.Remove(i);
+                            added = false;
+                        }
                     }
                 }
             }

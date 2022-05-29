@@ -379,6 +379,17 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public int collHeight;
+        public int CollHeight
+        {
+            get { return collHeight; }
+            set
+            {
+                collHeight = value;
+                OnPropertyChanged("CollHeight");
+            }
+        }
+
         public async void CreateLessonsCollection()
         {
             App app = (App)App.Current;
@@ -394,8 +405,18 @@ namespace LicenseApp.ViewModels
                         l.Paid = "שולם";
                     else
                         l.Paid = "לא שולם"; 
+                    
                     this.LessonsList.Add(l);
                 }  
+            }
+
+            if (LessonsList.Count == 0)
+            {
+                CollHeight = 40;
+            }
+            else if (LessonsList.Count > 0)
+            {
+                CollHeight = 120 * LessonsList.Count;
             }
         }
 
@@ -434,6 +455,7 @@ namespace LicenseApp.ViewModels
             this.ShowPassError = false;
             this.SaveDataCommand = new Command(() => SaveData());
             this.PassConditions = new Command(() => ShowConditions());
+            CollHeight = 0;
 
             LessonsList = new ObservableCollection<Lesson>();
 

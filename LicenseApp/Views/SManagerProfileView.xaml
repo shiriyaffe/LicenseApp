@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LicenseApp.Views.SManagerProfileView"
              FlowDirection="RightToLeft"
-             BackgroundImageSource="Wallpaper2.jpg">
+             BackgroundImageSource="Wallpaper2.jpg"
+              NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <ScrollView>
+        
             <StackLayout Padding="10">
-                <Frame Padding="10" HeightRequest="508" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
+                <Frame Padding="10" HeightRequest="565" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
                     <StackLayout>
 
                         <Grid HorizontalOptions="FillAndExpand">
@@ -76,6 +77,6 @@
                     </StackLayout>
                 </Frame>
             </StackLayout>
-        </ScrollView>
+        
     </ContentPage.Content>
 </ContentPage>

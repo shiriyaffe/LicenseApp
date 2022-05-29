@@ -92,7 +92,7 @@
                             <Label/>
                         </StackLayout>
 
-                        <CollectionView HorizontalOptions="CenterAndExpand" EmptyView="- לא התבצעו שיעורים -" x:Name="collectionName" 
+                        <CollectionView HeightRequest="{Binding CollHeight}" HorizontalOptions="CenterAndExpand" EmptyView="- לא התבצעו שיעורים -" x:Name="collectionName" 
                             ItemsSource="{Binding LessonsList}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelctionChanged}"
                         SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
@@ -101,7 +101,6 @@
                                     <Label Text="- לא התבצעו שיעורים -"
                             Margin="10,25,10,10"
                             FontSize="16"
-                            HorizontalOptions="Fill"
                             HorizontalTextAlignment="Center" />
                                 </DataTemplate>
                             </CollectionView.EmptyViewTemplate>

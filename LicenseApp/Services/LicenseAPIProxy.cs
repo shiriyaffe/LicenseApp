@@ -1371,5 +1371,37 @@ namespace LicenseApp.Services
                 return false;
             }
         }
+
+        public async Task<bool> ChangeRating(Instructor instructor)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+
+                    string jsonObject = JsonSerializer.Serialize<Instructor>(instructor, options);
+                    StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/ChangeRating", content);
+
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+            }
+            catch (Exception ee)
+            {
+                Console.WriteLine(ee.Message);
+                return false;
+            }
+        }
     }
 }

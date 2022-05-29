@@ -4,7 +4,8 @@
              x:Class="LicenseApp.Views.HomePageView"
              FlowDirection="RightToLeft"
              NavigationPage.HasNavigationBar="{Binding}"
-             BackgroundImageSource="Wallpaper2.jpg">
+             BackgroundImageSource="Wallpaper2.jpg"
+             xmlns:rating="clr-namespace:Rating;assembly=Rating">
     <ContentPage.Resources>
         <Style TargetType="Grid">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -37,7 +38,8 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="70"/>
                                     <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="70" />
                                     <ColumnDefinition Width="10" />
@@ -48,8 +50,17 @@
                                     <Image x:Name="theImage" Source="{Binding PhotoURI}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="50" WidthRequest="50"/>
                                 </Frame>
                                 <Label Grid.Column="0" Grid.Row="1" Text="{Binding Iname}" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                <Label Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Text="{Binding Details}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black"/>
-                            </Grid>
+                                <Label Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" Text="{Binding Details}" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black"/>
+                                    <rating:RatingBar x:Name="rating" 
+                                        ImageWidth="20" ImageHeight="20" 
+                                        FlowDirection="RightToLeft" 
+                                        EmptyStarImage="star.png" 
+                                        FillStarImage="starPicked.png" 
+                                        SelectedStarValue="{Binding RateId}"
+                                        HorizontalOptions="Center"
+                                        Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
+                                    </rating:RatingBar>
+                                </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

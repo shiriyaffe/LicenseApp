@@ -11,7 +11,7 @@
             Title="Tabs Example"
             SelectedTabColor="#014f86"
             UnselectedTabColor="Black"
-            >
+            NavigationPage.HasNavigationBar="False">
 
     <!--Pages can be added as references or inline-->
 

@@ -107,7 +107,8 @@ namespace LicenseApp.ViewModels
                     LessonLength = chosenInstructor.LessonLengthId,
                     Price = chosenInstructor.Price,
                     InstructorID = chosenInstructor.InstructorId,
-                    SLength = (await proxy.GetLessonLengthById(chosenInstructor.LessonLengthId)).Slength
+                    SLength = (await proxy.GetLessonLengthById(chosenInstructor.LessonLengthId)).Slength,
+                    Rating = (int)chosenInstructor.RateId
                 };
 
                 App app = (App)App.Current;

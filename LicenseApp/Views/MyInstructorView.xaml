@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LicenseApp.Views.MyInstructorView"
              FlowDirection="RightToLeft"
-             BackgroundImageSource="WallPaper2.jpg">
+             BackgroundImageSource="WallPaper2.jpg"
+             xmlns:rating="clr-namespace:Rating;assembly=Rating">
     <ContentPage.Content>
-
-        <StackLayout Padding="20,20">
+        
+        <StackLayout Padding="10,10">
             <Frame Padding="30" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
                 <StackLayout Padding="0">
                 <Grid>
@@ -50,12 +51,21 @@
                     </StackLayout>
                 </Frame>
                 <Label/>
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="תן דירוג:" FontSize="18" FontAttributes="Bold"/>
-                    <ImageButton />
-                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Label Text="תן דירוג:     " FontSize="17" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                        <rating:RatingBar x:Name="rating" 
+                          ImageWidth="25" ImageHeight="25" 
+                          FlowDirection="RightToLeft" 
+                          EmptyStarImage="star.png" 
+                          FillStarImage="starPicked.png" 
+                          SelectedStarValue="{Binding RatingValue}"
+                          HorizontalOptions="Center">
+                        </rating:RatingBar>
+                        <Button Padding="0,0" Margin="0,0,0,0" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" FontSize="16" Text="דרג" BackgroundColor="Transparent" TextColor="#5fa8d3" Command="{Binding AddRatingCommand}"/>
+                    </StackLayout>
                 </StackLayout>
             </Frame>
         </StackLayout>
+        
     </ContentPage.Content>
 </ContentPage>

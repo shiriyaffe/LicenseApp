@@ -3,10 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LicenseApp.Views.StatisticsView"
              FlowDirection="RightToLeft"
-             BackgroundImageSource="Wallpaper2.png">
+             BackgroundImageSource="Wallpaper2.png"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:rating="clr-namespace:Rating;assembly=Rating">
     <ContentPage.Content>
-        <StackLayout Padding="15">
-            <Frame Padding="5,0" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent" VerticalOptions="CenterAndExpand">
+        <StackLayout Padding="10">
+            <Frame Padding="5,0" HeightRequest="585" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent" VerticalOptions="CenterAndExpand">
                 <StackLayout Padding="20">
                     <Label Text="תלמידים חדשים בביהס:" FontAttributes="Bold" TextColor="#003049" FontSize="22" TextDecorations="Underline"/>
                     <StackLayout Orientation="Horizontal" Padding="0">
@@ -56,6 +58,15 @@
                     <Label/>
 
                     <Label Text="דירוג ממוצע של מוריך:" FontAttributes="Bold" TextColor="#003049" FontSize="22" TextDecorations="Underline"/>
+                    <Label Padding="0" Margin="0"/>
+                    <rating:RatingBar x:Name="rating" 
+                          ImageWidth="27" ImageHeight="27" 
+                          FlowDirection="RightToLeft" 
+                          EmptyStarImage="star.png" 
+                          FillStarImage="starPicked.png" 
+                          SelectedStarValue="{Binding RatingValue}"
+                          HorizontalOptions="Center">
+                    </rating:RatingBar>
                 </StackLayout>
             </Frame>
         </StackLayout>

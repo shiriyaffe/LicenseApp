@@ -349,8 +349,9 @@ namespace LicenseApp.ViewModels
                             }, $"SchoolManagers\\{schoolM.SmanagerId}.jpg");
                         }
 
-                        app.CurrentUser = sm;
-                        app.MainPage = new NavigationPage(new SchoolManagerMainTabView());
+                        app.CurrentUser = await proxy.LoginAsync(sm.Email, sm.Pass);
+                        if(app.CurrentUser != null)
+                            app.MainPage = new NavigationPage(new SchoolManagerMainTabView());
                     }
                 }
                 else

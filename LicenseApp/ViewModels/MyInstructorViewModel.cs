@@ -20,6 +20,7 @@ namespace LicenseApp.ViewModels
         }
 
         const int APPROVED = 2;
+        const int NO_RATING = 0;
 
         private string iName;
         public string IName
@@ -73,6 +74,17 @@ namespace LicenseApp.ViewModels
             {
                 review = value;
                 OnPropertyChanged("Review");
+            }
+        }
+
+        private int ratingValue;
+        public int RatingValue
+        {
+            get { return ratingValue; }
+            set
+            {
+                ratingValue = value;
+                OnPropertyChanged("RatingValue");
             }
         }
 
@@ -144,6 +156,7 @@ namespace LicenseApp.ViewModels
                 {
                     Review = "";
                     await App.Current.MainPage.DisplayAlert("", "ביקורתך נקלטה בהצלחה! תודה על מתן הביקורת", "בסדר");
+                    ((App)App.Current).UIRefresh();
                 }
             }
             else
@@ -157,6 +170,40 @@ namespace LicenseApp.ViewModels
             App app = (App)App.Current;
             Page p = new AvailableLessonsView();
             app.MainPage.Navigation.PushAsync(p);
+        }
+
+        public ICommand AddRatingCommand => new Command(AddRating);
+
+        public async void AddRating()
+        {
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            App app = (App)App.Current;
+
+            Instructor i = ((Student)app.CurrentUser).Instructor;
+            if(i != null)
+            {
+                if (i.RateId == NO_RATING)
+                {
+                    i.RateId = RatingValue;
+                }
+                else
+                {
+                    i.RateId = (i.RateId + RatingValue) / 2;
+                }
+
+                bool updated = await proxy.ChangeRating(i);
+
+                if(updated)
+                {
+                    RatingValue = 0;
+                    await App.Current.MainPage.DisplayAlert("", "דירוגך נקלט בהצלחה! תודה על מתן הביקורת", "בסדר");
+                    ((App)App.Current).UIRefresh();
+                }
+                else
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "הוספת הדירוג נכשלה", "בסדר");
+            }
+            else
+                await App.Current.MainPage.DisplayAlert("שגיאה", "הוספת הדירוג נכשלה", "בסדר");
         }
     }
 }

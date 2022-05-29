@@ -5,7 +5,9 @@ using LicenseApp.Views;
 using LicenseApp.Models;
 using LicenseApp.Services;
 using System.Collections.Generic;
-
+using Xamarin.Forms.PlatformConfiguration;
+using Xamarin.Forms.PlatformConfiguration.WindowsSpecific;
+using Application = Xamarin.Forms.Application;
 
 namespace LicenseApp
 {
@@ -21,6 +23,7 @@ namespace LicenseApp
         public App()
         {
             InitializeComponent();
+            Application.Current.On<Windows>().SetImageDirectory("Assets");
             FillListOfYears();
             CurrentUser = null;
             TempUser = null;
@@ -41,8 +44,7 @@ namespace LicenseApp
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             Tables = await proxy.GetLookups();
-            Page p = new OpenningPageView();
-            MainPage = new NavigationPage(p);
+            MainPage = new NavigationPage(new OpenningPageView());
         }
 
         public void UIRefresh() { this.RefreshUI?.Invoke(); }

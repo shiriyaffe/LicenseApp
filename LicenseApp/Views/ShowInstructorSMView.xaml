@@ -3,12 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LicenseApp.Views.ShowInstructorSMView"
              FlowDirection="RightToLeft"
-             BackgroundImageSource="Wallpaper2.jpg">
+             BackgroundImageSource="Wallpaper2.jpg"
+             xmlns:rating="clr-namespace:Rating;assembly=Rating">
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Padding="10">
                 <Frame Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
-                    <StackLayout Padding="40" HorizontalOptions="CenterAndExpand">
+                    <StackLayout Padding="40,20" HorizontalOptions="CenterAndExpand">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0.3*"/>
@@ -31,9 +32,10 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="120" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
@@ -45,6 +47,16 @@
                             <Label Grid.Column="1" Grid.Row="2" Text="{Binding SLength}" FontSize="18"/>
                             <Label Text="מחיר לשיעור:" Grid.Column="0" Grid.Row="3" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
                             <Label Grid.Column="1" Grid.Row="3" Text="{Binding Price}" FontSize="18"/>
+                            <Label Text="דירוג:" Grid.Column="0" Grid.Row="4" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
+                            <rating:RatingBar x:Name="rating" 
+                                ImageWidth="18" ImageHeight="18" 
+                                FlowDirection="RightToLeft" 
+                                EmptyStarImage="star.png" 
+                                FillStarImage="starPicked.png" 
+                                SelectedStarValue="{Binding Rating}"
+                                HorizontalOptions="Start"
+                                Grid.Column="1" Grid.Row="4">
+                            </rating:RatingBar>
                         </Grid>
                         <Label/>
                         <Button Command="{Binding OpenStudentsList}" BackgroundColor="#caf0f8" Text="תלמידים משויכים" HorizontalOptions="CenterAndExpand" Padding="10" FontSize="18" FontAttributes="Bold" CornerRadius="10" TextColor="Black"></Button>

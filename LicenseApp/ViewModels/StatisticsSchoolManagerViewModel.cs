@@ -16,6 +16,7 @@ namespace LicenseApp.ViewModels
         }
 
         const int APPROVED = 2;
+        private const int NO_RATING = 0;
 
         private int newMonth;
         public int NewMonth
@@ -71,11 +72,48 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        private int ratingValue;
+        public int RatingValue
+        {
+            get { return ratingValue; }
+            set
+            {
+                ratingValue = value;
+                OnPropertyChanged("RatingValue");
+            }
+        }
+
+        private int GetAverage()
+        {
+            App app = (App)App.Current;
+            int counter = 0;
+            int sumRate = 0;
+
+            if(app.CurrentUser is SchoolManager)
+            {
+                SchoolManager current = (SchoolManager)app.CurrentUser;
+
+                foreach(Instructor i in current.Instructors)
+                {
+                    if(i.RateId != NO_RATING)
+                    {
+                        sumRate += (int)i.RateId;
+                        counter++;
+                    }
+                }
+
+                return sumRate / counter;
+            }
+
+            return counter;
+        }
+
         public StatisticsSchoolManagerViewModel()
         {
             NewMonth = 0;
             NewWeek = 0;
             NewToday = 0;
+            RatingValue = GetAverage();
 
             App app = (App)App.Current;
             app.RefreshUI += OnRefresh;

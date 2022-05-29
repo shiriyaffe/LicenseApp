@@ -94,6 +94,17 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public int rating;
+        public int Rating
+        {
+            get { return rating; }
+            set
+            {
+                rating = value;
+                OnPropertyChanged("Rating");
+            }
+        }
+
         //private async void GetLessonLength()
         //{
         //    LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
