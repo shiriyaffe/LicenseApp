@@ -92,13 +92,7 @@ namespace LicenseApp.ViewModels
             Student current = new Student();
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             AvailableList.Clear();
-            //ObservableCollection<Student> allStudents = await proxy.GetStudentsByInstructorAsync((int)(((Student)app.CurrentUser).InstructorId));
-            //foreach(Student s in allStudents)
-            //{
-            //    if (s.StudentId == ((Student)app.CurrentUser).StudentId)
-            //        current = s;
-            //}
-
+            
             current = (Student)app.CurrentUser;
 
             List<WorkingHour> allHours = app.Tables.WorkingHours;
@@ -142,8 +136,8 @@ namespace LicenseApp.ViewModels
             }
         }
 
-        public ICommand SelctionChanged => new Command<Object>(OnSelectionChanged);
-        public async void OnSelectionChanged(Object obj)
+        public ICommand SelctionChanged => new Command<Object>(BookALesson);
+        public async void BookALesson(Object obj)
         {
             if (obj is WorkingHour)
             {

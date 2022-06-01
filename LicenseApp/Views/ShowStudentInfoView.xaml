@@ -6,9 +6,9 @@
              BackgroundImageSource="Wallpaper2.jpg">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="10">
-                <Frame Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
-                    <StackLayout Padding="40" HorizontalOptions="CenterAndExpand">
+            <StackLayout Padding="10,10">
+                <Frame Padding="20" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
+                    <StackLayout Padding="20,10,20,0" HorizontalOptions="CenterAndExpand">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0.3*"/>
@@ -22,7 +22,7 @@
                                 <Image x:Name="theImage" Source="{Binding ImageUrl}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="110" WidthRequest="110"/>
                             </Frame>
                         </Grid>
-
+                        <Label Padding="0" Margin="0" FontSize="0.5"/>
                         <Label Text="{Binding SName}" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold"></Label>
                         <Label/>
                         <Grid Padding="0" HorizontalOptions="CenterAndExpand">
@@ -33,8 +33,8 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="130" />
+                                <ColumnDefinition Width="180" />
                             </Grid.ColumnDefinitions>
                             <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
                             <Label Text="גיל:" Grid.Column="0" Grid.Row="0" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"></Label>
@@ -52,16 +52,17 @@
                         </Grid>
                         <Label Padding="0" Margin="0"/>
                         <Label Text="הוספת סיכום שיעור:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start"/>
-                        <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="250" HeightRequest="140" Padding="10">
+                        <Label Padding="0" Margin="0" FontSize="0.5"/>
+                        <Frame BorderColor="DarkGray" HorizontalOptions="Center" BackgroundColor="Transparent" WidthRequest="270" HeightRequest="130" Padding="20,10,20,20">
                             <StackLayout>
                                 <Picker HorizontalOptions="CenterAndExpand" Title="בחר תאריך:" ItemsSource="{Binding Lessons}" ItemDisplayBinding="{Binding Ldate}" SelectedItem="{Binding Lesson}">
                                 </Picker>
-                                <Entry HorizontalOptions="CenterAndExpand" VerticalTextAlignment="Center" Placeholder="כתוב סיכום כאן:" Text="{Binding LessonSum}"/>
+                                <Entry HorizontalOptions="Fill" VerticalTextAlignment="Center" Placeholder="כתוב סיכום כאן:" Text="{Binding LessonSum}"/>
                                 <Button VerticalOptions="Center" HorizontalOptions="End" FontSize="14" Text="הוסף סיכום שיעור" BackgroundColor="Transparent" TextColor="#5fa8d3" Command="{Binding AddSummaryCommand}"/>
                             </StackLayout>
                         </Frame>
-                        <Label Padding="0" HeightRequest="20"/>
-                        <Button Command="{Binding DeleteStudentCommand}" BackgroundColor="Transparent" Text="מחיקת תלמיד" HorizontalOptions="CenterAndExpand" Padding="10" FontSize="18" CornerRadius="10" TextColor="Red"></Button>
+                        <Label Padding="0" HeightRequest="10"/>
+                        <Button BackgroundColor="Transparent" Command="{Binding DeleteStudentCommand}" Text="מחיקת תלמיד" HorizontalOptions="CenterAndExpand" Padding="0" Margin="0" FontSize="18" CornerRadius="10" TextColor="Red"></Button>
                     </StackLayout>
                 </Frame>
             </StackLayout>

@@ -122,7 +122,7 @@ namespace LicenseApp.ViewModels
                     ImageUrl = chosenInstructor.PhotoURI,
                     Details = chosenInstructor.Details,
                     PhoneNum = chosenInstructor.PhoneNumber,
-                    TeachingArea = await proxy.GetAreaName(chosenInstructor.AreaId),
+                    TeachingArea = (await proxy.GetAreaById(chosenInstructor.AreaId)).AreaName,
                     WorkingTime = $"{chosenInstructor.StartTime}-{chosenInstructor.EndTime}",
                     Price = chosenInstructor.Price,
                     InstructorID = chosenInstructor.InstructorId

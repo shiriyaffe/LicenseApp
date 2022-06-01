@@ -24,7 +24,7 @@
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <ScrollView>
+        
             <StackLayout Padding="10,10">
                 <ImageButton BackgroundColor="Transparent" Source="Search.png" Command="{Binding SearchPageCommand}" Padding="5" WidthRequest="35" HeightRequest="35" HorizontalOptions="End"></ImageButton>
                 <Frame Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
@@ -66,6 +66,6 @@
                 </CollectionView>
                 </Frame>
             </StackLayout>
-        </ScrollView>
+        
     </ContentPage.Content>
 </ContentPage>

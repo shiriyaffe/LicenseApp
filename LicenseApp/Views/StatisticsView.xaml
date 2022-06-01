@@ -9,7 +9,7 @@
     <ContentPage.Content>
         <StackLayout Padding="10">
             <Frame Padding="5,0" HeightRequest="585" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent" VerticalOptions="CenterAndExpand">
-                <StackLayout Padding="20">
+                <StackLayout Padding="20" VerticalOptions="CenterAndExpand">
                     <Label Text="תלמידים חדשים בביהס:" FontAttributes="Bold" TextColor="#003049" FontSize="22" TextDecorations="Underline"/>
                     <StackLayout Orientation="Horizontal" Padding="0">
                         <Grid Padding="15" HorizontalOptions="CenterAndExpand">

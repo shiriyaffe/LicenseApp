@@ -159,6 +159,7 @@ namespace LicenseApp.ViewModels
         {
             App app = (App)App.Current;
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            ReviewList.Clear();
             ObservableCollection<Review> reviews = await proxy.GetInstructorReviewsAsync(InstructorID);
             foreach (Review r in reviews)
             {
@@ -171,7 +172,7 @@ namespace LicenseApp.ViewModels
             }
             else if (ReviewList.Count > 0)
             {
-                CollHeight = 120 * ReviewList.Count;
+                CollHeight = 80 * ReviewList.Count;
             }
         }
 

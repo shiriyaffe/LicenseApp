@@ -116,6 +116,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה המקבלת אימייל וסיסמה, מחברת את המשתמש לאפליקציה ומחזירה אובייקט לפי סוג המשתמש
         public async Task<Object> LoginAsync(string email, string pass)
         {
             try
@@ -129,7 +130,7 @@ namespace LicenseApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
-                    try
+                    try //בדיקה אם המשתמש התחבר בתור מנהל בית ספר
                     {
                         SchoolManager sm = JsonSerializer.Deserialize<SchoolManager>(content, options);
                         if (sm.Smname != null)
@@ -139,7 +140,7 @@ namespace LicenseApp.Services
                     {
                         Console.WriteLine(e.Message);
                     }
-                    try
+                    try //בדיקה אם המשתמש התחבר בתור מורה נהיגה
                     {
                         Instructor i = JsonSerializer.Deserialize<Instructor>(content, options);
                         if (i.Iname != null)
@@ -149,7 +150,7 @@ namespace LicenseApp.Services
                     {
                         Console.WriteLine(e.Message);
                     }
-                    try
+                    try //בדיקה אם המשתמש התחבר בתור תלמיד
                     {
                         Student s = JsonSerializer.Deserialize<Student>(content, options);
                         if (s.Sname != null)
@@ -174,6 +175,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה המחזירה את כל טבלאות הנתונים הקבועות
         public async Task<LookupTables> GetLookups()
         {
             try
@@ -202,33 +204,7 @@ namespace LicenseApp.Services
             }
         }
 
-        public async Task<string> GetAreaName(int areaId)
-        {
-            try
-            {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAreaName?areaId={areaId}");
-                if (response.IsSuccessStatusCode)
-                {
-                    JsonSerializerOptions options = new JsonSerializerOptions
-                    {
-                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
-                        PropertyNameCaseInsensitive = true
-                    };
-                    //string content = await response.Content.ReadAsStringAsync();
-                    return await response.Content.ReadAsStringAsync();
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
-        }
-
+        //פעולה זו מקבלת מספר מזהה של עיר ומחזירה את האובייקט של העיר המתאימה
         public async Task<City> GetCityById(int cityId)
         {
             try
@@ -257,6 +233,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה זו מקבלת מספר מזהה של אזור ומחזירה את האובייקט של האזור המתאים
         public async Task<Area> GetAreaById(int areaId)
         {
             try
@@ -285,6 +262,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה זו מקבלת מספר מזהה של שעה ומחזירה את האובייקט של השעה המתאימה
         public async Task<WorkingHour> GetWorkingHourById(int hourId)
         {
             try
@@ -313,6 +291,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה זו מקבלת מספר מזהה של תיבת הילוכים ומחזירה את האובייקט של תיבת ההילוכים המתאימה
         public async Task<Gearbox> GetGearboxById(int gearboxId)
         {
             try
@@ -341,6 +320,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה זו מקבלת מספר מזהה של אורך שיעור ומחזירה את האובייקט של אורך השיעור המתאים
         public async Task<LessonLength> GetLessonLengthById(int lessonLenghId)
         {
             try
@@ -369,6 +349,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה זו מקבלת מחרוזת של שעה ומחזירה את האובייקט של השעה המתאימה
         public async Task<WorkingHour> GetHour(string wHour)
         {
             try
@@ -397,6 +378,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה זו מחזירה רשימה של כל המורים הרשומים באפליקציה
         public async Task<ObservableCollection<Instructor>> GetAllInstructorsAsync()
         {
             try
@@ -425,6 +407,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה זו מקבלת מספר מזהה של תלמיד ומחזירה רשימה של כל השיעורים שלו
         public async Task<ObservableCollection<Lesson>> GetStudentLessonsAsync(int studentId)
         {
             try
@@ -453,6 +436,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה זו מקבלת מספר מזהה של מורה ומחזירה רשימה של כל הביקורות שנכתבו עליו
         public async Task<ObservableCollection<Review>> GetInstructorReviewsAsync(int instructorID)
         {
             try
@@ -481,6 +465,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה זו מקבלת מספר מזהה של מורה ומחזירה את כל התלמידים המשויכים אליו
         public async Task<ObservableCollection<Student>> GetStudentsByInstructorAsync(int instructorID)
         {
             try
@@ -509,11 +494,12 @@ namespace LicenseApp.Services
             }
         }
 
-        public async Task<ObservableCollection<Student>> GetAllWaitingStudentsByInstructor(int instructorID)
+        //פעולה המחזירה רשימה של כל התלמידים שהגישו בקשה להירשם אצל מורה מסוים ועדיין מחכים לתשובה
+        public async Task<ObservableCollection<Student>> GetWaitingStudentsByInstructor(int instructorID)
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAllWaitingStudentsByInstructor?instructorId={instructorID}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetWaitingStudentsByInstructor?instructorId={instructorID}");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
@@ -537,6 +523,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה זו מקבלת תלמיד חדש ורושמת אותו לאפליקציה 
         public async Task<Student> StudentSignUpAsync(Student student)
         {
             try
@@ -570,6 +557,7 @@ namespace LicenseApp.Services
             
         }
 
+        //פעולה המעדכנת את פרטי התלמיד המחובר
         public async Task<Student> UpdateStudent(Student student)
         {
             try
@@ -602,6 +590,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה זו מעדכנת את פרטיו של המנהל בית ספר המחובר
         public async Task<SchoolManager> UpdateSManager(SchoolManager schoolManager)
         {
             try
@@ -634,6 +623,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה זו מקבלת מורה חדש ורושמת אותו לאפליקציה
         public async Task<Instructor> InstructorSignUpAsync(Instructor instructor)
         {
             try
@@ -667,6 +657,7 @@ namespace LicenseApp.Services
 
         }
 
+        //פעולה זו מקבלת מנהל בית ספר חדש ורושמת אותו לאפליקציה
         public async Task<SchoolManager> SchoolManagerSignUpAsync(SchoolManager sManager)
         {
             try
@@ -700,6 +691,7 @@ namespace LicenseApp.Services
 
         }
 
+        //פעולה זו מקבלת בית ספר חדש לנהיגה ומוסיפה אותו למערכת
         public async Task<DrivingSchool> AddDrivingSchool(DrivingSchool drivingSchool)
         {
             try
@@ -733,6 +725,7 @@ namespace LicenseApp.Services
 
         }
 
+        //פעולה המקבלת בקשת רישום חדשה ושומרת אותה במערכת
         public async Task<EnrollmentRequest> AddEnrollmentRequest(EnrollmentRequest enrollmentRequest)
         {
             try
@@ -766,6 +759,7 @@ namespace LicenseApp.Services
 
         }
 
+        //פעולה המקבלת ביקורת חדשה ושומרת אותה במערכת
         public async Task<Review> AddReview(Review review)
         {
             try
@@ -798,6 +792,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה המקבלת סיכום שיעור חדש ושומרת אותו במערכת
         public async Task<StudentSummary> AddSummary(StudentSummary summary)
         {
             try
@@ -830,6 +825,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה המקבלת ביקורת חדשה על מורה מסויים ושומרת אותה במערכת
         public async Task<InstructorReview> AddInstructorReview(InstructorReview review)
         {
             try
@@ -862,6 +858,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה המעדכנת את פרטיו הנוכחיים של המורה המחובר
         public async Task<Instructor> UpdateInstructor(Instructor instructor)
         {
             try
@@ -894,6 +891,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה המקבלת אובייקט המאפיין תמונה ושומרת את התמונה בתיקיה
         public async Task<bool> UploadImage(Models.FileInfo fileInfo, string targetFileName)
         {
             try
@@ -916,6 +914,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה המנתקת קשר בין תלמיד למורה שלו
         public async Task<Student> DeleteStudent(int studentId)
         {
             try
@@ -944,6 +943,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה המנתקת קשר בין מורה לבית הספר שמשויך אליו
         public async Task<Instructor> DeleteInstructor(int instructorId)
         {
             try
@@ -972,6 +972,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה המחזירה רשימה של כל התלמידים המשויכים לבית ספר נהיגה מסוים
         public async Task<ObservableCollection<Student>> GetStudentsBySchoolAsync(int sManagerId)
         {
             try
@@ -1000,6 +1001,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה המשנה את הסטטוס ההצטרפות של מורה מסוים או סטטוס הרישום של תלמיד מסוים, תלוי באובייקט שקיבלה
         public async Task<bool> ChangeUserStatus(object u)
         {
             try
@@ -1056,6 +1058,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה המוסיפה סיכום שיעור חדש לשיעור מסוים
         public async Task<Lesson> UpdateLessonSum(Lesson lesson)
         {
             try
@@ -1088,6 +1091,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה המקבלת מספר מזהה של מורה ומחזירה את המורה עצמו
         public async Task<Instructor> GetInstructorById(int instructorId)
         {
             try
@@ -1116,6 +1120,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה המבטלת שיעור שעדיין לא התקיים או דוחה את הבקשה לקיומו
         public async Task<Lesson> CancelLesson(Lesson lesson)
         {
             try
@@ -1148,6 +1153,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה המחזירה רשימה של כל השיעורים של מורה מסוים
         public async Task<ObservableCollection<Lesson>> GetInstructorLessonsAsync(int instructorId)
         {
             try
@@ -1176,6 +1182,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה המחזירה רשימה של כל התלמידים החדשים שהצטרפו בתקופה מסוימת לאפליקציה, לפי המספר הנקלט
         public async Task<List<Student>> GetNewStudents(int num)
         {
             try
@@ -1204,6 +1211,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה הבודקת אם שיעור פנוי
         public async Task<bool> CheckIfAvailable(Lesson l)
         {
             try
@@ -1236,6 +1244,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה המקבלת שיעור חדש שנקבע ושומרת אותו במערכת
         public async Task<Lesson> AddNewLesson(Lesson lesson)
         {
             try
@@ -1269,6 +1278,7 @@ namespace LicenseApp.Services
 
         }
 
+        //פעולה זו משנה את סטטוס השיעור הנקלט למאושר
         public async Task<Lesson> ApproveLesson(Lesson lesson)
         {
             try
@@ -1301,6 +1311,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה זו בודקת אם כבר קיים משתמש באפליקציה בעל מייל זהה
         public async Task<bool> CheckIfMailExists(string mail)
         {
             try
@@ -1323,6 +1334,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה זו מחזירה את תוכן סיכום השיעור
         public async Task<string> GetLessonSumAsync(int reviewId)
         {
             try
@@ -1350,6 +1362,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה זו בודקת אם כבק נכתב סיכום שיעור לשיעור מסוים
         public async Task<bool> CheckIfSumExists(int lessonId)
         {
             try
@@ -1372,6 +1385,7 @@ namespace LicenseApp.Services
             }
         }
 
+        //פעולה זו מעדכנת את הדירוג של מורה מסוים
         public async Task<bool> ChangeRating(Instructor instructor)
         {
             try

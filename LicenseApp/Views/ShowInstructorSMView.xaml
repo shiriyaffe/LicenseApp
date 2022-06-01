@@ -89,9 +89,8 @@
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
-                        <Label/>
 
-                        <Button Command="{Binding DeleteInstructorCommand}" BackgroundColor="Transparent" Text="מחיקת מורה" HorizontalOptions="CenterAndExpand" Padding="10" FontSize="18" CornerRadius="10" TextColor="Red"></Button>
+                        <Button Command="{Binding DeleteInstructorCommand}" BackgroundColor="Transparent" Text="מחיקת מורה" HorizontalOptions="CenterAndExpand" Padding="0" FontSize="18" Margin="0" CornerRadius="10" TextColor="Red"></Button>
                     </StackLayout>
                 </Frame>
             </StackLayout>

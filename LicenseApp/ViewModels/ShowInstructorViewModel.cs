@@ -155,8 +155,8 @@ namespace LicenseApp.ViewModels
         {
             App app = (App)App.Current;
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
-            ObservableCollection<Review> reviews = await proxy.GetInstructorReviewsAsync(instructorID);
             ReviewList.Clear();
+            ObservableCollection<Review> reviews = await proxy.GetInstructorReviewsAsync(InstructorID);
             foreach (Review r in reviews)
             {
                 this.ReviewList.Add(r);
@@ -168,12 +168,30 @@ namespace LicenseApp.ViewModels
             }
             else if(ReviewList.Count > 0)
             {
-                CollHeight = 120 * ReviewList.Count;
+                CollHeight = 90 * ReviewList.Count;
             }
         }
         
         public ShowInstructorViewModel()
         {
+            ReviewList = new ObservableCollection<Review>();
+            CollHeight = 0;
+            App app = (App)App.Current;
+            app.RefreshUI += TheApp_RefreshUI;
+            CreateReviewsCollection();
+        }
+
+        public ShowInstructorViewModel(ShowInstructorViewModel instructorContext)
+        {
+            InstructorID = instructorContext.InstructorID;
+            Price = instructorContext.Price;
+            PhoneNum = instructorContext.PhoneNum;
+            IName = instructorContext.IName;
+            ImageUrl = instructorContext.ImageUrl;
+            Details = instructorContext.Details;
+            WorkingTime = instructorContext.WorkingTime;
+            TeachingArea = instructorContext.TeachingArea;
+
             ReviewList = new ObservableCollection<Review>();
             CollHeight = 0;
             App app = (App)App.Current;

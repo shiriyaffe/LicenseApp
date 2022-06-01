@@ -96,7 +96,7 @@ namespace LicenseApp.ViewModels
             if (app.CurrentUser is Instructor)
             {
                 Instructor instructor = (Instructor)app.CurrentUser;
-                students = await proxy.GetAllWaitingStudentsByInstructor(instructor.InstructorId);
+                students = await proxy.GetWaitingStudentsByInstructor(instructor.InstructorId);
                 StudentsList.Clear();
                 if (students.Count != 0)
                 {
@@ -165,7 +165,6 @@ namespace LicenseApp.ViewModels
             else
             {
                 await App.Current.MainPage.DisplayAlert("שגיאה", "פעולה נכשלה!", "בסדר");
-                //await App.Current.MainPage.Navigation.PopModalAsync();
             }
         }
     }

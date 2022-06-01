@@ -480,7 +480,7 @@ namespace LicenseApp.ViewModels
                 }
                 else if (ReviewList.Count > 0)
                 {
-                    CollHeight = 120 * ReviewList.Count;
+                    CollHeight = 100 * ReviewList.Count;
                 }
             }
         }

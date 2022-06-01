@@ -56,7 +56,7 @@
                     </CollectionView>
                     <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="Center">
                         <Label Text="סך התלמידים:" FontAttributes="Bold" TextColor="Gray" HorizontalOptions="Center" FontSize="15"/>
-                        <Label Text="{Binding AllStudents}" TextColor="Gray" HorizontalOptions="Center" FontSize="15"/>
+                        <Label Text="{Binding StudentsCount}" TextColor="Gray" HorizontalOptions="Center" FontSize="15"/>
                     </StackLayout>
                 </StackLayout>
             </Frame>
