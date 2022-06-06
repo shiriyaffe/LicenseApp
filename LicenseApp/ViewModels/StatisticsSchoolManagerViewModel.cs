@@ -18,6 +18,7 @@ namespace LicenseApp.ViewModels
         const int APPROVED = 2;
         private const int NO_RATING = 0;
 
+        //תכונות השומרות את מספר התלמידים החדשים שהצטרפו לבית הספר בפרק זמן מסוים
         private int newMonth;
         public int NewMonth
         {
@@ -72,6 +73,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //דירוג ממוצע של כלל המורים בבית הספר
         private int ratingValue;
         public int RatingValue
         {
@@ -83,6 +85,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //פעולה המחשבת את ממוצע הדירוגים של כל המורים המשויכים למנהל המחובר
         private int GetAverage()
         {
             App app = (App)App.Current;
@@ -123,13 +126,16 @@ namespace LicenseApp.ViewModels
             GetNewStudentsToday();
         }
 
+        //פעולה המרעננת את המסך
         public void OnRefresh()
         {
             GetNewStudentsThisMonth();
             GetNewStudentsThisWeek();
             GetNewStudentsToday();
+            GetAverage();
         }
 
+        //פעולה המעדכנת את מספר התלמידים שהצטרפו החודש לבית הספר
         private async void GetNewStudentsThisMonth()
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -152,6 +158,7 @@ namespace LicenseApp.ViewModels
 
         }
 
+        //פעולה המעדכנת את מספר התלמידים שהצטרפו השבוע לבית הספר
         private async void GetNewStudentsThisWeek()
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -172,6 +179,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //פעולה המעדכנת את מספר התלמידים שהצטרפו היום לבית הספר
         private async void GetNewStudentsToday()
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();

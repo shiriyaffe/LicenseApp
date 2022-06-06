@@ -81,6 +81,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //פעולה הבודקת את תקינות האיזור שנבחר
         public void ValidateArea()
         {
             this.ShowAreaError = AreaPicker == -1;
@@ -149,12 +150,13 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //פעולה הבודקת את תקינות השנה שנבחרה
         public void ValidateEYear()
         {
             this.ShowEYearError = EYearPicker == -1;
             if (this.ShowEYearError)
             {
-                this.EYearError = "שנת הקמה הוא שדה!";
+                this.EYearError = "שנת הקמה הוא שדה חובה!";
             }
             else
                 this.EYearError = null;
@@ -198,6 +200,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //פעולה הבודקת את תקינות שם בית הספר שהזין המשתמש
         private void ValidateName()
         {
             this.ShowNameError = string.IsNullOrEmpty(SchoolName);
@@ -256,41 +259,19 @@ namespace LicenseApp.ViewModels
         }
         #endregion
 
-        private string submitError;
-
-        public string SubmitError
-        {
-            get => submitError;
-            set
-            {
-                submitError = value;
-                OnPropertyChanged("SubmitError");
-            }
-        }
-
-        private bool showError;
-        public bool ShowError
-        {
-            get => showError;
-            set
-            {
-                showError = value;
-                OnPropertyChanged("ShowError");
-            }
-        }
 
         public ManagerSignInViewModel()
         {
             AreaPicker = -1;
             EYear = -1;
 
-            ShowError = false;
             this.ShowNameError = false;
             this.ShowNumberError = false;
             this.ShowAreaError = false;
             this.ShowEYearError = false;
         }
 
+        //פעולה הבודקת את תקינות השדות בטופס,
         private bool ValidateForm()
         {
             //Validate all fields first
@@ -306,13 +287,15 @@ namespace LicenseApp.ViewModels
             return true;
         }
 
-        public Command SignUpCommand => new Command(SignInAsManager);
-
-        public async void SignInAsManager()
+        public Command SignUpCommand => new Command(SignUpAsManager);
+        //פעולה השומרת את פרטי המנהל החדש ובית ספרו במסד הנתונים ומגדירה את המנהל כשמתמש המחובר
+        public async void SignUpAsManager()
         {
             App app = (App)App.Current;
+            //בדיקת תקינות הטופס
             if (ValidateForm())
             {
+                //בניית אובייקט חדש של בית ספר
                 DrivingSchool d = new DrivingSchool
                 {
                     SchoolName = SchoolName,
@@ -321,11 +304,13 @@ namespace LicenseApp.ViewModels
                     AreaId = Area.AreaId
                 };
 
+                //הוספת בית הספר החדש למסד הנתונים
                 LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
                 DrivingSchool dSchool = await proxy.AddDrivingSchool(d);
 
                 if (dSchool != null)
                 {
+                    //בניית אובייקט חדש של מנהל
                     SchoolManager sm = new SchoolManager
                     {
                         Smname = app.TempUser.Name,
@@ -338,9 +323,11 @@ namespace LicenseApp.ViewModels
                         RegistrationDate = DateTime.Today
                     };
 
+                    //הוספת המנהל למסד הנתונים
                     SchoolManager schoolM = await proxy.SchoolManagerSignUpAsync(sm);
                     if (schoolM != null)
                     {
+                        //שמירת תמונת הפרופיל של המנהל בשרת
                         if (app.TempUser.UserImg != null)
                         {
                             bool success = await proxy.UploadImage(new FileInfo()
@@ -349,6 +336,7 @@ namespace LicenseApp.ViewModels
                             }, $"SchoolManagers\\{schoolM.SmanagerId}.jpg");
                         }
 
+                        //חיבור המנהל לאפליקציה
                         app.CurrentUser = await proxy.LoginAsync(sm.Email, sm.Pass);
                         if(app.CurrentUser != null)
                             app.MainPage = new NavigationPage(new SchoolManagerMainTabView());
@@ -356,15 +344,11 @@ namespace LicenseApp.ViewModels
                 }
                 else
                 {
-                    //SubmitError = "ההרשמה נכשלה! נסה שנית";
-                    //ShowError = true;
                     await App.Current.MainPage.DisplayAlert("שגיאה", "ההרשמה נכשלה! בדוק את הפרטים שהזנת ונסה שנית", "בסדר");
                 }
             }
             else
             {
-                //SubmitError = "אירעה שגיאה! לא ניתן להמשיך בהרשמה";
-                //ShowError = true;
                 await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה! לא ניתן להמשיך בהרשמה", "בסדר");
             }
         }

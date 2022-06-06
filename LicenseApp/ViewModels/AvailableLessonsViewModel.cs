@@ -21,6 +21,7 @@ namespace LicenseApp.ViewModels
         private const int NO_STATUS = 4;
         private const int WAITING_STATUS = 1;
 
+        //רשימת השעות הפנויות
         private ObservableCollection<WorkingHour> availableList;
         public ObservableCollection<WorkingHour> AvailableList
         {
@@ -39,6 +40,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //התאריך שנבחר על ידי התלמיד
         private DateTime chosenDate;
         public DateTime ChosenDate
         {
@@ -58,17 +60,20 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //פעולה המופעלת בכל פעם שהתאריך משתנה והיא בודקת שהתאריך הנבחר אינו עבר
         private void ValidateDate()
         {
+            //הצגת הודעת שגיאה על המסך בצידה והתאריך אינו תקין
             if(DateTime.Compare(DateTime.Today, ChosenDate) > 0)
             {
                 App.Current.MainPage.DisplayAlert("", "תאריך זה כבר עבר", "בסדר");
                 ChosenDate = DateTime.Today;
             }
-            else
+            else //רענון המסך במידה והתאריך הנבחר תקין
                 OnRefresh();
         }
 
+        //פעולה הבונה המרעננת את המסך על ידי בניה מחדש של רשימת השעות הפנויות
         public void OnRefresh()
         {
             CreateLessonsList();
@@ -79,13 +84,14 @@ namespace LicenseApp.ViewModels
             AvailableList = new ObservableCollection<WorkingHour>();
             App app = (App)App.Current;
             app.RefreshUI += OnRefresh;
-
+            //הגדרת תאריך אוטומטי לתאריך הנוכחי
             ChosenDate = new DateTime();
             ChosenDate = DateTime.Today;
 
             CreateLessonsList();
         }
 
+        //פעולה הממלאת את רשימת השעות הפנויות בערכים, בהתאם לתאריך הנבחר
         public async void CreateLessonsList()
         {
             App app = (App)App.Current;
@@ -101,6 +107,7 @@ namespace LicenseApp.ViewModels
 
             int startId = 0;
             int endId = 0;
+            //בדיקה שהשעות הפנויות שיוצגו יהיו בהתאם לשעות העבודה של המורה של תלמיד המחובר
             foreach (WorkingHour w in allHours)
             {
                 if (w.Whour.Equals(current.Instructor.StartTime))
@@ -125,9 +132,10 @@ namespace LicenseApp.ViewModels
                     InstructorId = (int)current.InstructorId,
                     ReviewId = null
                 };
-
+                //בדיקה במסד הנתונים אם למורה כבר יש שיעור מאושר בזמן והיום שנבחרו
                 available = await proxy.CheckIfAvailable(l);
                 
+                //במידה ואין שיעור זהה, הוספת השעה לרשימת השעות הפנויות
                 if (available)
                 {
                     if(wh.HourId >= startId && wh.HourId <= endId)
@@ -137,6 +145,7 @@ namespace LicenseApp.ViewModels
         }
 
         public ICommand SelctionChanged => new Command<Object>(BookALesson);
+        //פעולה הפועלת בעת בחירה של שעה מסוימת והיא שולחת בקשה לקביעת שיעור חדש
         public async void BookALesson(Object obj)
         {
             if (obj is WorkingHour)
@@ -146,11 +155,12 @@ namespace LicenseApp.ViewModels
 
                 App app = (App)App.Current;
                 Student current = (Student)app.CurrentUser;
-
+                //בדיקה אם התלמיד רוצה בוודאות לשלוח בקשה לתאריך ושעה הספציפיים שנבחרו 
                 bool uSure = await App.Current.MainPage.DisplayAlert("שים לב!", $"האם ברצונך לשלוח בקשה לשיעור בשעה {chosenHour.Whour}?", "כן", "לא");
 
                 if(uSure)
                 {
+                    //בניית אובייקט שיעור חדש עם הפרטים המתאימים לתלמיד
                     Lesson l = new Lesson
                     {
                         Ldate = ChosenDate,
@@ -164,11 +174,14 @@ namespace LicenseApp.ViewModels
                         InstructorId = current.StudentId,
                     };
 
+                    //הוספת השיעור החדש לטבלת השיעורים במסד הנתונים
                     Lesson newL = await proxy.AddNewLesson(l);
 
+                    //בדיקה אם הוספת השיעור התבצעה בהצלחה והצגת הודעה על המסך בהתאם
                     if(newL != null)
                     {
                         await App.Current.MainPage.DisplayAlert("", $"בקשתך לשיעור נשלחה למורה בהצלחה!", "בסדר");
+                        //רענון המסכים באפליקציה כולה
                         OnRefresh();
                         ((App)App.Current).UIRefresh();
                     }

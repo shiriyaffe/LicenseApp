@@ -23,6 +23,7 @@ namespace LicenseApp.ViewModels
         const string ERROR_PIC = "Error.png";
         const string Correct_PIC = "Correct.png";
 
+        //משתנים המתארים את תכונות המורה המוצגות במסך
         #region password
         private string pass;
         public string Pass
@@ -59,10 +60,9 @@ namespace LicenseApp.ViewModels
                 OnPropertyChanged("ShowPassError");
             }
         }
-
+        //פעולה הבודקת את תקינות השדה של הסיסמה
         private void ValidatePass()
         {
-
             this.ShowPassError = string.IsNullOrEmpty(Pass);
             if (!this.ShowPassError)
             {
@@ -129,6 +129,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //פעולה הבודקת את תקינות השדה של מספר הטלפון
         public void ValidateNumber()
         {
             if (!string.IsNullOrEmpty(PhoneNumber))
@@ -347,6 +348,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //פעולה הבודקת את תקינות השדה של פרטי המורה
         public void ValidateDetails()
         {
             this.ShowDetailError = (string.IsNullOrEmpty(InstructorDetails));
@@ -443,6 +445,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //רשימת הביקורות שנכתבו על מורה
         private ObservableCollection<Review> reviewList;
         public ObservableCollection<Review> ReviewList
         {
@@ -461,6 +464,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //פעולה הממלאת את רשימת הביקורות בערכים
         public async void CreateReviewsCollection()
         {
             App app = (App)App.Current;
@@ -474,6 +478,7 @@ namespace LicenseApp.ViewModels
                     this.ReviewList.Add(r);
                 }
 
+                //קביעת אורך הרשימה
                 if (ReviewList.Count == 0)
                 {
                     CollHeight = 40;
@@ -502,6 +507,7 @@ namespace LicenseApp.ViewModels
         }
 
         public ICommand RefreshCommand => new Command(OnRefresh);
+        //פעולה המרעננת את המסך
         public void OnRefresh()
         {
             IsRefreshing = true;
@@ -561,6 +567,7 @@ namespace LicenseApp.ViewModels
             CreateReviewsCollection();
         }
 
+        //פעולה המקבלת אובייקט של המורה המחובר ושומרת בתכונות המחלקה את אובייקט ושם האיזור בו עובד
         private async void GetArea(Instructor i)
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -574,6 +581,7 @@ namespace LicenseApp.ViewModels
                 this.AreaName = "אזור לימוד:";
         }
 
+        //פעולה המקבלת אובייקט של המורה המחובר ושומרת בתכונות המחלקה את אובייקט ושם תיבת ההילוכים עליה מלמד
         private async void GetGearbox(Instructor i)
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -587,6 +595,7 @@ namespace LicenseApp.ViewModels
                 this.GearboxName = "תיבת הילוכים:";
         }
 
+        //פעולה המקבלת אובייקט של המורה המחובר ושומרת בתכונות המחלקה את אובייקט ותיאור השעה ביום בה מתחיל ללמד
         private async void GetStartHour(string wHour)
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -600,6 +609,7 @@ namespace LicenseApp.ViewModels
                 this.StartTime = "שעת התחלה:";
         }
 
+        //פעולה המקבלת אובייקט של המורה המחובר ושומרת בתכונות המחלקה את אובייקט ותיאור השעה ביום בה מסיים ללמד
         private async void GetEndHour(string wHour)
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -613,6 +623,7 @@ namespace LicenseApp.ViewModels
                 this.EndTime = "שעת סיום:";
         }
 
+        //פעולה המקבלת אובייקט של המורה המחובר ושומרת בתכונות המחלקה את אובייקט ותיאור אורך השיעור שמלמד
         private async void GetLessonLength(Instructor i)
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -626,6 +637,7 @@ namespace LicenseApp.ViewModels
                 this.LessonLengthMin = "אורך שיעור מועדף (בדקות):";
         }
 
+        //פעולה הבודקת את תקינות כל השדות שהוזנו
         private bool ValidateForm()
         {
             //Validate all fields first
@@ -641,7 +653,7 @@ namespace LicenseApp.ViewModels
         }
 
         public Command SaveDataCommand { protected set; get; }
-
+        //פעולה המעדכנת את פרטי המורה במסד הנתונים, לפי הערכים החדשים שהזין
         private async void SaveData()
         {
             if (ValidateForm())
@@ -673,6 +685,7 @@ namespace LicenseApp.ViewModels
                 LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
                 Instructor instructor = await proxy.UpdateInstructor(newInstructor);
 
+                //הצגת הודעה למשתמש האם העדכון בוצע בהצלחה או לא
                 if (instructor == null)
                 {
                     await App.Current.MainPage.DisplayAlert("שגיאה", "העדכון נכשל", "אישור", FlowDirection.RightToLeft);
@@ -690,6 +703,7 @@ namespace LicenseApp.ViewModels
                     theApp.CurrentUser = instructor;
                     await App.Current.MainPage.DisplayAlert("", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);
 
+                    //רענון האפליקציה
                     OnRefresh();
                     ((App)App.Current).UIRefresh();
                 }

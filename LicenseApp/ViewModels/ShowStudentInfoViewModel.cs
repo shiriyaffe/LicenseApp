@@ -28,6 +28,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //פרטי התלמיד המוצגים במסך
         private string sName;
         public string SName
         {
@@ -83,7 +84,19 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        private string sCity;
+        public string SCity
+        {
+            get { return sCity; }
+            set
+            {
+                sCity = value;
+                OnPropertyChanged("SCity");
+            }
+        }
+
         #region סיכום שיעור
+        //רשימת השיעורים שביצע התלמיד הנבחר
         private ObservableCollection<Lesson> lessons;
         public ObservableCollection<Lesson> Lessons
         {
@@ -95,6 +108,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //פעולה הממלאת את רשימת השיעורים בערכים
         public async void GetLessons()
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -109,6 +123,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //תוכן סיכום השיעור שהזין המורה
         private string lessonSum;
         public string LessonSum
         {
@@ -132,19 +147,8 @@ namespace LicenseApp.ViewModels
         }
         #endregion
 
-        private string sCity;
-        public string SCity
-        {
-            get { return sCity; }
-            set
-            {
-                sCity = value;
-                OnPropertyChanged("SCity");
-            }
-        }
-
         public Command DeleteStudentCommand => new Command(DeleteStudent);
-
+        //פעולה המנתקת את הקשר בין התלמיד הנבחר לבין המורה אליו משויך
         public async void DeleteStudent()
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -157,17 +161,15 @@ namespace LicenseApp.ViewModels
             }
             else
                 await App.Current.MainPage.DisplayAlert("שגיאה", "מחיקת התלמיד נכשלה! נסה שנית מאוחר יותר", "בסדר");
-
-            //Page p = new Views.InstructorMainTabView();
-            //await App.Current.MainPage.Navigation.PushAsync(p);
         }
 
         public Command AddSummaryCommand => new Command(AddSummary);
-
+        //פעולה המוסיפה את סיכום השיעור שכתב המורה למסד הנתונים ומקשקת אותו לשיעור לגביו נכתב
         public async void AddSummary()
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
 
+            //בדיקה שלא נתכב בעבר סיכום על שיעור זה
             bool exist = await proxy.CheckIfSumExists(Lesson.LessonId);
 
             if (exist)
@@ -176,6 +178,7 @@ namespace LicenseApp.ViewModels
             }
             else
             {
+                //הוספת סיכום השיעור החדש למסד הנתונים
                 Review r = new Review
                 {
                     Content = LessonSum,
@@ -197,6 +200,7 @@ namespace LicenseApp.ViewModels
 
                     if (newSum != null)
                     {
+                        //קישור סיכום השיעור לשיעור לגביו נכתב
                         Lesson l = new Lesson
                         {
                             Ldate = Lesson.Ldate,

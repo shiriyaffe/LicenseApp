@@ -22,6 +22,7 @@ namespace LicenseApp.ViewModels
         const string ERROR_PIC = "Error.png";
         const string Correct_PIC = "Correct.png";
 
+        //פקטי המנהל המוצגים במסך
         #region password
         private string pass;
         public string Pass
@@ -225,6 +226,7 @@ namespace LicenseApp.ViewModels
 
         public Command SaveDataCommand { protected set; get; }
 
+        //פעולה הבודקת את תקינות הפרטים החדשים שהזין המורה
         private bool ValidateForm()
         {
             //Validate all fields first
@@ -238,6 +240,7 @@ namespace LicenseApp.ViewModels
             return true;
         }
 
+        //פעולה המעדכנת את פרטי המנהל המחובר בהתאם לשדות ששינה
         private async void SaveData()
         {
             if (ValidateForm())
@@ -257,8 +260,10 @@ namespace LicenseApp.ViewModels
                 };
 
                 LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+                //עדכון פרטי המנהל במסד הנתונים
                 SchoolManager sManager = await proxy.UpdateSManager(newSManager);
 
+                //הצגת הודעה בהתאם להצלחת העדכון
                 if (sManager == null)
                 {
                     await App.Current.MainPage.DisplayAlert("שגיאה", "העדכון נכשל", "אישור", FlowDirection.RightToLeft);

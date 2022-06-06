@@ -26,10 +26,11 @@ namespace LicenseApp.ViewModels
 
         private const int APPROVED = 2;
 
+        //רשימת המורים המסוננת לפי שדות החיפוש שנבחרו
         private ObservableCollection<Instructor> instructors;
         public ObservableCollection<Instructor> InstructorsList;
 
-
+        //שדות החיפוש
         private int sliderValue;
         public int SliderValue
         {
@@ -131,14 +132,17 @@ namespace LicenseApp.ViewModels
         }
 
         public ICommand SearchCommand => new Command(SearchInstructor);
-
+        //פעולה המסננת את רשימת המורים בהתאם לקריטריונים שבחר המשתמש
         public async void SearchInstructor()
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+
+            //קריאת נתוניהם של כל המורים הרשומים לאפליקציה
             instructors = await proxy.GetAllInstructorsAsync();
             InstructorsList = new ObservableCollection<Instructor>();
             bool added = false;
 
+            //הוספת המורים הרלוונטים בלבד לרשימה שתוצג במסך
             foreach (Instructor i in instructors)
             {
                 if (i.EStatusId == APPROVED)

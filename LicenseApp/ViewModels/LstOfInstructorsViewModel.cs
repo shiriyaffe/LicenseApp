@@ -22,6 +22,7 @@ namespace LicenseApp.ViewModels
 
         private const int APPROVED_STATUS = 2;
 
+        //רשימת המורים המשויכים לבית הספר שבבעלתו של המנהל המחובר
         private ObservableCollection<Instructor> filteredInstructorList;
         public ObservableCollection<Instructor> FilteredInstructorList
         {
@@ -42,6 +43,7 @@ namespace LicenseApp.ViewModels
 
         private ObservableCollection<Instructor> AllInstructors;
 
+        //מספר המורים העובדים תחת המנהל המחובר
         private int instructorsCount;
         public int InstructorsCount
         {
@@ -68,19 +70,24 @@ namespace LicenseApp.ViewModels
             CreateInstructorCollection();
         }
 
+        //פעולה המרעננת את המסך
         private void TheApp_RefreshUI()
         {
             CreateInstructorCollection();
         }
 
+        //פעולה הממלאת את רשימת המורים בהתאם למנהל המחובר
         public async void CreateInstructorCollection()
         {
             App app = (App)App.Current;
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+
+            //קריאת נתוניהם של כל המורים הרשומים באפליקציה
             ObservableCollection<Instructor> instructors = await proxy.GetAllInstructorsAsync();
             AllInstructors.Clear();
             foreach (Instructor i in instructors)
             {
+                //הכנסה לרישמה של מורים המשויכים למנהל המחובר ושאושרו על ידו
                 if (i.SchoolManagerId == ((SchoolManager)app.CurrentUser).SmanagerId && i.EStatusId == APPROVED_STATUS)
                     AllInstructors.Add(i);
             }
@@ -91,6 +98,7 @@ namespace LicenseApp.ViewModels
         }
 
         public ICommand SelctionChanged => new Command<Object>(OnSelectionChanged);
+        //פעולה המופעלת בעת בחירת מורה מסוים מהרשימה ומציגה למנהל את פרטיו המלאים של מורה זה
         public async void OnSelectionChanged(Object obj)
         {
             if (obj is Instructor)
@@ -98,6 +106,7 @@ namespace LicenseApp.ViewModels
                 LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
                 Instructor chosenInstructor = (Instructor)obj;
 
+                //העברת נתוני המורה הנבחר למסך הבא
                 ShowInstrucorSMViewModel instructorContext = new ShowInstrucorSMViewModel
                 {
                     IName = chosenInstructor.Iname,
@@ -111,17 +120,12 @@ namespace LicenseApp.ViewModels
                     Rating = (int)chosenInstructor.RateId
                 };
 
-                App app = (App)App.Current;
-                if (app.CurrentUser != null)
-                {
                     Page p = new ShowInstructorSMView(instructorContext);
                     await App.Current.MainPage.Navigation.PushAsync(p);
-                }
-                else
-                    await App.Current.MainPage.DisplayAlert("שגיאה", "יש להתחבר למערכת כדי לגשת לפרטים נוספים של מורה", "בסדר");
             }
         }
 
+        //שדה החיפוש שהזין המנהל המחובר
         private string searchTerm;
         public string SearchTerm
         {
@@ -140,6 +144,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //סינון רשימת המורים לפי שדה החיפוש שהזין המנהל
         public void OnTextChanged(string search)
         {
             App app = (App)App.Current;

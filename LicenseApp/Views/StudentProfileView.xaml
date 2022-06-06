@@ -92,6 +92,11 @@
                             <Label/>
                         </StackLayout>
 
+                        <StackLayout Padding="30,0" Orientation="Horizontal" >
+                            <Label Text="מספר השיעורים שביצעת:" IsVisible="{Binding ShowLessonsCount}" FontSize="16" FontAttributes="Bold"/>
+                            <Label Text="{Binding LessonsCount}" IsVisible="{Binding ShowLessonsCount}" FontSize="16"/>
+                        </StackLayout>
+                        
                         <CollectionView HeightRequest="{Binding CollHeight}" HorizontalOptions="CenterAndExpand" EmptyView="- לא התבצעו שיעורים -" x:Name="collectionName" 
                             ItemsSource="{Binding LessonsList}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelctionChanged}"

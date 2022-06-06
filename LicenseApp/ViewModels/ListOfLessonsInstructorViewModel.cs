@@ -23,6 +23,7 @@ namespace LicenseApp.ViewModels
         private const int APPROVED = 2;
         private const int NO_STATUS = 4;
 
+        //רשימת השיעורים המאושרים המתוכננים למורה בתאריך הנבחר
         private ObservableCollection<Lesson> upComingLessonsList;
         public ObservableCollection<Lesson> UpComingLessonsList
         {
@@ -41,7 +42,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
-
+        //רשימת השיעורים הנמצאים בהמתנה לאישור לקיום בתאריך הנבחר
         private ObservableCollection<Lesson> waitingLessonsList;
         public ObservableCollection<Lesson> WaitingLessonsList
         {
@@ -75,12 +76,14 @@ namespace LicenseApp.ViewModels
             }
         }
         public ICommand RefreshCommand => new Command(OnRefresh);
+        //פעולה המרעננת את המסך
         public void OnRefresh()
         {
             CreateLessonsList();
         }
         #endregion
 
+        //שמירת התאריך שבחר המורה
         private DateTime chosenDate;
         public DateTime ChosenDate
         {
@@ -100,6 +103,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //בדיקת תקינותו של התאריך הנבחר והצגת הודעה בהתאם
         private void ValidateDate()
         {
             if (DateTime.Compare(DateTime.Today, ChosenDate) > 0)
@@ -123,6 +127,7 @@ namespace LicenseApp.ViewModels
             CreateLessonsList();
         }
 
+        //הפעולה ממלאת את רשימות השיעורים המוצגות למורה בהתאם לתאריך הנבחר
         public async void CreateLessonsList()
         {
             IsRefreshing = true;
@@ -133,6 +138,8 @@ namespace LicenseApp.ViewModels
             if (app.CurrentUser is Instructor)
             {
                 Instructor i = (Instructor)app.CurrentUser;
+
+                //קריאת נתוני השיעורים המשויכים למורה המחובר
                 ObservableCollection<Lesson> list = new ObservableCollection<Lesson>();
                 list = await proxy.GetInstructorLessonsAsync(i.InstructorId);
                 UpComingLessonsList.Clear();
@@ -140,6 +147,7 @@ namespace LicenseApp.ViewModels
 
                 if (list != null)
                 {
+                    //סינון השיעורים ושמירתם ברשימה הרלוונטית
                     foreach (Lesson l in list)
                     {
                         if (l.Ldate.Date == ChosenDate.Date)
@@ -157,7 +165,7 @@ namespace LicenseApp.ViewModels
         }
 
         public ICommand CancelLessonCommand => new Command(CancelLesson);
-
+        //פעולה המבטלת קיום שיעור מתוכנן או דוחה בקשה לשיעור הנמצא בהמתנה
         public async void CancelLesson(Object obj)
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -180,9 +188,10 @@ namespace LicenseApp.ViewModels
                     InstructorId = chosen.InstructorId,
                     ReviewId = null
                 };
-
+                //עדכון פרטי השיעור הקיים במערכת
                 Lesson cancelled = await proxy.CancelLesson(l);
 
+                //הצגת הודעת עדכון למשתמש בהתאם להצלחת ריצת הפעולה
                 if (cancelled != null)
                 {
                     await App.Current.MainPage.DisplayAlert("", "שיעור זה בוטל בהצלחה!:)", "בסדר");
@@ -195,6 +204,7 @@ namespace LicenseApp.ViewModels
         }
 
         public ICommand ApproveLessonCommand => new Command(ApproveLesson);
+        //פעולה זו מאשרת בקשה לקיום שיעור חדש
         public async void ApproveLesson(Object obj)
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -203,9 +213,10 @@ namespace LicenseApp.ViewModels
             {
                 Lesson chosen = (Lesson)obj;
                 chosen.EStatusId = APPROVED;
-
+                //עדכון סטטוס השיעור ל"מאושר"
                 Lesson approved = await proxy.ApproveLesson(chosen);
-
+                
+                //הצגת הודעה על המסך בהתאם להצלחת אישור השיעור
                 if (approved != null)
                 {
                     if (approved.InstructorId == 0)

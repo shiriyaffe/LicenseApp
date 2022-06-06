@@ -23,6 +23,7 @@ namespace LicenseApp.ViewModels
 
         const int STATUS_ID = 4;
 
+        //פרטים אשר התלמיד מתבקש ללא על עצמו
         private int sliderValue;
         public int SliderValue
         {
@@ -410,29 +411,6 @@ namespace LicenseApp.ViewModels
             }
         }
 
-        private string submitError;
-
-        public string SubmitError
-        {
-            get => submitError;
-            set
-            {
-                submitError = value;
-                OnPropertyChanged("SubmitError");
-            }
-        }
-
-        private bool showError;
-
-        public bool ShowError
-        {
-            get => showError;
-            set
-            {
-                showError = value;
-                OnPropertyChanged("ShowNextError");
-            }
-        }
 
         public StudentSignUp()
         {
@@ -450,10 +428,10 @@ namespace LicenseApp.ViewModels
 
 
             SliderValue = 0;
-            ShowError = false;
             this.StudentImgSrc = DEFAULT_PHOTO_SRC;
         }
 
+        //פעולה הבודקת את תרינות השדות שהזין המשתמש
         private bool ValidateForm()
         {
             //Validate all fields first
@@ -471,7 +449,7 @@ namespace LicenseApp.ViewModels
         }
 
         public Command SignUpCommand => new Command(SignUpAsStudent);
-
+        //פעולה הרושמת את התלמיד החדש לאפליקציה ומחברת אותו אליה
         public async void SignUpAsStudent()
         {
             App app = (App)App.Current;
@@ -479,6 +457,7 @@ namespace LicenseApp.ViewModels
 
             if (ValidateForm())
             {
+                //בניית אובייקט חדש של תלמיד בהתאם לפרטים שמילא המשתמש
                 Student s = new Student
                 {
                     Sname = app.TempUser.Name,
@@ -499,7 +478,7 @@ namespace LicenseApp.ViewModels
                     EStatusId = STATUS_ID
                 };
 
-
+                //הוספת התלמיד החדש למסד הנתונים
                 Student student = await proxy.StudentSignUpAsync(s);
 
                 if (student != null)

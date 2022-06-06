@@ -13,6 +13,7 @@ namespace LicenseApp.ViewModels
     {
         public Command SignUpAsCommand => new Command<int>(NextPage);
 
+        //פעולה המעבריה את המשתמש למסך הבא בהתאם לבחירתו
         public void NextPage(int index)
         {
             App app = (App)App.Current;

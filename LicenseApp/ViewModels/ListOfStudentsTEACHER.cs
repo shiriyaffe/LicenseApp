@@ -24,6 +24,7 @@ namespace LicenseApp.ViewModels
 
         private ObservableCollection<Student> AllStudents;
 
+        //רשימת התלמידים המשויכים למורה
         private ObservableCollection<Student> studentList;
         public ObservableCollection<Student> StudentList
         {
@@ -42,7 +43,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
-
+        //מספר התלמידים של המורה
         private int studentsCount;
         public int StudentsCount
         {
@@ -68,11 +69,13 @@ namespace LicenseApp.ViewModels
             theApp.RefreshUI += TheApp_RefreshUI;
         }
 
+        //פעולה המרעננת את המסך
         private void TheApp_RefreshUI()
         {
             CreateStudentCollection();
         }
 
+        //פעולה ממלאת את רשימת התלמידים בערכים בהתאם למורה המחובר
         public async void CreateStudentCollection()
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -80,19 +83,25 @@ namespace LicenseApp.ViewModels
             AllStudents.Clear();
             if (app.CurrentUser is Instructor)
             {
+                //קריאת נתוניהם של כלל התלמידים המשויכים למורה
                 ObservableCollection<Student> studentsByID = await proxy.GetStudentsByInstructorAsync(((Instructor)app.CurrentUser).InstructorId);
                 foreach (Student i in studentsByID)
                 {
+                    i.GetLessonsCount();
+                    //הוספת התלמידים שאושרו על ידי המורה בלבד
                     if(i.EStatusId == APPROVED)
                         this.AllStudents.Add(i);
                 }
             }
 
             StudentsCount = AllStudents.Count;
+
+            //סידור הרשימה לפני שמות התלמידים
             StudentList = new ObservableCollection<Student>(this.AllStudents.OrderBy(i => i.Sname));
             this.SearchTerm = string.Empty;
         }
 
+        //פעולה המחזירה את הגיל המדוייק של התלמיד
         private double GetAge(DateTime birthday)
         {
             int month = 0;
@@ -112,13 +121,16 @@ namespace LicenseApp.ViewModels
         }
 
         public ICommand SelctionChanged => new Command<Object>(OnSelectionChanged);
+        //פעולה המופעלת בעת בחירת תלמיד מסוים מהרשימה ומציגה למורה את פרטיו המלאים של תלמיד זה
         public async void OnSelectionChanged(Object obj)
         {
             if (obj is Student)
             {
                 LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
                 Student chosenStudent = (Student)obj;
+                chosenStudent.GetLessonsCount();
 
+                //העברת נתוני התלמיד הנבחר למסך הבא
                 ShowStudentInfoViewModel studentContext = new ShowStudentInfoViewModel
                 {
                     ImageUrl = chosenStudent.PhotoURI,
@@ -129,27 +141,13 @@ namespace LicenseApp.ViewModels
                     LessonsCount = chosenStudent.LessonsCount,
                     PhoneNum = chosenStudent.PhoneNumber
                 };
-
-                App app = (App)App.Current;
-                if (app.CurrentUser != null)
-                {
+                
                     Page p = new ShowStudentInfoView(studentContext);
                     await App.Current.MainPage.Navigation.PushAsync(p);
-                }
-                else
-                    await App.Current.MainPage.DisplayAlert("שגיאה", "יש להתחבר למערכת כדי לגשת לפרטים נוספים של מורה", "בסדר");
             }
         }
 
-        public ICommand SearchPageCommand => new Command(OpenSearchPage);
-
-        public async void OpenSearchPage()
-        {
-            App app = (App)App.Current;
-            Page p = new SearchPageView();
-            await App.Current.MainPage.Navigation.PushAsync(p);
-        }
-
+        //שדה החיפוש שהזין המורה
         private string searchTerm;
         public string SearchTerm
         {
@@ -168,6 +166,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //סינון רשימת התלמידים לפי שדה החיפוש שהזין המורה
         public void OnTextChanged(string search)
         {
             App app = (App)App.Current;

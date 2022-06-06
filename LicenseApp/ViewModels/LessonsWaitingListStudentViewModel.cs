@@ -22,6 +22,7 @@ namespace LicenseApp.ViewModels
         private const int APPROVED = 2;
         private const int NO_STATUS = 4;
 
+        //רשימת השיעורים המאושרים המתוכננים לתלמיד
         private ObservableCollection<Lesson> upComingLessonsList;
         public ObservableCollection<Lesson> UpComingLessonsList
         {
@@ -40,7 +41,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
-
+        //רשימת השיעורים הנמצאים בהמתנה לאישור על ידי המורה
         private ObservableCollection<Lesson> waitingLessonsList;
         public ObservableCollection<Lesson> WaitingLessonsList
         {
@@ -74,6 +75,7 @@ namespace LicenseApp.ViewModels
             }
         }
         public ICommand RefreshCommand => new Command(OnRefresh);
+        //פעולה המרעננת את המסך על ידי בניית רשימות השיעורים מחדש
         public void OnRefresh()
         {
             CreateLessonsList();
@@ -90,6 +92,7 @@ namespace LicenseApp.ViewModels
             CreateLessonsList();
         }
 
+        //פעולה הממלאת את רשימות השיעורים המוצגות במסך בערכים בהתאם לתלמיד המחובר
         public async void CreateLessonsList()
         {
             IsRefreshing = true;
@@ -100,12 +103,16 @@ namespace LicenseApp.ViewModels
             if (app.CurrentUser is Student)
             {
                 Student s = (Student)app.CurrentUser;
+
+                //קריאת נתוני השיעורים המשוייכים לתלמיד מסוים
                 ObservableCollection<Lesson> list = new ObservableCollection<Lesson>();
                 list = await proxy.GetStudentLessonsAsync(s.StudentId);
                 UpComingLessonsList.Clear();
                 WaitingLessonsList.Clear();
+
                 if (list != null)
                 {
+                    //סינון השיעורים ושמירתם ברשימה הרלוונטית
                     foreach (Lesson l in list)
                     {
                         if (!l.HasDone && l.EStatusId == APPROVED)
@@ -120,7 +127,7 @@ namespace LicenseApp.ViewModels
         }
 
         public ICommand CancelLessonCommand => new Command(CancelLesson);
-
+        //פעולה המבטלת קיום שיעור מתוכנן או בקשה לשיעור שנמצא בהמתנה
         public async void CancelLesson(Object obj)
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -128,7 +135,7 @@ namespace LicenseApp.ViewModels
             if(obj is Lesson)
             {
                 Lesson chosen = (Lesson)obj;
-
+                
                 Lesson l = new Lesson
                 {
                     Ldate = chosen.Ldate,
@@ -143,12 +150,13 @@ namespace LicenseApp.ViewModels
                     InstructorId = chosen.InstructorId,
                     ReviewId = null
                 };
-
+                //עדכון פרטי השיעור הקיים במערכת
                 Lesson cancelled = await proxy.CancelLesson(l);
 
+                //הצגת הודעת עדכון למשתמש בהתאם להצלחת ריצת הפעולה
                 if (cancelled != null)
                 {
-                    await App.Current.MainPage.DisplayAlert("", "שיעורך בוטל בהצלחה! מומלץ לקבוע שיעור נוסף במקודם:)", "בסדר");
+                    await App.Current.MainPage.DisplayAlert("", "שיעורך בוטל בהצלחה! מומלץ לקבוע שיעור נוסף בהקדם:)", "בסדר");
                     OnRefresh();
                     ((App)App.Current).UIRefresh();
                 }

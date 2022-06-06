@@ -17,6 +17,7 @@ namespace LicenseApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        //פרטי המורה המוצגים במסך
         private string email;
         public string Email
         {
@@ -105,16 +106,6 @@ namespace LicenseApp.ViewModels
             }
         }
 
-        //private async void GetLessonLength()
-        //{
-        //    LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
-        //    LessonLength l = await proxy.GetLessonLengthById(LessonLength);
-        //    if (l != null)
-        //    {
-        //        this.SLength = l.Slength;
-        //    }
-        //}
-
         public int collHeight;
         public int CollHeight
         {
@@ -126,6 +117,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //רשימת הביקורות שנכתבו על המורה הנבחר
         private ObservableCollection<Review> reviewList;
         public ObservableCollection<Review> ReviewList
         {
@@ -155,6 +147,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //פעולה הממלאת את רשימת הביקורות בערכים
         public async void CreateReviewsCollection()
         {
             App app = (App)App.Current;
@@ -184,7 +177,7 @@ namespace LicenseApp.ViewModels
         }
 
         public Command DeleteInstructorCommand => new Command(DeleteInstructor);
-
+        //פעולה המנתקת את הקשר בין המורה הנבחר לבין המנהל ובית הספר אליהם משויך
         public async void DeleteInstructor()
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -197,11 +190,10 @@ namespace LicenseApp.ViewModels
             }
             else
                 await App.Current.MainPage.DisplayAlert("שגיאה", "מחיקת המורה מבית הספר נכשלה! נסה שנית מאוחר יותר", "בסדר");
-            //Page p = new Views.SchoolManagerMainTabView();
-            //await App.Current.MainPage.Navigation.PushAsync(p);
         }
 
         public Command OpenStudentsList => new Command(StudentsList);
+        //פעולה המציגה במסך חדש את רשימת התלמידים המשויכים למורה הנבחר
         public async void StudentsList()
         {
             Page p = new Views.ListOfStudentsByInstructorId(InstructorID);

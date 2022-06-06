@@ -16,9 +16,12 @@ namespace LicenseApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private const int STATUS_ID = 1;
+        private const int WAITING_STATUS = 1;
+        private const int NO_STATUS = 4;
+        private const int DENIED_STATUS = 3;
 
         #region driving school
+        //רשימת בתי הספר הקיימים במערכת של האפליקציה
         public List<DrivingSchool> DrivingSchools
         {
             get
@@ -52,8 +55,8 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //תכונה המתארת את תוכן הודעת השגיאה
         private string drivingSchoolError;
-
         public string DrivingSchoolError
         {
             get => drivingSchoolError;
@@ -64,8 +67,8 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //תכונה המגדירה האם הודעת השגיאה תופיע בפני המשתמש
         private bool showDrivingSchoolError;
-
         public bool ShowDrivingSchoolError
         {
             get => showDrivingSchoolError;
@@ -76,6 +79,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //פעולה הבודקת אם נבחר בית ספר ומשנה את תוכן הודעת השגיאה בהתאם
         public bool ValidateDrivingSchool()
         {
             this.ShowDrivingSchoolError = DrivingSchoolPicker == -1;
@@ -99,35 +103,41 @@ namespace LicenseApp.ViewModels
         }
 
         public Command SendEnrollmentCommand => new Command(SendEnrollment);
-
+        //פעולה השולחת בקשת רישום של מורה חדש למנהל בית הספר הנבחר
         public async void SendEnrollment()
         {
             App app = (App)App.Current;
 
             if (ValidateDrivingSchool())
             {
+                //בדיקה אם המשתמש המחובר הינו מורה
                 if (app.CurrentUser is Instructor)
                 {
                     Instructor instructor = (Instructor)app.CurrentUser;
-                    if (instructor.EStatusId != STATUS_ID)
+                    //בדיקה שסטטוס המורה הוא "אין סטטוס" או ""נדחה"
+                    if (instructor.EStatusId == DENIED_STATUS || instructor.EStatusId == NO_STATUS)
                     {
+                        //בניית אובייקט חדש של בקשת רישום
                         EnrollmentRequest er = new EnrollmentRequest
                         {
                             InstructorId = instructor.InstructorId,
-                            StatusId = STATUS_ID,
+                            StatusId = WAITING_STATUS,
                             SchoolId = DrivingSchool.SchoolId
                         };
 
                         LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+                        //הוספת בקשת הרישום החדשה למסד הנתונים
                         EnrollmentRequest newEm = await proxy.AddEnrollmentRequest(er);
 
+                        //בדיקה אם ההוספה התבצעה בהצלחה והצגת הודעת למשתמש בהתאם
                         if (er == null)
                         {
                             await App.Current.MainPage.DisplayAlert("שגיאה", "בקשתך לרישום נכשלה! נסה שנית מאוחר יותר", "אישור", FlowDirection.RightToLeft);
                         }
                         else
                         {
-                            instructor.EStatusId = STATUS_ID;
+                            //עדכון סטטוס המורה המחובר ל"בהמתנה"
+                            instructor.EStatusId = WAITING_STATUS;
                             bool changed = await proxy.ChangeUserStatus(instructor);
 
                             if (changed)

@@ -390,29 +390,6 @@ namespace LicenseApp.ViewModels
 
         #endregion
 
-        private string nextError;
-
-        public string NextError
-        {
-            get => nextError;
-            set
-            {
-                nextError = value;
-                OnPropertyChanged("NextError");
-            }
-        }
-
-        private bool showNextError;
-
-        public bool ShowNextError
-        {
-            get => showNextError;
-            set
-            {
-                showNextError = value;
-                OnPropertyChanged("ShowNextError");
-            }
-        }
 
         #region gender
         public List<Gender> Genders
@@ -491,7 +468,6 @@ namespace LicenseApp.ViewModels
             this.ShowPassError = false;
             this.ShowDateError = false;
             this.ShowNumberError = false;
-            ShowNextError = false;
 
             GenderPicker = -1;
             ShowGenderError = false;
@@ -504,6 +480,7 @@ namespace LicenseApp.ViewModels
             this.PassConditions = new Command(() => ShowConditions());
         }
 
+        //פעולה הבודקת את תקינות השדות שהזונו בטופס
         private bool ValidateForm()
         {
             //Validate all fields first
@@ -521,6 +498,7 @@ namespace LicenseApp.ViewModels
             return true;
         }
 
+        //פעולה השומרת את הפרטים שהזין המשתמש עד כה
         public Command SaveDataCommand { protected set; get; }
         private async void SaveData()
         {
@@ -556,8 +534,6 @@ namespace LicenseApp.ViewModels
             else
             {
                 await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה! לא ניתן להמשיך בהרשמה", "בסדר");
-                //NextError = "אירעה שגיאה! לא ניתן להמשיך בהרשמה";
-                //ShowNextError = true;
             }
                 
         }

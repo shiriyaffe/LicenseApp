@@ -22,6 +22,7 @@ namespace LicenseApp.ViewModels
         public const int PERMITTED_STATUS = 2;
         public const int WAITING_STATUS = 1;
 
+        //רשימת המורים המבקשים להצטרף לבית הספר
         private ObservableCollection<Instructor> instructorsList;
         public ObservableCollection<Instructor> InstructorsList
         {
@@ -40,6 +41,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //מספק הבקשות הנמצאות בהמתנה
         private int amountOfRequests;
         public int AmountOfRequests
         {
@@ -73,6 +75,7 @@ namespace LicenseApp.ViewModels
             }
         }
         public ICommand RefreshCommand => new Command(OnRefresh);
+        //פעולה המרעננת את המסך
         public void OnRefresh()
         {
             CreateCollection();
@@ -86,17 +89,21 @@ namespace LicenseApp.ViewModels
             CreateCollection();
         }
 
+        //פעולה הממלאת את רשימת המורים, במורים אשר מחכים להצטרף לבית ספרו של המנהל המחובר
         public async void CreateCollection()
         {
             IsRefreshing = true;
 
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             App app = (App)App.Current;
+
+            //קריאת נתוניהם של כלל המורים המחוברים לאפליקציה
             ObservableCollection<Instructor> instructors = new ObservableCollection<Instructor>();
             instructors = await proxy.GetAllInstructorsAsync();
             InstructorsList.Clear();
             foreach(Instructor i in instructors)
             {
+                //הוספה לרשימת המורים רק את אלו הרלוונטים לדרישות
                 if(i.EStatusId == WAITING_STATUS && i.DrivingSchoolId == ((SchoolManager)app.CurrentUser).SchoolId)
                 {
                     InstructorsList.Add(i);
@@ -108,18 +115,21 @@ namespace LicenseApp.ViewModels
         }
 
         public ICommand DisapproveCommand => new Command(OnDisapprove);
+        //פעולה המופעלת כאשר המנהל דוחה בקשה של מורה
         public async void OnDisapprove(Object obj)
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
 
             if (obj is Instructor)
             {
+                //עדכון סטטוס המורה ל"נדחה"
                 Instructor i = (Instructor)obj;
                 i.EStatusId = UNPERMITTED_STATUS;
 
                 bool ok = await proxy.ChangeUserStatus(i);
                 if (ok)
                 {
+                    //רענון המסך במידה והשינוי התבצע בהצלחה
                     OnRefresh();
                     ((App)App.Current).UIRefresh();
                 }
@@ -137,18 +147,21 @@ namespace LicenseApp.ViewModels
 
 
         public ICommand ApproveCommand => new Command(OnApprove);
+        //פעולה המופעלת כאשר המנהל מאשר בקשה של מורה
         public async void OnApprove(object obj)
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
 
             if (obj is Instructor)
             {
+                //עדכון סטטוס התלמיד ל"מאושר"
                 Instructor i = (Instructor)obj;
                 i.EStatusId = PERMITTED_STATUS;
 
                 bool ok = await proxy.ChangeUserStatus(i);
                 if (ok)
                 {
+                    //רענון המסך במידה והעדכון התבצע בהצלחה
                     OnRefresh();
                     ((App)App.Current).UIRefresh();
                 }
@@ -161,7 +174,6 @@ namespace LicenseApp.ViewModels
             else
             {
                 await App.Current.MainPage.DisplayAlert("שגיאה", "פעולה נכשלה!", "בסדר");
-                //await App.Current.MainPage.Navigation.PopModalAsync();
             }
         }
     }

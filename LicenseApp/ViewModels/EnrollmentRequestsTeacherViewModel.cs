@@ -22,6 +22,7 @@ namespace LicenseApp.ViewModels
         public const int PERMITTED_STATUS = 2;
         public const int WAITING_STATUS = 1;
 
+        //רשימת התלמידים המוצגים במסך
         private ObservableCollection<Student> studentsList;
         public ObservableCollection<Student> StudentsList
         {
@@ -40,6 +41,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //מספר התלמידים ברשימה
         private int amountOfRequests;
         public int AmountOfRequests
         {
@@ -59,6 +61,7 @@ namespace LicenseApp.ViewModels
         }
 
         #region Refresh
+        //תכונה המגדירה האם יוצג במסך סימן הרענון
         private bool isRefreshing;
         public bool IsRefreshing
         {
@@ -73,6 +76,7 @@ namespace LicenseApp.ViewModels
             }
         }
         public ICommand RefreshCommand => new Command(OnRefresh);
+        //פעולה המרעננת את המסך ובונה מחדש את רשימת התלמידים
         public void OnRefresh()
         {
             CreateCollection();
@@ -86,6 +90,7 @@ namespace LicenseApp.ViewModels
             CreateCollection();
         }
 
+        //פעולה הממלאת את רשימת התלמידים בערכים 
         public async void CreateCollection()
         {
             IsRefreshing = true;
@@ -93,18 +98,21 @@ namespace LicenseApp.ViewModels
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             App app = (App)App.Current;
             ObservableCollection<Student> students = new ObservableCollection<Student>();
+            //בדיקה שהמשתמש המחובר הוא מורה
             if (app.CurrentUser is Instructor)
             {
                 Instructor instructor = (Instructor)app.CurrentUser;
+                //קריאת נתוני התלמידים הנמצאים ברשימת המתנה לרישום אצל המורה המחובר
                 students = await proxy.GetWaitingStudentsByInstructor(instructor.InstructorId);
                 StudentsList.Clear();
-                if (students.Count != 0)
+                if (students != null && students.Count != 0)
                 {
+                    //הוספת התלמידים לרשימה המוצגת במסך
                     foreach (Student i in students)
                     {
                         StudentsList.Add(i);
                     }
-
+                    
                     AmountOfRequests = StudentsList.Count;
                 }
             }
@@ -112,6 +120,7 @@ namespace LicenseApp.ViewModels
         }
 
         public ICommand DisapproveCommand => new Command(OnDisapprove);
+        //פעולה המופעלת כאשר המורה דוחה בקשה של תלמיד
         public async void OnDisapprove(Object obj)
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -119,11 +128,13 @@ namespace LicenseApp.ViewModels
             if (obj is Student)
             {
                 Student s = (Student)obj;
+                //עדכון סטטוס התלמיד ל"נדחה"
                 s.EStatusId = UNPERMITTED_STATUS;
 
                 bool ok = await proxy.ChangeUserStatus(s);
                 if (ok)
                 {
+                    //רענון המסך במידה והשינוי התבצע בהצלחה
                     OnRefresh();
                     ((App)App.Current).UIRefresh();
                 }
@@ -141,6 +152,7 @@ namespace LicenseApp.ViewModels
 
 
         public ICommand ApproveCommand => new Command(OnApprove);
+        //פעולה המופעלת כאשר המורה מאשר בקשה של תלמיד
         public async void OnApprove(object obj)
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -148,11 +160,13 @@ namespace LicenseApp.ViewModels
             if (obj is Student)
             {
                 Student i = (Student)obj;
+                //עדכון סטטוס התלמיד ל"מאושר"
                 i.EStatusId = PERMITTED_STATUS;
 
                 bool ok = await proxy.ChangeUserStatus(i);
                 if (ok)
                 {
+                    //רענון המסך במידה והעדכון התבצע בהצלחה
                     OnRefresh();
                     ((App)App.Current).UIRefresh();
                 }

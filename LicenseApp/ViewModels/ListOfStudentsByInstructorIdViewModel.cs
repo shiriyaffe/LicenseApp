@@ -21,6 +21,7 @@ namespace LicenseApp.ViewModels
 
         private ObservableCollection<Student> AllStudents;
 
+        //רשימת התלמידים המוצגים במסך
         private ObservableCollection<Student> studentList;
         public ObservableCollection<Student> StudentList
         {
@@ -39,7 +40,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
-
+        //מספר התלמידים הרשומים לבית הספר
         private int studentsCount;
         public int StudentsCount
         {
@@ -63,25 +64,31 @@ namespace LicenseApp.ViewModels
             AllStudents = new ObservableCollection<Student>();
         }
 
+        //פעולה הממלאת את רשימת התלמידים בערכים בהתאם למנהל המחובר
         public async void CreateStudentCollection(int instructorId)
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             App app = (App)App.Current;
             if (app.CurrentUser is SchoolManager)
             {
+                //קריאת נתוניהם של כלל התלמידים המשויכים לבית הספר של המורה המחובר
                 ObservableCollection<Student> studentsByID = await proxy.GetStudentsByInstructorAsync(instructorId);
                 foreach (Student i in studentsByID)
                 {
+                    i.GetLessonsCount();
+                    //הכנסה לרשימה רק תלמידים שבקשתם רישומם אושרה על ידי המורה
                     if(i.EStatusId == APPROVED)
                         this.AllStudents.Add(i);
                 }
             }
 
             StudentsCount = AllStudents.Count;
+            //סידור התלמידים ברשימה לפני השם
             StudentList = new ObservableCollection<Student>(this.AllStudents.OrderBy(s => s.Sname));
             this.SearchTerm = string.Empty;
         }
 
+        //שמירת שדה החיפוש שהזין המנהל
         private string searchTerm;
         public string SearchTerm
         {
@@ -100,6 +107,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //פעולה המופעלת בעת שינוי שדה החיפוש ומסננת את רשימת התלמידים לפיו
         public void OnTextChanged(string search)
         {
             App app = (App)App.Current;

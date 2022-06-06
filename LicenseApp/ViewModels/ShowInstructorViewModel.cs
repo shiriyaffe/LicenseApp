@@ -23,6 +23,7 @@ namespace LicenseApp.ViewModels
         const int REJECTED_STATUS = 3;
         const int nonexistent_STATUS = 4;
 
+        //פרטי המורה המוצגים במסך
         private Area area;
         public Area Area
         {
@@ -133,6 +134,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //רשימת הביקורות שנכתבו על המורה
         private ObservableCollection<Review> reviewList;
         public ObservableCollection<Review> ReviewList
         {
@@ -151,6 +153,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //פעולה הממלאת את רשימת הביקורות בערכים בהתאם למורה הנבחר
         public async void CreateReviewsCollection()
         {
             App app = (App)App.Current;
@@ -181,6 +184,7 @@ namespace LicenseApp.ViewModels
             CreateReviewsCollection();
         }
 
+        //פעולה בונה מעתיקה
         public ShowInstructorViewModel(ShowInstructorViewModel instructorContext)
         {
             InstructorID = instructorContext.InstructorID;
@@ -199,13 +203,14 @@ namespace LicenseApp.ViewModels
             CreateReviewsCollection();
         }
 
+        //פעולה המרעננת את המסך
         private void TheApp_RefreshUI()
         {
             CreateReviewsCollection();
         }
 
         public ICommand SendEnrollmentCommand => new Command(SendEnrollmentRequest);
-
+        //פעולה המוסיפה ךמסד הנתונים בקשת רישום חדשה ומעדכנת את המורה הנבחר על כך
         public async void SendEnrollmentRequest()
         {
             App app = (App)App.Current;
@@ -213,17 +218,21 @@ namespace LicenseApp.ViewModels
             if (app.CurrentUser is Student)
             {
                 Student current = (Student)app.CurrentUser;
+
+                //בדיקה שהתלמיד המחובר לא משויך למורה אחר או הגיש בקשת רישום נוספת הנמצאת בהמתנה
                 if (current.EStatusId == WAITING_STATUS || current.EStatusId == APPROVED_STATUS)
                 {
                     await App.Current.MainPage.DisplayAlert("שגיאה", "בקשתך לרישום אצל מורה נוסף קיימת במערכת! לא ניתן להרשם לשני מורים במקביל..", "בסדר");
                 }
                 else
                 {
+                    //עדכון סטטוס התלמיד המחובר
                     current.EStatusId = WAITING_STATUS;
                     bool ok = await proxy.ChangeUserStatus(current);
 
                     if (ok)
                     {
+                        //הוספת בקשת רישום חדש למסד הנתונים
                         EnrollmentRequest em = new EnrollmentRequest
                         {
                             StudentId = ((Student)app.CurrentUser).StudentId,

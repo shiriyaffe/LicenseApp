@@ -25,6 +25,7 @@ namespace LicenseApp.ViewModels
         private const string OPENEYE_PHOTO_SRC = "openEye.png";
         private const string CLOSEDEYE_PHOTO_SRC = "closedEye.png";
 
+        //אימייל המשתמש הרשום המבקש להתחבר לאפליקציה
         private string email;
         public string Email
         {
@@ -36,6 +37,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //סיסמת המשתמש הרשום המבקש להתחבר לאפליקצי
         private string password;
         public string Password
         {
@@ -58,6 +60,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //מגדיר אם סיסמת המשתמש תוצג בפניו
         private bool showPass;
         public bool ShowPass
         {
@@ -93,7 +96,7 @@ namespace LicenseApp.ViewModels
         }
 
         public ICommand PassCommand { protected set; get; }
-
+        //פעולה המשנה את חשיפת הסיסמה למשתמש
         public void OnShowPass()
         {
             if (ShowPass == false)
@@ -108,10 +111,11 @@ namespace LicenseApp.ViewModels
         }
 
         public ICommand LogInCommand => new Command(OnSubmit);
-
+        //פעולה המחברת את המשתמש לאפליקציה
         public async void OnSubmit()
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            //בדיקה אם קיים משתמש רשום בעל אימייל וסיסמה זהים וחיבורו לאפליקציה בהתאם
             Object user = await proxy.LoginAsync(Email, Password);
             if (user == null)
             {
@@ -122,9 +126,10 @@ namespace LicenseApp.ViewModels
                 App theApp = (App)App.Current;
                 theApp.CurrentUser = user;
 
+                //הצגת המסכים בהתאם לסוכ המשתמש שמבקש להתחבר
                 if (user is Student)
                 {
-                    if(((Student)user).InstructorId == null)
+                    if(((Student)user).EStatusId == 4 || ((Student)user).EStatusId == 3)
                         App.Current.MainPage = new NavigationPage(new StudentWithoutInstructorTabView());
                     else
                         App.Current.MainPage = new NavigationPage(new StudentMainTabView());

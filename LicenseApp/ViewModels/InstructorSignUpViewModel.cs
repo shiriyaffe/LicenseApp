@@ -397,7 +397,7 @@ namespace LicenseApp.ViewModels
             this.ShowAreaError = AreaPicker == -1;
             if (this.ShowAreaError)
             {
-                this.AreaError = "אזור לימוד הוא שדה!";
+                this.AreaError = "אזור לימוד הוא שדה חובה!";
             }
             else
                 this.AreaError = null;
@@ -511,6 +511,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //פעולה הבודקת את תקינות הפרטים שהזין המורה
         public void ValidateDetails()
         {
             this.ShowDetailError = (string.IsNullOrEmpty(InstructorDetails) || !Regex.IsMatch(this.InstructorDetails, @"^[\u0590-\u05FF ]+$"));
@@ -560,6 +561,7 @@ namespace LicenseApp.ViewModels
         public event Action<ImageSource> SetImageSourceEvent;
         #region PickImage
         public ICommand PickImageCommand => new Command(OnPickImage);
+        //פעולה המופעלת בעת שהמשתמש בוחר תמונה חדשה מהמחשב ושומרת את התמונה שבחר
         public async void OnPickImage()
         {
             FileResult result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions()
@@ -582,6 +584,7 @@ namespace LicenseApp.ViewModels
         //The following command handle the take photo button
         #region CameraImage
         public ICommand CameraImageCommand => new Command(OnCameraImage);
+        //פעולה המופעלת בעת שהמשתמש מצלם תמונה חדשה והיא שומרת את התמונה שצילם
         public async void OnCameraImage()
         {
             var result = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions()
@@ -622,6 +625,7 @@ namespace LicenseApp.ViewModels
             ShowError = false;
         }
 
+        //פעולה הבודקת את תיקנות כל השדות שהזין המשתמש
         private bool ValidateForm()
         {
             //Validate all fields first
@@ -641,13 +645,14 @@ namespace LicenseApp.ViewModels
         }
 
         public Command SignUpCommand => new Command(SignUpAsInstructor);
-
+        //פעולה זו מוסיפה את פרטי המורה החדש למסד הנתונים
         public async void SignUpAsInstructor()
         {
             App app = (App)App.Current;
-
+            //בדיקה שהטופס תקין
             if (ValidateForm())
             {
+                //בניית אובייקט של מורה חדש לפי הערכים שהזין
                 Instructor i = new Instructor
                 {
                     Iname = app.TempUser.Name,
@@ -671,10 +676,12 @@ namespace LicenseApp.ViewModels
                 };
 
                 LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+                //הוספת המורה החדש למסד הנתונים
                 Instructor instructor = await proxy.InstructorSignUpAsync(i);
 
                 if (instructor != null)
                 {
+                    //שמירת תמונת הפרופיל של המורה בשרת
                     if (app.TempUser.UserImg != null)
                     {
                         bool success = await proxy.UploadImage(new Models.FileInfo()
@@ -683,17 +690,16 @@ namespace LicenseApp.ViewModels
                         }, $"Instructors\\{instructor.InstructorId}.jpg");
                     }
 
+                    //בניית אובייקט חדש של בקשת רישום
                     EnrollmentRequest er = new EnrollmentRequest
                     {
                         InstructorId = instructor.InstructorId,
                         StatusId = STATUS_ID,
                         SchoolId = instructor.DrivingSchoolId
                     };
-
+                    //הוספת בקשת הרישום למסד הנתונים
                     EnrollmentRequest newEm = await proxy.AddEnrollmentRequest(er);
 
-                    //app.CurrentUser = instructor;
-                    //app.MainPage = new NavigationPage(new InstructorMainTabView());
                     await App.Current.MainPage.DisplayAlert("", "ההרשמה בוצעה בהצלחה! לפני השימוש באפליקציה, עלייך לחכות שמנהל בית הספר יאשר אותך", "בסדר");
                     app.MainPage = new NavigationPage(new OpenningPageView());
                 }
@@ -702,8 +708,6 @@ namespace LicenseApp.ViewModels
             }
             else
             {
-                //SubmitError = "ההרשמה נכשלה! נסה שנית";
-                //ShowError = true;
                 await App.Current.MainPage.DisplayAlert("שגיאה", "ההרשמה נכשלה! בדוק את הפרטים שהזנת ונסה שנית", "בסדר");
             }
         }

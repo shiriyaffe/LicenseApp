@@ -24,6 +24,7 @@ namespace LicenseApp.ViewModels
         const string ERROR_PIC = "Error.png";
         const string Correct_PIC = "Correct.png";
 
+        //פרטי התלמיד המוצגים במסך
         #region password
         private string pass;
         public string Pass
@@ -360,7 +361,7 @@ namespace LicenseApp.ViewModels
         #endregion
         #endregion
 
-
+        //רשימת השיעורים שביצע התלמיד
         private ObservableCollection<Lesson> lessonsList;
         public ObservableCollection<Lesson> LessonsList
         {
@@ -379,6 +380,28 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        public int lessonsCount;
+        public int LessonsCount
+        {
+            get { return lessonsCount; }
+            set
+            {
+                lessonsCount = value;
+                OnPropertyChanged("LessonsCount");
+            }
+        }
+
+        public bool showLessonsCount;
+        public bool ShowLessonsCount
+        {
+            get { return showLessonsCount; }
+            set
+            {
+                showLessonsCount = value;
+                OnPropertyChanged("ShowLessonsCount");
+            }
+        }
+
         public int collHeight;
         public int CollHeight
         {
@@ -390,6 +413,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //פעולה הממלאת את רשימת השיעורים בערכים
         public async void CreateLessonsCollection()
         {
             App app = (App)App.Current;
@@ -413,13 +437,19 @@ namespace LicenseApp.ViewModels
             if (LessonsList.Count == 0)
             {
                 CollHeight = 40;
+                ShowLessonsCount = false;
+                LessonsCount = 0;
             }
             else if (LessonsList.Count > 0)
             {
                 CollHeight = 120 * LessonsList.Count;
+                
+                LessonsCount = LessonsList.Count;
+                ShowLessonsCount = true;
             }
         }
 
+        //פעולה המעדכנת את תוכן סיכום השיעור של שיעור מסוים ברשימה
         public async void GetLessonSum(Lesson l)
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -453,6 +483,8 @@ namespace LicenseApp.ViewModels
             }
             this.ShowNumberError = false;
             this.ShowPassError = false;
+            this.ShowLessonsCount = false;
+            this.LessonsCount = 0;
             this.SaveDataCommand = new Command(() => SaveData());
             this.PassConditions = new Command(() => ShowConditions());
             CollHeight = 0;
@@ -465,6 +497,7 @@ namespace LicenseApp.ViewModels
 
         public Command SaveDataCommand { protected set; get; }
 
+        //פעולה הבודקת את תקינות הערכים החדשים שהזין התלמיד
         private bool ValidateForm()
         {
             //Validate all fields first
@@ -478,6 +511,7 @@ namespace LicenseApp.ViewModels
             return true;
         }
 
+        //פעולה המעדכנת את פרטיו של התלמיד המחובר במסד הנתונים
         private async void SaveData()
         {
             if (ValidateForm())

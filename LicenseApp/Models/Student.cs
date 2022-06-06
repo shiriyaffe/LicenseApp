@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using LicenseApp.Services;
 
@@ -46,6 +47,23 @@ namespace LicenseApp.Models
                 Random r = new Random();
                 return $"{proxy.GetBasePhotoUri()}Students/{this.StudentId}.jpg?{r.Next()}";
             }
+        }
+
+        public async void GetLessonsCount()
+        {
+            int count = 0;
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            if (StudentId > 0)
+            {
+                ObservableCollection<Lesson> lessons = await proxy.GetStudentLessonsAsync(StudentId);
+                foreach (Lesson l in lessons)
+                {
+                    if (l.HasDone)
+                        count++;
+                }
+            }
+
+            LessonsCount = count;
         }
     }
 }

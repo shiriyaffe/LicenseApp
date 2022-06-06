@@ -97,6 +97,7 @@ namespace LicenseApp.ViewModels
             }
         }
 
+        //פעולה המציגה במסך את פרטי המורה של התלמיד המחובר
         private async void GetInfo()
         {
             App app = (App)App.Current;
@@ -124,47 +125,54 @@ namespace LicenseApp.ViewModels
         }
 
         public ICommand AddReviewCommand => new Command(AddReview);
-
+        //פעולה המוסיפה למסד הנתונים ביקורת חדשה על המורה של התלמיד המחובר
         public async void AddReview()
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             App app = (App)App.Current;
 
-            Review r = new Review
+            if (!string.IsNullOrEmpty(Review))
             {
-                Content = Review,
-                WrittenOn = DateTime.Today
-            };
-
-            Review newR = await proxy.AddReview(r);
-
-            if (newR != null)
-            {
-                InstructorReview ir = new InstructorReview
+                Review r = new Review
                 {
-                    ReviewId = newR.ReviewId,
-                    InstructorId = (int)(((Student)app.CurrentUser).InstructorId)
+                    Content = Review,
+                    WrittenOn = DateTime.Today
                 };
+                //הוספת הביקורת שהזין התלמיד למסד הנתונים
+                Review newR = await proxy.AddReview(r);
 
-                InstructorReview newReview = await proxy.AddInstructorReview(ir);
-
-                if (newReview == null)
+                if (newR != null)
                 {
-                    await App.Current.MainPage.DisplayAlert("שגיאה", "שליחת ביקורת נכשלה", "בסדר");
+                    InstructorReview ir = new InstructorReview
+                    {
+                        ReviewId = newR.ReviewId,
+                        InstructorId = (int)(((Student)app.CurrentUser).InstructorId)
+                    };
+                    //קישור הביקורת למורה של התלמיד
+                    InstructorReview newReview = await proxy.AddInstructorReview(ir);
+
+                    //הצגת הודעה למשתמש בהתאם להצלחת ריצת הפעולה
+                    if (newReview == null)
+                    {
+                        await App.Current.MainPage.DisplayAlert("שגיאה", "שליחת ביקורת נכשלה", "בסדר");
+                    }
+                    else
+                    {
+                        Review = "";
+                        await App.Current.MainPage.DisplayAlert("", "ביקורתך נקלטה בהצלחה! תודה על מתן הביקורת", "בסדר");
+                        ((App)App.Current).UIRefresh();
+                    }
                 }
                 else
-                {
-                    Review = "";
-                    await App.Current.MainPage.DisplayAlert("", "ביקורתך נקלטה בהצלחה! תודה על מתן הביקורת", "בסדר");
-                    ((App)App.Current).UIRefresh();
-                }
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "שליחת ביקורת נכשלה", "בסדר");
             }
             else
-                await App.Current.MainPage.DisplayAlert("שגיאה", "שליחת ביקורת נכשלה", "בסדר");
+                await App.Current.MainPage.DisplayAlert("שגיאה", "לא ניתן לשלוח ביקורת ריקה", "בסדר");
         }
 
         public ICommand BookALessonCommand => new Command(BookALesson);
 
+        //פעולה המציגה בפני התלמיד רשימת שעות פנויות בתאריכים שונים מהן יוכל לבחור את השיעור הבא שלו
         public void BookALesson()
         {
             App app = (App)App.Current;
@@ -173,7 +181,7 @@ namespace LicenseApp.ViewModels
         }
 
         public ICommand AddRatingCommand => new Command(AddRating);
-
+        //פעולה המעדכנת את דירוג המורה בהתאם לדירוג החדש שהוסיף התלמיד
         public async void AddRating()
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
@@ -190,7 +198,7 @@ namespace LicenseApp.ViewModels
                 {
                     i.RateId = (i.RateId + RatingValue) / 2;
                 }
-
+                //עדכון דירוג המורה במסג הנתונים
                 bool updated = await proxy.ChangeRating(i);
 
                 if(updated)
