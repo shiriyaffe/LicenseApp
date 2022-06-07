@@ -105,7 +105,10 @@ namespace LicenseApp.ViewModels
                     }
                 }
 
-                return sumRate / counter;
+                if(counter != 0)
+                    return sumRate / counter;
+                else
+                    return counter;
             }
 
             return counter;

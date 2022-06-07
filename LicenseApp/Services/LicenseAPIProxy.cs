@@ -148,6 +148,39 @@ namespace LicenseApp.Services
             }
         }
 
+        public async Task<bool> Logout()
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+
+                App app = (App)App.Current;
+                string jsonObject = JsonSerializer.Serialize<Object>(app.CurrentUser, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/Logout", content);
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ee)
+            {
+                Console.WriteLine(ee.Message);
+                return false;
+            }
+        }
+
         //פעולה המחזירה את כל טבלאות הנתונים הקבועות
         public async Task<LookupTables> GetLookups()
         {

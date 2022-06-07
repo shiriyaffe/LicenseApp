@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using LicenseApp.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -21,12 +21,19 @@ namespace LicenseApp.Views
             InitializeComponent();
         }
 
-        private void logout_Clicked(object sender, EventArgs e)
+        private async void logout_Clicked(object sender, EventArgs e)
         {
             App app = (App)App.Current;
-            app.CurrentUser = null;
-            Page p = new OpenningPageView();
-            app.MainPage = new NavigationPage(p);
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            bool loggedOut = await proxy.Logout();
+            if (loggedOut)
+            {
+                app.CurrentUser = null;
+                Page p = new OpenningPageView();
+                app.MainPage = new NavigationPage(p);
+            }
+            else
+                await App.Current.MainPage.DisplayAlert("שגיאה", "ההתנתקות נכשלה!", "בסדר");
         }
 
         private void Sp_SetImageSourceEvent(ImageSource obj)
