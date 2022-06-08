@@ -98,7 +98,7 @@ namespace LicenseApp.ViewModels
             this.ShowCityError = CityPicker == -1;
             if (this.ShowCityError)
             {
-                this.CityError = "מגדר הוא שדה חובה!";
+                this.CityError = "עיר היא שדה חובה!";
             }
             else
                 this.CityError = null;
@@ -493,8 +493,11 @@ namespace LicenseApp.ViewModels
 
                     app.CurrentUser = await proxy.LoginAsync(student.Email, student.Pass);
 
-                    if(app.CurrentUser != null)
+                    if (app.CurrentUser != null)
+                    {
+                        ((App)App.Current).UIRefresh();
                         app.MainPage = new NavigationPage(new StudentWithoutInstructorTabView());
+                    }
                 }
 
                 else

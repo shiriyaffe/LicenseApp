@@ -20,7 +20,7 @@ namespace LicenseApp.Models
         public int LessonLengthId { get; set; }
         public int Price { get; set; }
         public string Details { get; set; }
-        public int DrivingSchoolId { get; set; }
+        public int? DrivingSchoolId { get; set; }
         public int? SchoolManagerId { get; set; }
         public DateTime RegistrationDate { get; set; }
         public string StartTime { get; set; }

@@ -171,7 +171,7 @@ namespace LicenseApp.ViewModels
                         HasDone = false,
                         StuudentId = current.StudentId,
                         EStatusId = WAITING_STATUS,
-                        InstructorId = current.StudentId,
+                        InstructorId = (int)current.InstructorId
                     };
 
                     //הוספת השיעור החדש לטבלת השיעורים במסד הנתונים

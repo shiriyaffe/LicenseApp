@@ -666,7 +666,7 @@ namespace LicenseApp.ViewModels
                     GearboxId = Gearbox.GearboxId,
                     LicenseTypeId = LicenseType.LicenseTypeId,
                     LessonLengthId = LessonLength.LessonLengthId,
-                    RateId = 0,
+                    RateId = null,
                     StartTime = StartHour.Whour,
                     EndTime = EndHour.Whour,
                     DrivingSchoolId = DrivingSchool.SchoolId,
@@ -701,6 +701,7 @@ namespace LicenseApp.ViewModels
                     EnrollmentRequest newEm = await proxy.AddEnrollmentRequest(er);
 
                     await App.Current.MainPage.DisplayAlert("", "ההרשמה בוצעה בהצלחה! לפני השימוש באפליקציה, עלייך לחכות שמנהל בית הספר יאשר אותך", "בסדר");
+                    ((App)App.Current).UIRefresh();
                     app.MainPage = new NavigationPage(new OpenningPageView());
                 }
                 else

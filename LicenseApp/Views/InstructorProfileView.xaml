@@ -81,7 +81,7 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="115" />
+                                    <ColumnDefinition Width="110" />
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="25" />
@@ -107,9 +107,9 @@
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="85"/>
                                         <ColumnDefinition Width="5"/>
-                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="85"/>
                                     </Grid.ColumnDefinitions>
                                     <Picker Title="{Binding StartTime}" HorizontalOptions="Start" Grid.Column="2" FontAttributes="Bold" ItemsSource="{Binding WorkingHours}" ItemDisplayBinding="{Binding Whour}" SelectedItem="{Binding EndHour}">
                                     </Picker>

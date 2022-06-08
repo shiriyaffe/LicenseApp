@@ -320,7 +320,8 @@ namespace LicenseApp.ViewModels
                         Birthday = app.TempUser.BirthDate,
                         GenderId = app.TempUser.Gender.GenderId,
                         SchoolId = dSchool.SchoolId,
-                        RegistrationDate = DateTime.Today
+                        RegistrationDate = DateTime.Today,
+                        EStatusId = STATUS_ID
                     };
 
                     //הוספת המנהל למסד הנתונים
@@ -338,8 +339,11 @@ namespace LicenseApp.ViewModels
 
                         //חיבור המנהל לאפליקציה
                         app.CurrentUser = await proxy.LoginAsync(sm.Email, sm.Pass);
-                        if(app.CurrentUser != null)
+                        if (app.CurrentUser != null)
+                        {
+                            ((App)App.Current).UIRefresh();
                             app.MainPage = new NavigationPage(new SchoolManagerMainTabView());
+                        }
                     }
                 }
                 else
