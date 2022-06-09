@@ -40,7 +40,7 @@
                             <Button Padding="0" x:Name="logout" Clicked="logout_Clicked" Text="התנתקות" Grid.Column="0" FontAttributes="Bold" TextColor="#5fa8d3" BackgroundColor="Transparent" FontSize="17" HorizontalOptions="Start"></Button>
                         </Grid>
 
-                        <StackLayout Padding="18,0">
+                        <StackLayout Padding="10,0">
 
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -81,8 +81,8 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="110" />
-                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="103" />
+                                    <ColumnDefinition Width="16" />
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="25" />
                                 </Grid.ColumnDefinitions>
@@ -107,9 +107,9 @@
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="85"/>
+                                        <ColumnDefinition Width="90"/>
                                         <ColumnDefinition Width="5"/>
-                                        <ColumnDefinition Width="85"/>
+                                        <ColumnDefinition Width="90"/>
                                     </Grid.ColumnDefinitions>
                                     <Picker Title="{Binding StartTime}" HorizontalOptions="Start" Grid.Column="2" FontAttributes="Bold" ItemsSource="{Binding WorkingHours}" ItemDisplayBinding="{Binding Whour}" SelectedItem="{Binding EndHour}">
                                     </Picker>

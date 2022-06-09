@@ -75,7 +75,7 @@ namespace LicenseApp.ViewModels
                 ObservableCollection<Student> studentsByID = await proxy.GetStudentsByInstructorAsync(instructorId);
                 foreach (Student i in studentsByID)
                 {
-                    i.GetLessonsCount();
+                    //i.GetLessonsCount();
                     //הכנסה לרשימה רק תלמידים שבקשתם רישומם אושרה על ידי המורה
                     if(i.EStatusId == APPROVED)
                         this.AllStudents.Add(i);

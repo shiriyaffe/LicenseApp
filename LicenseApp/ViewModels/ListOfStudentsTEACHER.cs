@@ -87,7 +87,7 @@ namespace LicenseApp.ViewModels
                 ObservableCollection<Student> studentsByID = await proxy.GetStudentsByInstructorAsync(((Instructor)app.CurrentUser).InstructorId);
                 foreach (Student i in studentsByID)
                 {
-                    i.GetLessonsCount();
+                    //i.GetLessonsCount();
                     //הוספת התלמידים שאושרו על ידי המורה בלבד
                     if(i.EStatusId == APPROVED)
                         this.AllStudents.Add(i);
@@ -128,7 +128,7 @@ namespace LicenseApp.ViewModels
             {
                 LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
                 Student chosenStudent = (Student)obj;
-                chosenStudent.GetLessonsCount();
+                //chosenStudent.GetLessonsCount();
 
                 //העברת נתוני התלמיד הנבחר למסך הבא
                 ShowStudentInfoViewModel studentContext = new ShowStudentInfoViewModel

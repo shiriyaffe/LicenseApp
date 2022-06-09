@@ -77,7 +77,7 @@ namespace LicenseApp.ViewModels
                 ObservableCollection<Student> studentsBySchool = await proxy.GetStudentsBySchoolAsync(((SchoolManager)app.CurrentUser).SmanagerId);
                 foreach (Student i in studentsBySchool)
                 {
-                    i.GetLessonsCount();
+                    //i.GetLessonsCount();
                     //בדיקה האם בקשת הרישום של התלמיד למורה אושרה, או שנמצא ברשימת המתנה
                     if(i.EStatusId == APPROVED)
                         this.StudentList.Add(i);

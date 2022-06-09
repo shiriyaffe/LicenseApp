@@ -413,6 +413,48 @@ namespace LicenseApp.Services
             }
         }
 
+        public async Task<bool> SetLessonsCount()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/SetLessonsCount");
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        
+        public async Task<bool> SetPastLessons()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/SetPastLessons");
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
         //פעולה זו מקבלת מספר מזהה של תלמיד ומחזירה רשימה של כל השיעורים שלו
         public async Task<ObservableCollection<Lesson>> GetStudentLessonsAsync(int studentId)
         {

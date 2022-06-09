@@ -24,7 +24,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Padding="10,10">
-            <Frame Padding="10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
+            <Frame Padding="0,10" BackgroundColor="White" Opacity="0.9" BorderColor="Transparent">
                 <StackLayout>
                     <SearchBar x:Name="searchBar" 
                        Placeholder="חפש מורה לפי שם..." 
@@ -38,17 +38,17 @@
                             <DataTemplate>
                                 <Grid Padding="10" HorizontalOptions="CenterAndExpand">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="66" />
+                                        <RowDefinition Height="55" />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="70" />
-                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="80" />
+                                        <ColumnDefinition Width="90" />
                                         <ColumnDefinition Width="150" />
                                         <ColumnDefinition Width="20" />
                                     </Grid.ColumnDefinitions>
                                     <!--לשנות את הבינדינג ככה שיתאים לעמודות שיש בטבלת מורה-->
-                                    <Frame BorderColor="white" Grid.Column="0" Grid.Row="0"  CornerRadius="100" IsClippedToBounds="True" Padding="0" HeightRequest="90" WidthRequest="90" HorizontalOptions="CenterAndExpand">
+                                    <Frame BorderColor="white" Grid.Column="0" Grid.Row="0" CornerRadius="100" IsClippedToBounds="True" Padding="0" HeightRequest="55" WidthRequest="55" HorizontalOptions="CenterAndExpand">
                                         <Image x:Name="theImage" Source="{Binding PhotoURI}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" HeightRequest="50" WidthRequest="50"/>
                                     </Frame>
                                     <Label Grid.Column="0" Grid.Row="1" Text="{Binding Sname}" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>

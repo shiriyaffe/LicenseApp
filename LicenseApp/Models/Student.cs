@@ -49,21 +49,21 @@ namespace LicenseApp.Models
             }
         }
 
-        public async void GetLessonsCount()
-        {
-            int count = 0;
-            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
-            if (StudentId > 0)
-            {
-                ObservableCollection<Lesson> lessons = await proxy.GetStudentLessonsAsync(StudentId);
-                foreach (Lesson l in lessons)
-                {
-                    if (l.HasDone)
-                        count++;
-                }
-            }
+        //public async void GetLessonsCount()
+        //{
+        //    int count = 0;
+        //    LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+        //    if (StudentId > 0)
+        //    {
+        //        ObservableCollection<Lesson> lessons = await proxy.GetStudentLessonsAsync(StudentId);
+        //        foreach (Lesson l in lessons)
+        //        {
+        //            if (l.HasDone)
+        //                count++;
+        //        }
+        //    }
 
-            LessonsCount = count;
-        }
+        //    LessonsCount = count;
+        //}
     }
 }

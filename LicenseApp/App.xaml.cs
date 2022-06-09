@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.WindowsSpecific;
 using Application = Xamarin.Forms.Application;
+using System.Collections.ObjectModel;
 
 namespace LicenseApp
 {
@@ -44,10 +45,30 @@ namespace LicenseApp
         {
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
             Tables = await proxy.GetLookups();
+            SetLessonsCount();
+            SetPastLessons();
             MainPage = new NavigationPage(new OpenningPageView());
         }
 
-        public void UIRefresh() { this.RefreshUI?.Invoke(); }
+        private async void SetLessonsCount()
+        {
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            bool ok = await proxy.SetLessonsCount();
+        }
+
+        private async void SetPastLessons()
+        {
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            bool ok = await proxy.SetPastLessons();
+        }
+
+        public async void UIRefresh() 
+        {
+            this.RefreshUI?.Invoke();
+
+            LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
+            Tables = await proxy.GetLookups();
+        }
 
         protected override void OnSleep()
         {
