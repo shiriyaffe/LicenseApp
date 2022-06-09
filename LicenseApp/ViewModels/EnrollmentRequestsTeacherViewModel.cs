@@ -105,7 +105,7 @@ namespace LicenseApp.ViewModels
                 //קריאת נתוני התלמידים הנמצאים ברשימת המתנה לרישום אצל המורה המחובר
                 students = await proxy.GetWaitingStudentsByInstructor(instructor.InstructorId);
                 StudentsList.Clear();
-                if (students != null && students.Count != 0)
+                if (students != null)
                 {
                     //הוספת התלמידים לרשימה המוצגת במסך
                     foreach (Student i in students)

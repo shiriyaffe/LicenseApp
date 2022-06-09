@@ -98,7 +98,7 @@ namespace LicenseApp.ViewModels
 
                 foreach(Instructor i in current.Instructors)
                 {
-                    if(i.RateId != NO_RATING)
+                    if(i.RateId != null && i.RateId != NO_RATING)
                     {
                         sumRate += (int)i.RateId;
                         counter++;
