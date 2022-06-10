@@ -64,10 +64,13 @@ namespace LicenseApp
 
         public async void UIRefresh() 
         {
-            this.RefreshUI?.Invoke();
-
             LicenseAPIProxy proxy = LicenseAPIProxy.CreateProxy();
-            Tables = await proxy.GetLookups();
+            LookupTables lut = new LookupTables();
+            lut = await proxy.GetLookups();
+
+            Tables.DrivingSchools = lut.DrivingSchools;
+
+            this.RefreshUI?.Invoke();
         }
 
         protected override void OnSleep()

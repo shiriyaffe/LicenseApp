@@ -83,7 +83,7 @@ namespace LicenseApp.ViewModels
         {
             AvailableList = new ObservableCollection<WorkingHour>();
             App app = (App)App.Current;
-            app.RefreshUI += OnRefresh;
+            //app.RefreshUI += OnRefresh;
             //הגדרת תאריך אוטומטי לתאריך הנוכחי
             ChosenDate = new DateTime();
             ChosenDate = DateTime.Today;
@@ -101,7 +101,8 @@ namespace LicenseApp.ViewModels
             
             current = (Student)app.CurrentUser;
 
-            List<WorkingHour> allHours = app.Tables.WorkingHours;
+            List<WorkingHour> allHours = new List<WorkingHour>();
+            allHours = app.Tables.WorkingHours;
             Lesson l = new Lesson();
             bool available = false;
 
@@ -163,7 +164,7 @@ namespace LicenseApp.ViewModels
                     //בניית אובייקט שיעור חדש עם הפרטים המתאימים לתלמיד
                     Lesson l = new Lesson
                     {
-                        Ldate = ChosenDate,
+                        Ldate = ChosenDate.Date,
                         Lday = ChosenDate.DayOfWeek.ToString(),
                         Ltime = chosenHour.Whour,
                         IsAvailable = false,
