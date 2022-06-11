@@ -704,8 +704,9 @@ namespace LicenseApp.ViewModels
                     await App.Current.MainPage.DisplayAlert("", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);
 
                     //רענון האפליקציה
-                    OnRefresh();
+                   
                     ((App)App.Current).UIRefresh();
+                    OnRefresh();
                 }
             }
             else

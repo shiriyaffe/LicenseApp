@@ -157,8 +157,9 @@ namespace LicenseApp.ViewModels
                 if (cancelled != null)
                 {
                     await App.Current.MainPage.DisplayAlert("", "שיעורך בוטל בהצלחה! מומלץ לקבוע שיעור נוסף בהקדם:)", "בסדר");
-                    OnRefresh();
+                    
                     ((App)App.Current).UIRefresh();
+                    OnRefresh();
                 }
                 else
                     await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה בעת ביטול השיעור. נסת שנית מאוחר יותר", "בסדר");

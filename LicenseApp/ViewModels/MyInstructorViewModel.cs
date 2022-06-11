@@ -160,6 +160,7 @@ namespace LicenseApp.ViewModels
                     {
                         Review = "";
                         await App.Current.MainPage.DisplayAlert("", "ביקורתך נקלטה בהצלחה! תודה על מתן הביקורת", "בסדר");
+                        
                         ((App)App.Current).UIRefresh();
                     }
                 }

@@ -183,8 +183,9 @@ namespace LicenseApp.ViewModels
                     {
                         await App.Current.MainPage.DisplayAlert("", $"בקשתך לשיעור נשלחה למורה בהצלחה!", "בסדר");
                         //רענון המסכים באפליקציה כולה
-                        OnRefresh();
+                        
                         ((App)App.Current).UIRefresh();
+                        OnRefresh();
                     }
                     else
                         await App.Current.MainPage.DisplayAlert("שגיאה!", $"בקשתך לשיעור נכשלה.. נסה שוב", "בסדר");

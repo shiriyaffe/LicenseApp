@@ -195,8 +195,9 @@ namespace LicenseApp.ViewModels
                 if (cancelled != null)
                 {
                     await App.Current.MainPage.DisplayAlert("", "שיעור זה בוטל בהצלחה!:)", "בסדר");
-                    OnRefresh();
+                    
                     ((App)App.Current).UIRefresh();
+                    OnRefresh();
                 }
                 else
                     await App.Current.MainPage.DisplayAlert("שגיאה", "אירעה שגיאה בעת ביטול השיעור. נסת שנית מאוחר יותר", "בסדר");
@@ -226,8 +227,9 @@ namespace LicenseApp.ViewModels
                     else
                     {
                         await App.Current.MainPage.DisplayAlert("", "שיעור זה אושר בהצלחה!:)", "בסדר");
-                        OnRefresh();
+                        
                         ((App)App.Current).UIRefresh();
+                        OnRefresh();
                     }
                 }
                 else

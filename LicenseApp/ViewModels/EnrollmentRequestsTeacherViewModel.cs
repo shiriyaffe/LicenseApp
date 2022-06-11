@@ -135,8 +135,9 @@ namespace LicenseApp.ViewModels
                 if (ok)
                 {
                     //רענון המסך במידה והשינוי התבצע בהצלחה
-                    OnRefresh();
+                    
                     ((App)App.Current).UIRefresh();
+                    OnRefresh();
                 }
                 else
                 {
@@ -167,8 +168,9 @@ namespace LicenseApp.ViewModels
                 if (ok)
                 {
                     //רענון המסך במידה והעדכון התבצע בהצלחה
-                    OnRefresh();
+                    
                     ((App)App.Current).UIRefresh();
+                    OnRefresh();
                 }
                 else
                 {
